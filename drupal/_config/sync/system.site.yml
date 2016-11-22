@@ -1,0 +1,14 @@
+uuid: 1776e283-a34a-4641-b993-3ac6730ff940
+name: 'AOTY Project Visualizations'
+mail: admin@example.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: AyT9s8OUcclfALRE_imByOMgtZ19eOlqdF6zI3p7yqo
