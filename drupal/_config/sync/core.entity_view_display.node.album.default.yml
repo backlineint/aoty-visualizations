@@ -1,0 +1,16 @@
+uuid: ca0d6da9-a904-4b18-ac03-4d7a20b9d129
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.album
+  module:
+    - user
+id: node.album.default
+targetEntityType: node
+bundle: album
+mode: default
+content:
+  links:
+    weight: 100
+hidden: {  }

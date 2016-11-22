@@ -1,4 +1,5 @@
 module:
+  aoty_migrate: 0
   automated_cron: 0
   block: 0
   block_content: 0
@@ -22,6 +23,9 @@ module:
   image: 0
   link: 0
   menu_ui: 0
+  migrate: 0
+  migrate_plus: 0
+  migrate_tools: 0
   node: 0
   options: 0
   page_cache: 0

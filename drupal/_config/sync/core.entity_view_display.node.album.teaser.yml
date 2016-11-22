@@ -1,0 +1,17 @@
+uuid: dfac0197-4067-49cf-bba5-645d539ef0ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - node.type.album
+  module:
+    - user
+id: node.album.teaser
+targetEntityType: node
+bundle: album
+mode: teaser
+content:
+  links:
+    weight: 100
+hidden: {  }

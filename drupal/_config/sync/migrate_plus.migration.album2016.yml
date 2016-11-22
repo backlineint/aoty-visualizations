@@ -1,0 +1,32 @@
+uuid: 205022ab-3bcb-4cfc-9b9b-1a7d0c35e252
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: TevSnD3rpORZHcMear79oodndHZ7iO2kj-Ojx1bX_dI
+id: album2016
+migration_tags: null
+migration_group: aoty
+label: '2016 Album Of the Year Project Data'
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  urls: 'https://spreadsheets.google.com/feeds/list/1qoiuqi8DzKgT2KVUKJBR7Xdo2dFNF8WT7uO9gtvoyFI/1/public/full?alt=json'
+  item_selector: feed/entry
+  fields:
+    -
+      name: album
+      label: Album
+      selector: gsx$id/$t
+  ids:
+    album:
+      type: string
+process:
+  type:
+    plugin: default_value
+    default_value: album
+  title: album
+destination:
+  plugin: 'entity:node'
+migration_dependencies: null
