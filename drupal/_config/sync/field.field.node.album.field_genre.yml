@@ -1,0 +1,19 @@
+uuid: 7462c2be-17e5-4d29-8e67-3b545e717d72
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_genre
+    - node.type.album
+id: node.album.field_genre
+field_name: field_genre
+entity_type: node
+bundle: album
+label: Genre
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

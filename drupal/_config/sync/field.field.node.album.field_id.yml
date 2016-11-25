@@ -1,0 +1,23 @@
+uuid: 4f929a39-f349-4697-a05a-0038611e8433
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_id
+    - node.type.album
+id: node.album.field_id
+field_name: field_id
+entity_type: node
+bundle: album
+label: ID
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

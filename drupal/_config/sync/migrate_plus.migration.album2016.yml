@@ -1,9 +1,9 @@
-uuid: 205022ab-3bcb-4cfc-9b9b-1a7d0c35e252
+uuid: a8ca51cb-8171-425c-ada9-30d2ef06a742
 langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: TevSnD3rpORZHcMear79oodndHZ7iO2kj-Ojx1bX_dI
+  default_config_hash: 9w2ULbpI0_mebhggFyIO8pmyN_NayOA_Ov2Mdi9Ouo4
 id: album2016
 migration_tags: null
 migration_group: aoty
@@ -18,7 +18,35 @@ source:
     -
       name: album
       label: Album
+      selector: gsx$album/$t
+    -
+      name: id
+      label: ID
       selector: gsx$id/$t
+    -
+      name: genre
+      label: Genre
+      selector: gsx$genre/$t
+    -
+      name: avg
+      label: Average
+      selector: gsx$avg/$t
+    -
+      name: wt_avg
+      label: 'Weighted Average'
+      selector: gsx$wt-avg/$t
+    -
+      name: cons_score
+      label: 'Cons Score'
+      selector: gsx$cons-score/$t
+    -
+      name: lists
+      label: 'Number of Lists'
+      selector: gsx$lists/$t
+    -
+      name: top_10s
+      label: 'Top 10s'
+      selector: gsx$top10s/$t
   ids:
     album:
       type: string
@@ -27,6 +55,13 @@ process:
     plugin: default_value
     default_value: album
   title: album
+  field_id: id
+  field_genre: genre
+  field_avg: avg
+  field_wt_avg: wt_avg
+  field_cons_score: cons_score
+  field_lists: lists
+  field_top_10s: top_10s
 destination:
   plugin: 'entity:node'
 migration_dependencies: null

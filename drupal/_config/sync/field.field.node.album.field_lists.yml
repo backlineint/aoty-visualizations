@@ -1,0 +1,23 @@
+uuid: 147fb72d-6a23-4d4a-a3e2-df7c8ba521b6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_lists
+    - node.type.album
+id: node.album.field_lists
+field_name: field_lists
+entity_type: node
+bundle: album
+label: Lists
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

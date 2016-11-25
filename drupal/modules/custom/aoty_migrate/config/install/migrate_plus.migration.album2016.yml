@@ -30,7 +30,35 @@ source:
     -
       name: album
       label: 'Album'
+      selector: gsx$album/$t
+    -
+      name: id
+      label: 'ID'
       selector: gsx$id/$t
+    -
+      name: genre
+      label: 'Genre'
+      selector: gsx$genre/$t
+    -
+      name: avg
+      label: 'Average'
+      selector: gsx$avg/$t
+    -
+      name: wt_avg
+      label: 'Weighted Average'
+      selector: gsx$wt-avg/$t
+    -
+      name: cons_score
+      label: 'Cons Score'
+      selector: gsx$cons-score/$t
+    -
+      name: lists
+      label: 'Number of Lists'
+      selector: gsx$lists/$t
+    -
+      name: top_10s
+      label: 'Top 10s'
+      selector: gsx$top10s/$t
   # Under 'ids', we identify source fields populated above which will uniquely
   # identify each imported item. The 'type' makes sure the migration map table
   # uses the proper schema type for stored the IDs.
@@ -44,5 +72,12 @@ process:
     plugin: default_value
     default_value: album
   title: album
+  field_id: id
+  field_genre: genre
+  field_avg: avg
+  field_wt_avg: wt_avg
+  field_cons_score: cons_score
+  field_lists: lists
+  field_top_10s: top_10s
 
 
