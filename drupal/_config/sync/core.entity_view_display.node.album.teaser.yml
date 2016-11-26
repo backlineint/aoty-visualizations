@@ -17,5 +17,9 @@ content:
 hidden:
   body: true
   field_avg: true
+  field_cons_score: true
+  field_genre: true
   field_id: true
+  field_lists: true
+  field_top_10s: true
   field_wt_avg: true
