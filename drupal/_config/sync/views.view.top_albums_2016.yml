@@ -664,7 +664,19 @@ display:
           entity_type: node
           entity_field: type
           plugin_id: bundle
-      sorts: {  }
+      sorts:
+        field_cons_score_value:
+          id: field_cons_score_value
+          table: node__field_cons_score
+          field: field_cons_score_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: true
+          expose:
+            label: 'Cons Score (field_cons_score)'
+          plugin_id: standard
       title: 'Top Albums 2016'
       header: {  }
       footer: {  }
@@ -678,6 +690,8 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -702,6 +716,8 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -748,12 +764,36 @@ display:
             field_top_10s:
               alias: ''
               raw_output: false
+      pager:
+        type: full
+        options:
+          items_per_page: null
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: true
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: true
+            items_per_page_options_all_label: '- All -'
+            offset: true
+            offset_label: Offset
+          quantity: 9
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - request_format
+        - url.query_args
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
         - 'user.node_grants:view'
         - user.permissions
       tags:
