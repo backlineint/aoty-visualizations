@@ -186,4 +186,6 @@ AddEncoding gzip svgz
   Header always set X-Content-Type-Options nosniff
   # Disable Proxy header, since it's an attack vector.
   RequestHeader unset Proxy
+  # Allow CORS for local debugging, need to lock down for production.
+  Header set Access-Control-Allow-Origin "*"
 </IfModule>
