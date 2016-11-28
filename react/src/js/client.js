@@ -1,96 +1,96 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryStack } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel } from 'victory';
 
-const data2012 = [
-  {quarter: 1, earnings: 13000},
-  {quarter: 2, earnings: 16500},
-  {quarter: 3, earnings: 14250},
-  {quarter: 4, earnings: 19000}
-];
+// TODO - Find a more react-y way to do this.
+var axios = require('axios');
 
-const data2013 = [
-  {quarter: 1, earnings: 15000},
-  {quarter: 2, earnings: 12500},
-  {quarter: 3, earnings: 19500},
-  {quarter: 4, earnings: 13000}
-];
+// TODO - Add a main function to allow switching between graphs
 
-const data2014 = [
-  {quarter: 1, earnings: 11500},
-  {quarter: 2, earnings: 13250},
-  {quarter: 3, earnings: 20000},
-  {quarter: 4, earnings: 15500}
-];
+class ByAlbum extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      data: [
+        // To prevent flash of incomplete chart, may need to get full data here.
+        {title: 0, field_cons_score: 0}
+      ],
+      items_per_page: 10,
+      page: 0,
+      offset: 0,
+    };
+  }
 
-const data2015 = [
-  {quarter: 1, earnings: 18000},
-  {quarter: 2, earnings: 13250},
-  {quarter: 3, earnings: 15000},
-  {quarter: 4, earnings: 12000}
-];
+  getData(itemsPerPage, adjustpage, adjustoffset) {
+    // Alternatively, could just do this in DidMount...
+      // TODO - use function params to get new data and re-render graph
+      //this.setState({items_per_page: itemsPerPage});
+      console.log("Getting data");
+       var _this = this;
+       this.serverRequest = axios
+        .get("http://aoty-visualizations.dd:8083/2016?items_per_page=" + this.state.items_per_page + "&page=" + this.state.page + "&offset=" + this.state.offset)
+        .then(function(result) {
+          _this.setState({data: result.data});
+        });
+   }
 
-class Main extends React.Component {
+  componentDidMount() {
+    this.getData(10,0,0);
+  }
+
+  componentWillUnmount() {
+    this.serverRequest.abort();
+  }
+
   render() {
-    return (
-      <div>
-        <VictoryChart
-          domainPadding={10}
-          theme={VictoryTheme.material}
-        >
-          <VictoryAxis
-            tickValues={["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"]}
-          />
-          <VictoryAxis
-            dependentAxis
-            tickFormat={(x) => (`$${x / 1000}k`)}
-          />
-          <VictoryStack
-            colorScale={"warm"}
-          >
-            <VictoryBar
-              data={data2012}
-              x={"quarter"}
-              y={"earnings"}
-            />
-            <VictoryBar
-              data={data2013}
-              x={"quarter"}
-              y={"earnings"}
-            />
-            <VictoryBar
-              data={data2014}
-              x={"quarter"}
-              y={"earnings"}
-            />
-            <VictoryBar
-              data={data2015}
-              x={"quarter"}
-              y={"earnings"}
-            />
-          </VictoryStack>
-        </VictoryChart>
-      </div>
+    const chartStyle = {
+        width: "75%",
+        float: "left",
+    };
+      const controlStyle = {
+          width: "25%",
+          float: "left",
+      };
+      return (
+        <div>
+          <div style={chartStyle}>
+            <VictoryChart>
+              <VictoryAxis
+                tickLabelComponent={<VictoryLabel angle={45} />}
+                style={{
+                  tickLabels: {fontSize: 5}
+                }}
+              />
+              <VictoryAxis
+                  dependentAxis
+                  style={{
+                      tickLabels: {fontSize: 5}
+                  }}
+              />
+              <VictoryBar
+                data={this.state.data}
+                x={"title"}
+                y={"field_cons_score"}
+                // It is possible to modify data as it is parsed for graph.
+                // y={(datum) => 100 - datum.field_cons_score}
+              />
+            </VictoryChart>
+        </div>
+        <div style={controlStyle}>
+            <p>Controls</p>
+            <button onClick={() => this.getData(20,0,0)}>20 results</button>
+        </div>
+    </div>
     );
   }
 }
 
-/*class Chart2 extends React.Component {
-  render() {
-    return (
-        <div>
-          <h1>Victory Tutorial</h1>
-          <VictoryBar />
-        </div>
-    );
-  }
-}*/
-
 const app = document.getElementById('app');
-ReactDOM.render(<Main />, app);
 
 /*
 * One simple way to handle multiple visualizations would be to add additional classes for the other charts, and then
 * use a select list that on change calls the react render statement to change the graph.
 */
 //ReactDOM.render(<Chart2 />, app);
+
+ReactDOM.render(<ByAlbum />, app);
