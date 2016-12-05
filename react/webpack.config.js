@@ -1,6 +1,8 @@
 var path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 var srcPath = path.join(__dirname, 'src');
-var buildPath = path.join(__dirname, 'dist');
+//var buildPath = path.join(__dirname, 'dist');
+var buildPath = path.join(__dirname, '../docs/app');
 
 module.exports = {
   context: srcPath,
@@ -9,6 +11,12 @@ module.exports = {
       path: buildPath,
       filename: "bundle.js"
   },
+  plugins: [
+      new HtmlWebpackPlugin({
+          title: 'AOTY Visualizations',
+          template: 'index.ejs'
+      })
+  ],
   module: {
       loaders: [
           {
