@@ -30,3 +30,8 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
+
+collections:
+  journal:
+    output: true
+    permalink: /journal/:path/
