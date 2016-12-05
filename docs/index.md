@@ -10,5 +10,5 @@ A decoupled Drupal project creating visualizations based on data from [http://ro
 
 The long term plan is to flesh out some documentation here in support of a talk or a series of blog posts. In the meantime, I’ll just be recording a kitchen sink of project notes.
 
-* [Work-in Progress React Visualizations](/app)
+* [Work-in Progress React Visualizations](app)
 * [1 - The Dataset](/journal/1-the-dataset)
