@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel } from 'victory';
-
-// TODO - Find a more react-y way to do this.
-var axios = require('axios');
 
 // TODO - Add a main function to allow switching between graphs
 
@@ -12,44 +10,54 @@ class ByAlbum extends React.Component {
     super();
     this.state = {
       data: [
-        // To prevent flash of incomplete chart, may need to get full data here.
+        // Todo - push getting of data up into aoty component so that we have it already.
         {title: 0, field_cons_score: 0}
+        // Maybe something like this could set data?
       ],
+      // If these values are only being used as rest params, we might not need to set them in state.
       items_per_page: 10,
       page: 0,
       offset: 0,
     };
+    // Could we use something like this to bind updateData and set data in constructor?
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  getData(itemsPerPage, adjustpage, adjustoffset) {
-    // Alternatively, could just do this in DidMount...
+  // Todo - I'd prefer to name this after the specific event.
+  handleChange(event) {
+    this.setState({value: event.target.value});
+    this.updateData(event.target.value, this.state.page, this.state.offset);
+  }
+
+  // Could we always use state here and thus not require values to be passed to the function?
+  updateData(itemsPerPage, adjustPage, adjustOffset) {
       // TODO - use function params to get new data and re-render graph
-      //this.setState({items_per_page: itemsPerPage});
-      console.log("Getting data");
        var _this = this;
        this.serverRequest = axios
-        .get("http://aoty-visualizations.dd:8083/2016?items_per_page=" + this.state.items_per_page + "&page=" + this.state.page + "&offset=" + this.state.offset)
+        // Todo - make rest address configurable
+        .get("http://aoty-visualizations.dd:8083/2016?items_per_page=" + itemsPerPage + "&page=" + adjustPage + "&offset=" + adjustOffset)
         .then(function(result) {
           _this.setState({data: result.data});
         });
    }
 
   componentDidMount() {
-    this.getData(10,0,0);
+    this.updateData(this.state.items_per_page, this.state.page, this.state.offset);
   }
 
   componentWillUnmount() {
     this.serverRequest.abort();
   }
 
+  // Todo - abstract form into yet another component. Try creating in a standalone file.
   render() {
-    const chartStyle = {
+      const chartStyle = {
         width: "75%",
         float: "left",
-    };
+      };
       const controlStyle = {
-          width: "25%",
-          float: "left",
+        width: "25%",
+        float: "left",
       };
       return (
         <div>
@@ -78,7 +86,17 @@ class ByAlbum extends React.Component {
         </div>
         <div style={controlStyle}>
             <p>Controls</p>
-            <button onClick={() => this.getData(20,0,0)}>20 results</button>
+            <button onClick={() => this.updateData(10,0,0)}>Reset</button>
+            <br />
+            <label>
+                Number of Albums:
+                <select value={this.state.value} onChange={this.handleChange}>
+                    <option value="5">5</option>
+                    <option selected value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select>
+            </label>
         </div>
     </div>
     );
