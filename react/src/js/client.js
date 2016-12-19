@@ -35,7 +35,7 @@ class ByAlbum extends React.Component {
        var _this = this;
        this.serverRequest = axios
         // Todo - make rest address configurable
-        .get("http://aoty-visualizations.dd:8083/2016?items_per_page=" + itemsPerPage + "&page=" + adjustPage + "&offset=" + adjustOffset)
+        .get("http://backlineint.webfactional.com/2016?items_per_page=" + itemsPerPage + "&page=" + adjustPage + "&offset=" + adjustOffset)
         .then(function(result) {
           _this.setState({data: result.data});
         });
