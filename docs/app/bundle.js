@@ -153,7 +153,7 @@
 	          { style: chartStyle },
 	          _react2.default.createElement(
 	            _victory.VictoryChart,
-	            null,
+	            { animate: { duration: 1000 } },
 	            _react2.default.createElement(_victory.VictoryAxis, {
 	              tickLabelComponent: _react2.default.createElement(_victory.VictoryLabel, { angle: 45 }),
 	              style: {

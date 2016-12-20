@@ -62,7 +62,7 @@ class ByAlbum extends React.Component {
       return (
         <div>
           <div style={chartStyle}>
-            <VictoryChart>
+            <VictoryChart animate={{ duration: 1000 }}>
               <VictoryAxis
                 tickLabelComponent={<VictoryLabel angle={45} />}
                 style={{
