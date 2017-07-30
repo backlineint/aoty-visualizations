@@ -1,6 +1,5 @@
 import React from 'react';
 import { Cell, Column, Table } from "@blueprintjs/table";
-import '@blueprintjs/core/dist/blueprint.css';
 import '@blueprintjs/table/dist/table.css';
 
 class AlbumTable extends React.Component {
@@ -34,8 +33,8 @@ class AlbumTable extends React.Component {
     };
 
     return (
-      <div>
-        <Table numRows={50}>
+      <div className="album-table">
+        <Table numRows={this.props.rows}>
           <Column name="Album" renderCell={renderTitleCell}/>
           <Column name="Genre" renderCell={renderGenreCell}/>
           <Column name="Average" renderCell={renderAvgCell}/>
@@ -52,7 +51,8 @@ class AlbumTable extends React.Component {
 
 // TODO - Convert to use npm module prop-types
 AlbumTable.propTypes = {
-  albums: React.PropTypes.array.isRequired
+  albums: React.PropTypes.array.isRequired,
+  rows: React.PropTypes.number.isRequired
 };
 
 export default AlbumTable;

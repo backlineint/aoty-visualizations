@@ -1,4 +1,15 @@
-.App {
+/* Todo - convert to SASS and add to component folders */
+
+.control-panel {
+  width: 25%;
+  float: left;
+}
+
+.album-table .bp-table-container {
+  height: 100vh;
+}
+
+/*.App {
   text-align: center;
 }
 
@@ -22,3 +33,4 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+*/

@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
+import ControlPanel from './components/ControlPanel';
 import AlbumTable from './components/AlbumTable';
+
+import './App.css';
+import '@blueprintjs/core/dist/blueprint.css';
 
 import albums from './albums';
 
 class App extends Component {
   state = {
-    albums
+    albums,
+    rows: 25
+  };
+
+  setRows = (newRows) => {
+    // Does this copy the value rather than reference the variable?
+    const rows = newRows;
+    this.setState({rows});
   };
 
   render() {
     return (
       <div className="App">
-        <h2>Best of Best Of 2016</h2>
-        <AlbumTable albums={this.state.albums} />
+        <ControlPanel setRows={this.setRows} />
+        <AlbumTable albums={this.state.albums} rows={this.state.rows} />
       </div>
     );
   }
