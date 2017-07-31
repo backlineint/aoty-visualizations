@@ -50,6 +50,7 @@ class AlbumTable extends React.Component {
 }
 
 // TODO - Convert to use npm module prop-types
+// Todo - fix warning about string vs number for rows
 AlbumTable.propTypes = {
   albums: React.PropTypes.array.isRequired,
   rows: React.PropTypes.number.isRequired

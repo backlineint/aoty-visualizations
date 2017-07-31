@@ -8,10 +8,16 @@ import '@blueprintjs/core/dist/blueprint.css';
 import albums from './albums';
 
 class App extends Component {
-  state = {
-    albums,
-    rows: 25
-  };
+  constructor() {
+    super();
+
+    const defaultRows = 25;
+
+    this.state = {
+      albums,
+      rows: defaultRows
+    };
+  }
 
   setRows = (newRows) => {
     // Does this copy the value rather than reference the variable?
@@ -22,7 +28,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <ControlPanel setRows={this.setRows} />
+        <ControlPanel rows={this.state.rows} setRows={this.setRows} />
         <AlbumTable albums={this.state.albums} rows={this.state.rows} />
       </div>
     );
