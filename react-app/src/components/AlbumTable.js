@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Cell, Column, Table } from "@blueprintjs/table";
 import '@blueprintjs/table/dist/table.css';
 
@@ -49,11 +50,9 @@ class AlbumTable extends React.Component {
   }
 }
 
-// TODO - Convert to use npm module prop-types
-// Todo - fix warning about string vs number for rows
 AlbumTable.propTypes = {
-  albums: React.PropTypes.array.isRequired,
-  rows: React.PropTypes.number.isRequired
+  albums: PropTypes.array.isRequired,
+  rows: PropTypes.number.isRequired
 };
 
 export default AlbumTable;

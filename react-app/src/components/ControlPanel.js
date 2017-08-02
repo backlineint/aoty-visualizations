@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class ControlPanel extends React.Component {
   // Pass props to the constructor / super to access them in the constructor.
@@ -38,10 +39,10 @@ class ControlPanel extends React.Component {
     const rowControlIds = Object.keys(rowControl);
     rowControlIds.map((key) => {
       if (key === numRows) {
-        rowControl[key].className = "pt-button pt-intent-primary pt-active";
+        return rowControl[key].className = "pt-button pt-intent-primary pt-active";
       }
       else {
-        rowControl[key].className = "pt-button pt-intent-primary";
+        return rowControl[key].className = "pt-button pt-intent-primary";
       }
     });
   };
@@ -54,14 +55,27 @@ class ControlPanel extends React.Component {
         <h2>Best of Best Of 2016</h2>
         <p>Number of Results:</p>
         <div className="pt-button-group pt-large pt-fill">
-          {/* TODO - Convert this to a render function for readability */}
-          {rowControlIds.map(key => <a key={key} className={this.state.rowControl[key].className} tabIndex="0" role="button" onClick={() => this.handleRowChange(key)}>{key}</a>)}
+          {/* Could convert this to a render function but I think below is more readable */}
+          {rowControlIds.map(key =>
+            <a
+              key={key}
+              className={this.state.rowControl[key].className}
+              tabIndex="0"
+              role="button"
+              onClick={() => this.handleRowChange(this.state.rowControl[key].rows)}
+            >
+              {key}
+            </a>
+          )}
         </div>
       </div>
     )
   }
 }
 
-// TODO - Add prop types
+ControlPanel.propTypes = {
+  rows: PropTypes.number.isRequired,
+  setRows: PropTypes.func.isRequired
+};
 
 export default ControlPanel;
