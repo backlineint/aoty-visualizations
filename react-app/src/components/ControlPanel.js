@@ -33,6 +33,8 @@ class ControlPanel extends React.Component {
   }
 
   handleRowChange = (numRows) => {
+    // Todo - protect from case where user tries to change to a number of rows greater
+    // than available filtered rows.
     this.props.setRows(numRows);
     const rowControl = {...this.state.rowControl};
     // TODO - Is there a better pattern for iterating through an object?

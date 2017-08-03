@@ -53,7 +53,6 @@ class App extends Component {
     else if ((filteredAlbums.length > this.state.rows) && (filteredAlbums.length >= 50)) {
       this.setRows(50);
     }
-    console.log(filteredAlbums);
     this.setState({activeAlbums: filteredAlbums});
   };
 
