@@ -38,14 +38,17 @@ class ControlPanel extends React.Component {
     // TODO - Is there a better pattern for iterating through an object?
     const rowControlIds = Object.keys(rowControl);
     rowControlIds.map((key) => {
-      if (key === numRows) {
-        return rowControl[key].className = "pt-button pt-intent-primary pt-active";
-        // TODO - fix bug with active state. Do we need to set state here?
+      if (parseInt(key, 10) === numRows) {
+        rowControl[key].className = "pt-button pt-intent-primary pt-active";
+        return rowControl[key].active = true;
       }
       else {
-        return rowControl[key].className = "pt-button pt-intent-primary";
+        rowControl[key].className = "pt-button pt-intent-primary";
+        return rowControl[key].active = false;
       }
     });
+    /* State seems to be updated here without me explicitly setting it, and I'm
+       not sure why */
   };
 
   render() {
