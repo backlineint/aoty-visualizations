@@ -40,6 +40,7 @@ class ControlPanel extends React.Component {
     rowControlIds.map((key) => {
       if (key === numRows) {
         return rowControl[key].className = "pt-button pt-intent-primary pt-active";
+        // TODO - fix bug with active state. Do we need to set state here?
       }
       else {
         return rowControl[key].className = "pt-button pt-intent-primary";
@@ -54,6 +55,8 @@ class ControlPanel extends React.Component {
       <div className="control-panel">
         <h2>Best of Best Of 2016</h2>
         <p>Number of Results:</p>
+        {/* This is less useful now that filtering works. Serves as a good example
+            though so I'll keep in in for the time being */}
         <div className="pt-button-group pt-large pt-fill">
           {/* Could convert this to a render function but I think below is more readable */}
           {rowControlIds.map(key =>
@@ -68,6 +71,17 @@ class ControlPanel extends React.Component {
             </a>
           )}
         </div>
+        <p>Filter Albums:</p>
+        <div className="pt-input-group pt-large">
+          <span className="pt-icon pt-icon-search"></span>
+          <input
+            className="pt-input"
+            type="search"
+            placeholder="Search input"
+            dir="auto"
+            onChange={(e) => this.props.filterAlbums(e.target.value)}
+          />
+        </div>
       </div>
     )
   }
@@ -75,7 +89,8 @@ class ControlPanel extends React.Component {
 
 ControlPanel.propTypes = {
   rows: PropTypes.number.isRequired,
-  setRows: PropTypes.func.isRequired
+  setRows: PropTypes.func.isRequired,
+  filterAlbums: PropTypes.func.isRequired
 };
 
 export default ControlPanel;
