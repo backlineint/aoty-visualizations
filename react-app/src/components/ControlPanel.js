@@ -50,7 +50,7 @@ class ControlPanel extends React.Component {
       }
     });
     /* State seems to be updated here without me explicitly setting it, and I'm
-       not sure why */
+       not sure why. Feature of .map perhaps? */
   };
 
   render() {
@@ -77,7 +77,7 @@ class ControlPanel extends React.Component {
           )}
         </div>
         <p>Filter Albums:</p>
-        <div className="pt-input-group pt-large">
+        <div className="pt-input-group pt-large pt-minimal">
           <span className="pt-icon pt-icon-search"></span>
           <input
             className="pt-input"
@@ -87,6 +87,24 @@ class ControlPanel extends React.Component {
             onChange={(e) => this.props.filterAlbums(e.target.value)}
           />
         </div>
+        <label className="pt-label">
+          Sort by:
+          <div className="pt-select pt-minimal pt-large">
+            {/* TODO - refactor to generate from js object?
+                Also set value based on default sort. */}
+            <select defaultValue="choose" onChange={(e) => this.props.sortAlbums(e.target.value)}>
+              <option value="choose">Choose a value...</option>
+              <option value="title">Album</option>
+              <option value="field_genre">Genre</option>
+              <option value="field_avg">Average</option>
+              <option value="field_cons_score">Consensus Score</option>
+              <option value="field_id">ID</option>
+              <option value="field_lists">Lists</option>
+              <option value="field_top_10s">Top Ten</option>
+              <option value="field_wt_avg">Weighted Average</option>
+            </select>
+          </div>
+        </label>
       </div>
     )
   }

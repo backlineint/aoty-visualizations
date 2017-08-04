@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // Starting lite with specific lodash function imports.  If I wanted entire library:
 // import * as _ from 'lodash';
 import _filter from 'lodash/filter';
+import _orderBy from 'lodash/orderBy';
 
 // Custom components
 import ControlPanel from './components/ControlPanel';
@@ -17,6 +18,21 @@ import albums from './albums';
 class App extends Component {
   constructor() {
     super();
+
+    // Cast strings to numbers in our original dataset.
+    // TODO - Handle this on the Drupal side, or in our method that gets data from the service.
+    albums.map((value, key) => {
+      // TODO - Genre fix - encoding and case.
+      value.field_avg = parseFloat(value.field_avg);
+      value.field_cons_score = parseFloat(value.field_cons_score);
+      value.field_id = parseInt(value.field_id, 10);
+      value.field_lists = parseInt(value.field_lists, 10);
+      value.field_top_10s = parseInt(value.field_top_10s, 10);
+      value.field_wt_avg = parseFloat(value.field_wt_avg);
+      return value;
+    });
+
+    // Todo - set default sort.
 
     // For now we'll leave our full dataset untouched, and instead sort and filter a copy.
     const activeAlbums = [...albums];
@@ -56,10 +72,25 @@ class App extends Component {
     this.setState({activeAlbums: filteredAlbums});
   };
 
+  sortAlbums = (column) => {
+    // Todo - move this logic to the control panel.
+    let order = 'asc';
+    if (column === 'field_lists' || column === 'field_top_10s') {
+      order = 'desc';
+    }
+    const sortedAlbums = _orderBy(this.state.activeAlbums, column, order);
+    this.setState({activeAlbums: sortedAlbums});
+  };
+
   render() {
     return (
       <div className="App">
-        <ControlPanel rows={this.state.rows} setRows={this.setRows} filterAlbums={this.filterAlbums} />
+        <ControlPanel
+          rows={this.state.rows}
+          setRows={this.setRows}
+          filterAlbums={this.filterAlbums}
+          sortAlbums={this.sortAlbums}
+        />
         <AlbumTable albums={this.state.activeAlbums} rows={this.state.rows} />
       </div>
     );
