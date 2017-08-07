@@ -52,7 +52,7 @@ class ControlPanel extends React.Component {
     // than available filtered rows.
     this.props.setRows(numRows);
     const rowControl = {...this.state.rowControl};
-    // TODO - Is there a better pattern for iterating through an object?
+    // TODO - Is there a better pattern for iterating through an object?  Could use for..in but that isn't good for arrays
     const rowControlIds = Object.keys(rowControl);
     rowControlIds.map((key) => {
       if (parseInt(key, 10) === numRows) {
@@ -77,6 +77,7 @@ class ControlPanel extends React.Component {
     const sortOptions = Object.keys(this.state.sortControl.options);
     return (
       // Todo - convert clases to BEM style syntax
+      // Todo - consider splitting out some controls into their own components
       <div className="control-panel">
         <h2>Best of Best Of 2016</h2>
         <p>Number of Results:</p>
@@ -110,7 +111,7 @@ class ControlPanel extends React.Component {
         <label className="pt-label">
           Sort by:
           <div className="pt-select pt-minimal pt-large">
-            <select defaultValue={this.state.sortControl.selectedSort} onChange={this.handleSortChange}>
+            <select defaultValue={this.props.defaultSort} onChange={this.handleSortChange}>
               {sortOptions.map(key =>
                 <option
                   key={key}

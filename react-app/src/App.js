@@ -32,17 +32,19 @@ class App extends Component {
       return value;
     });
 
-    // Todo - set default sort.
+    const defaultSort = 'field_cons_score';
+    const defaultSortOrder = 'asc';
 
     // For now we'll leave our full dataset untouched, and instead sort and filter a copy.
-    const activeAlbums = [...albums];
+    const activeAlbums = _orderBy([...albums], defaultSort, defaultSortOrder);
 
     const defaultRows = 50;
 
     this.state = {
       albums,
       activeAlbums,
-      rows: defaultRows
+      rows: defaultRows,
+      defaultSort
     };
   }
 
@@ -82,6 +84,7 @@ class App extends Component {
       <div className="App">
         <ControlPanel
           rows={this.state.rows}
+          defaultSort={this.state.defaultSort}
           setRows={this.setRows}
           filterAlbums={this.filterAlbums}
           sortAlbums={this.sortAlbums}
