@@ -72,12 +72,7 @@ class App extends Component {
     this.setState({activeAlbums: filteredAlbums});
   };
 
-  sortAlbums = (column) => {
-    // Todo - move this logic to the control panel.
-    let order = 'asc';
-    if (column === 'field_lists' || column === 'field_top_10s') {
-      order = 'desc';
-    }
+  sortAlbums = (column, order) => {
     const sortedAlbums = _orderBy(this.state.activeAlbums, column, order);
     this.setState({activeAlbums: sortedAlbums});
   };

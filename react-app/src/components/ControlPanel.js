@@ -27,8 +27,23 @@ class ControlPanel extends React.Component {
       }
     }, this);
 
+    const sortControl = {
+      selectedSort: 'field_cons_score',
+      options: {
+        title: {field: 'title', label: 'Album', defaultSort: 'asc'},
+        field_genre: {field: 'field_genre', label: 'Genre', defaultSort: 'asc'},
+        field_avg: {field: 'field_avg', label: 'Average', defaultSort: 'asc'},
+        field_cons_score: {field: 'field_cons_score', label: 'Consensus Score', defaultSort: 'asc'},
+        field_id: {field: 'field_id', label: 'ID', defaultSort: 'asc'},
+        field_lists: {field: 'field_lists', label: 'Lists', defaultSort: 'desc'},
+        field_top_10s: {field: 'field_top_10s', label: 'Top Ten', defaultSort: 'desc'},
+        field_wt_avg: {field: 'field_wt_avg', label: 'Weighted Average', defaultSort: 'asc'}
+      }
+    };
+
     this.state = {
-      rowControl
+      rowControl,
+      sortControl
     };
   }
 
@@ -53,8 +68,13 @@ class ControlPanel extends React.Component {
        not sure why. Feature of .map perhaps? */
   };
 
+  handleSortChange = (e) => {
+    this.props.sortAlbums(e.target.value, this.state.sortControl.options[e.target.value].defaultSort);
+  };
+
   render() {
     const rowControlIds = Object.keys(this.state.rowControl);
+    const sortOptions = Object.keys(this.state.sortControl.options);
     return (
       // Todo - convert clases to BEM style syntax
       <div className="control-panel">
@@ -90,18 +110,15 @@ class ControlPanel extends React.Component {
         <label className="pt-label">
           Sort by:
           <div className="pt-select pt-minimal pt-large">
-            {/* TODO - refactor to generate from js object?
-                Also set value based on default sort. */}
-            <select defaultValue="choose" onChange={(e) => this.props.sortAlbums(e.target.value)}>
-              <option value="choose">Choose a value...</option>
-              <option value="title">Album</option>
-              <option value="field_genre">Genre</option>
-              <option value="field_avg">Average</option>
-              <option value="field_cons_score">Consensus Score</option>
-              <option value="field_id">ID</option>
-              <option value="field_lists">Lists</option>
-              <option value="field_top_10s">Top Ten</option>
-              <option value="field_wt_avg">Weighted Average</option>
+            <select defaultValue={this.state.sortControl.selectedSort} onChange={this.handleSortChange}>
+              {sortOptions.map(key =>
+                <option
+                  key={key}
+                  value={this.state.sortControl.options[key].field}
+                >
+                  {this.state.sortControl.options[key].label}
+                </option>
+              )}
             </select>
           </div>
         </label>
