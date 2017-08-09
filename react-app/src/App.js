@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 // import * as _ from 'lodash';
 import _filter from 'lodash/filter';
 import _orderBy from 'lodash/orderBy';
-import _map from 'lodash/map';
-import _uniq from 'lodash/uniq';
 
 // Custom components
 import ControlPanel from './components/ControlPanel';
@@ -40,15 +38,11 @@ class App extends Component {
     // For now we'll leave our full dataset untouched, and instead sort and filter a copy.
     const activeAlbums = _orderBy([...albums], defaultSort, defaultSortOrder);
 
-    // Tried using new Set(_map(albums, 'field_genre')) here but it is capping at 100 for some reason.
-    const facetGenre = _uniq(_map(albums, 'field_genre'));
-
     const defaultRows = 50;
 
     this.state = {
       albums,
       activeAlbums,
-      facetGenre,
       rows: defaultRows,
       defaultSort
     };
@@ -89,14 +83,17 @@ class App extends Component {
     return (
       <div className="App">
         <ControlPanel
+          albums={this.state.activeAlbums}
           rows={this.state.rows}
-          facetGenre={this.state.facetGenre}
           defaultSort={this.state.defaultSort}
           setRows={this.setRows}
           filterAlbums={this.filterAlbums}
           sortAlbums={this.sortAlbums}
         />
-        <AlbumTable albums={this.state.activeAlbums} rows={this.state.rows} />
+        <AlbumTable
+          albums={this.state.activeAlbums}
+          rows={this.state.rows}
+        />
       </div>
     );
   }

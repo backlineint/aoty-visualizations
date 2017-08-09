@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Facet from './Facet';
+import _map from 'lodash/map';
+import _uniq from 'lodash/uniq';
 
 class ControlPanel extends React.Component {
   // Pass props to the constructor / super to access them in the constructor.
+  // Seems like using props to set state is an antipattern / bad news.  Maybe refactor this eventually.
   constructor(props) {
     super(props);
 
@@ -42,10 +45,20 @@ class ControlPanel extends React.Component {
       }
     };
 
+    // Tried using new Set(_map(albums, 'field_genre')) here but it is capping at 100 for some reason.
+    const facetGenre = _uniq(_map(this.props.albums, 'field_genre'));
+
     this.state = {
       rowControl,
-      sortControl
+      sortControl,
+      facetGenre
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Update the facet lists when the album list is filtered.
+    const facetGenre = _uniq(_map(nextProps.albums, 'field_genre'));
+    this.setState({facetGenre});
   }
 
   handleRowChange = (numRows) => {
@@ -127,7 +140,7 @@ class ControlPanel extends React.Component {
         <div>
           <Facet
             name="Genre Filters"
-            facets={this.props.facetGenre}
+            facets={this.state.facetGenre}
             filterAlbums={this.props.filterAlbums}
           />
         </div>
@@ -137,8 +150,8 @@ class ControlPanel extends React.Component {
 }
 
 ControlPanel.propTypes = {
+  albums: PropTypes.array.isRequired,
   rows: PropTypes.number.isRequired,
-  facetGenre: PropTypes.array,
   defaultSort: PropTypes.string.isRequired,
   setRows: PropTypes.func.isRequired,
   filterAlbums: PropTypes.func.isRequired,

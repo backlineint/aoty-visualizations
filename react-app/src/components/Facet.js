@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Collapse, Checkbox } from '@blueprintjs/core';
-// /import _filter from 'lodash/filter';
 
 class Facet extends React.Component {
   constructor(props) {
@@ -9,7 +8,7 @@ class Facet extends React.Component {
 
     const facetControl = {};
     this.props.facets.map((facet, key) => {
-      return facetControl[key] = {
+      return facetControl[facet] = {
         value: facet,
         checked: false
       }
@@ -21,6 +20,18 @@ class Facet extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    // Update the facet list based on what albums have been selected
+    const facetControl = {};
+    nextProps.facets.map((facet, key) => {
+      return facetControl[facet] = {
+        value: facet,
+        checked: this.state.facetControl[facet] !== undefined ? this.state.facetControl[facet] : false
+      }
+    });
+    this.setState({facetControl});
+  }
+
   handleClick = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
@@ -29,16 +40,19 @@ class Facet extends React.Component {
     // Update the checked state of the facet.
     const facetControl = {...this.state.facetControl};
     facetControl[key].checked = !facetControl[key].checked;
+    this.setState({facetControl});
     // If facet is selected, filter for it, otherwise remove the filter.
-    if (facetControl[key].checked) {
+    // Todo - handle multiple selected filters
+    if (this.state.facetControl[key].checked) {
       this.props.filterAlbums(e.target.value);
     }
     else {
       this.props.filterAlbums('');
+      const facetControl = this.state.facetControl;
+      facetControl[key] = false;
+      this.setState({facetControl});
+
     }
-    // TODO - Update facet genre list.
-    this.setState({facetControl});
-    // Todo - handle multiple selected filters
   };
 
   render() {
