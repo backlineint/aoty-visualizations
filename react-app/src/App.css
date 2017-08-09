@@ -1,8 +1,10 @@
 /* Todo - convert to SASS and add to component folders */
 
 .control-panel {
+  height: 100vh;
   width: 25%;
   float: left;
+  overflow: scroll;
 }
 
 .album-table .bp-table-container {

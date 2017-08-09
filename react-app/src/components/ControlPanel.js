@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Facet from './Facet';
 
 class ControlPanel extends React.Component {
   // Pass props to the constructor / super to access them in the constructor.
@@ -123,6 +124,13 @@ class ControlPanel extends React.Component {
             </select>
           </div>
         </label>
+        <div>
+          <Facet
+            name="Genre Filters"
+            facets={this.props.facetGenre}
+            filterAlbums={this.props.filterAlbums}
+          />
+        </div>
       </div>
     )
   }
@@ -130,8 +138,11 @@ class ControlPanel extends React.Component {
 
 ControlPanel.propTypes = {
   rows: PropTypes.number.isRequired,
+  facetGenre: PropTypes.array,
+  defaultSort: PropTypes.string.isRequired,
   setRows: PropTypes.func.isRequired,
-  filterAlbums: PropTypes.func.isRequired
+  filterAlbums: PropTypes.func.isRequired,
+  sortAlbums: PropTypes.func.isRequired
 };
 
 export default ControlPanel;
