@@ -18,6 +18,7 @@ class ControlPanel extends React.Component {
       if (item === this.props.rows) {
         rowControl[item] = {
           rows: item,
+          disabled: false,
           active: true,
           className: "pt-button pt-intent-primary pt-active"
         };
@@ -25,6 +26,7 @@ class ControlPanel extends React.Component {
       else {
         rowControl[item] = {
           rows: item,
+          disabled: false,
           active: false,
           className: "pt-button pt-intent-primary"
         }
@@ -56,6 +58,19 @@ class ControlPanel extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // Check to see if any of the row controls need to be disabled or re-enabled.
+    const rowControl = {...this.state.rowControl};
+    const rowControlIds = Object.keys(rowControl);
+    for (const key of rowControlIds) {
+      if (rowControl[key].rows > nextProps.rows) {
+        rowControl[key].disabled = true;
+      }
+      else if(rowControl[key].disabled === true) {
+        rowControl[key].disabled = false;
+      }
+    }
+    this.setState({rowControl});
+
     // Update the facet lists when the album list is filtered.
     const facetGenre = _uniq(_map(nextProps.albums, 'field_genre'));
     this.setState({facetGenre});
@@ -66,7 +81,7 @@ class ControlPanel extends React.Component {
     // than available filtered rows.
     this.props.setRows(numRows);
     const rowControl = {...this.state.rowControl};
-    // TODO - Is there a better pattern for iterating through an object?  Could use for..in but that isn't good for arrays
+    // TODO - Move to componentWillReceiveProps since we're making similar changes.
     const rowControlIds = Object.keys(rowControl);
     rowControlIds.map((key) => {
       if (parseInt(key, 10) === numRows) {
@@ -100,15 +115,16 @@ class ControlPanel extends React.Component {
         <div className="pt-button-group pt-large pt-fill">
           {/* Could convert this to a render function but I think below is more readable */}
           {rowControlIds.map(key =>
-            <a
+            <button
               key={key}
               className={this.state.rowControl[key].className}
               tabIndex="0"
-              role="button"
+              type="button"
+              disabled={this.state.rowControl[key].disabled}
               onClick={() => this.handleRowChange(this.state.rowControl[key].rows)}
             >
               {key}
-            </a>
+            </button>
           )}
         </div>
         <p>Filter Albums:</p>
