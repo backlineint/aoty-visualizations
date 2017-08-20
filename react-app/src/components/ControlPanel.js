@@ -11,7 +11,7 @@ class ControlPanel extends React.Component {
     super(props);
 
     // Create row controls
-    const rowOptions = [5, 10, 25, 50];
+    const rowOptions = this.props.rowOptions;
     const rowControl = {};
 
     rowOptions.forEach(function(item) {
@@ -62,7 +62,8 @@ class ControlPanel extends React.Component {
     const rowControl = {...this.state.rowControl};
     const rowControlIds = Object.keys(rowControl);
     for (const key of rowControlIds) {
-      if (rowControl[key].rows > nextProps.rows) {
+      // Disable or enable row controls based on filtered albums
+      if (rowControl[key].rows > nextProps.albums.length) {
         rowControl[key].disabled = true;
       }
       else if(rowControl[key].disabled === true) {
@@ -77,8 +78,6 @@ class ControlPanel extends React.Component {
   }
 
   handleRowChange = (numRows) => {
-    // Todo - protect from case where user tries to change to a number of rows greater
-    // than available filtered rows.
     this.props.setRows(numRows);
     const rowControl = {...this.state.rowControl};
     // TODO - Move to componentWillReceiveProps since we're making similar changes.
@@ -167,6 +166,7 @@ class ControlPanel extends React.Component {
 
 ControlPanel.propTypes = {
   albums: PropTypes.array.isRequired,
+  rowOptions: PropTypes.array.isRequired,
   rows: PropTypes.number.isRequired,
   defaultSort: PropTypes.string.isRequired,
   setRows: PropTypes.func.isRequired,

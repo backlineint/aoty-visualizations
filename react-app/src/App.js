@@ -38,11 +38,13 @@ class App extends Component {
     // For now we'll leave our full dataset untouched, and instead sort and filter a copy.
     const activeAlbums = _orderBy([...albums], defaultSort, defaultSortOrder);
 
+    const rowOptions = [5, 10, 25, 50]; // Todo - ensure that this is sorted asc
     const defaultRows = 50;
 
     this.state = {
       albums,
       activeAlbums,
+      rowOptions,
       rows: defaultRows,
       defaultSort
     };
@@ -59,17 +61,35 @@ class App extends Component {
     const filteredAlbums = _filter(this.state.albums, function(album) {
       return album.title.includes(filter) || album.field_genre.includes(filter);
     });
+
     // If there are fewer results than table rows, shrink the table.
     if (filteredAlbums.length < this.state.rows) {
-      this.setRows(filteredAlbums.length);
+      let closestRowOption = 50;
+      for (const key of this.state.rowOptions.reverse()) {
+        if (filteredAlbums.length >= key) {
+          closestRowOption = key;
+          break;
+        }
+        else if (filteredAlbums.length < 5) {
+          closestRowOption = filteredAlbums.length;
+        }
+      }
+      this.setRows(closestRowOption);
     }
+
     // If there are more results than table rows, expand the table.
-    else if ((filteredAlbums.length > this.state.rows) && (filteredAlbums.length <= 50)) {
-      this.setRows(filteredAlbums.length);
-    }
-    // But don't let it go past 50 rows.
-    else if ((filteredAlbums.length > this.state.rows) && (filteredAlbums.length >= 50)) {
-      this.setRows(50);
+    else if (filteredAlbums.length > this.state.rows) {
+      let closestRowOption = 0;
+      for (const key of this.state.rowOptions) {
+        if (filteredAlbums.length < 5) {
+          closestRowOption = filteredAlbums.length;
+          break;
+        }
+        else if (filteredAlbums.length >= key) {
+          closestRowOption = key;
+        }
+      }
+      this.setRows(closestRowOption);
     }
     this.setState({activeAlbums: filteredAlbums});
   };
@@ -84,6 +104,7 @@ class App extends Component {
       <div className="App">
         <ControlPanel
           albums={this.state.activeAlbums}
+          rowOptions={this.state.rowOptions}
           rows={this.state.rows}
           defaultSort={this.state.defaultSort}
           setRows={this.setRows}
