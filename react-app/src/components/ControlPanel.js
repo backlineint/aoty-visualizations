@@ -80,7 +80,6 @@ class ControlPanel extends React.Component {
   handleRowChange = (numRows) => {
     this.props.setRows(numRows);
     const rowControl = {...this.state.rowControl};
-    // TODO - Move to componentWillReceiveProps since we're making similar changes.
     const rowControlIds = Object.keys(rowControl);
     rowControlIds.map((key) => {
       if (parseInt(key, 10) === numRows) {

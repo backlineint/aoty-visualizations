@@ -5,15 +5,15 @@ import _filter from 'lodash/filter';
 import _orderBy from 'lodash/orderBy';
 
 // Custom components
-import ControlPanel from './components/ControlPanel';
-import AlbumTable from './components/AlbumTable';
+import ControlPanel from './ControlPanel';
+import AlbumTable from './AlbumTable';
 
 // Styling
 import './App.css';
 import '@blueprintjs/core/dist/blueprint.css';
 
 // Data
-import albums from './albums';
+import albums from '../data/albums';
 
 class App extends Component {
   constructor() {
@@ -38,7 +38,7 @@ class App extends Component {
     // For now we'll leave our full dataset untouched, and instead sort and filter a copy.
     const activeAlbums = _orderBy([...albums], defaultSort, defaultSortOrder);
 
-    const rowOptions = [5, 10, 25, 50]; // Todo - ensure that this is sorted asc
+    const rowOptions = [5, 10, 25, 50]; // Row options must be sorted asc
     const defaultRows = 50;
 
     this.state = {
@@ -62,6 +62,7 @@ class App extends Component {
       return album.title.includes(filter) || album.field_genre.includes(filter);
     });
 
+    // Todo - is there a race condition here where rows aren't set it user types too fast?
     // If there are fewer results than table rows, shrink the table.
     if (filteredAlbums.length < this.state.rows) {
       let closestRowOption = 50;
