@@ -14,8 +14,16 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "watch": "concurrently --names \"webpack, stylus\" --prefix name \"npm run start\" \"npm run styles:watch\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "styles": "stylus -u autoprefixer-stylus ./src/components",
+    "styles:watch": "stylus -u autoprefixer-stylus -w ./src/components"
+  },
+  "devDependencies": {
+    "autoprefixer-stylus": "^0.14.0",
+    "concurrently": "^3.5.0",
+    "stylus": "^0.54.5"
   }
 }

@@ -4,6 +4,8 @@ import Facet from './Facet';
 import _map from 'lodash/map';
 import _uniq from 'lodash/uniq';
 
+import './ControlPanel.css';
+
 class ControlPanel extends React.Component {
   // Pass props to the constructor / super to access them in the constructor.
   // Seems like using props to set state is an antipattern / bad news.  Maybe refactor this eventually.

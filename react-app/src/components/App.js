@@ -9,7 +9,6 @@ import ControlPanel from './ControlPanel';
 import AlbumTable from './AlbumTable';
 
 // Styling
-import './App.css';
 import '@blueprintjs/core/dist/blueprint.css';
 
 // Data
