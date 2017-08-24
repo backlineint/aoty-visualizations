@@ -12,3 +12,9 @@
 
 # Ignore Composer-managed dependencies.
 #vendor/
+
+# Ignore files added by Dev Desktop Install
+/docroot/sites/*.dd
+/docroot/sites/default/files/
+/docroot/sites/default/settings.php
+/docroot/sites/sites.php
