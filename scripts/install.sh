@@ -1,10 +1,7 @@
 #!/bin/sh
 
-cd ../drupal
+cd ../drupal/docroot
 drush si -y
 drush upwd admin --password=admin
-drush sql-query "TRUNCATE shortcut"
-drush sql-query "TRUNCATE shortcut_field_data"
-drush cset system.site uuid 1776e283-a34a-4641-b993-3ac6730ff940 -y
-drush cim sync -y
+drush en -y aoty_migrate
 drush migrate-import --group=aoty -y
