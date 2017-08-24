@@ -1,0 +1,6 @@
+entity.oauth2_client.add_form:
+  route_name: 'entity.oauth2_client.add_form'
+  title: 'Add Client'
+  appears_on:
+    - entity.oauth2_client.collection
+    - oauth2_token.settings

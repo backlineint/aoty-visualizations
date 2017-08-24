@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains simple_oauth.module..
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\simple_oauth\Entity\Oauth2ClientInterface;
+
+/**
+ * Implements hook_cron().
+ */
+function simple_oauth_cron() {
+  /** @var \Drupal\simple_oauth\ExpiredCollector $collector */
+  $collector = \Drupal::service('simple_oauth.expired_collector');
+  // Collect all expired tokens and delete them.
+  $collector->deleteMultipleTokens($collector->collect());
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function simple_oauth_entity_update(EntityInterface $entity) {
+  /** @var \Drupal\simple_oauth\ExpiredCollector $collector */
+  $collector = \Drupal::service('simple_oauth.expired_collector');
+  // Collect the affected tokens and expire them.
+  if ($entity instanceof AccountInterface) {
+    $collector->deleteMultipleTokens($collector->collectForAccount($entity));
+  }
+  if ($entity instanceof Oauth2ClientInterface) {
+    $collector->deleteMultipleTokens($collector->collectForClient($entity));
+  }
+}

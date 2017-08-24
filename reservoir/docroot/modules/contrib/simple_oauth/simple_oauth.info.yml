@@ -1,0 +1,15 @@
+name: Simple OAuth
+type: module
+description: 'The OAuth 2.0 Authorization Framework: Bearer Token Usage'
+# core: 8.x
+package: Authentication
+dependencies:
+  - drupal:system (>=8.3)
+  - serialization
+  - text
+
+# Information added by Drupal.org packaging script on 2017-05-28
+version: '8.x-2.0-rc2'
+core: '8.x'
+project: 'simple_oauth'
+datestamp: 1496008093

@@ -1,0 +1,161 @@
+<?php
+
+/**
+ * @file
+ *
+ * Module implementation file.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Render\Element;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function simple_oauth_extras_form_oauth2_token_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $form['use_implicit'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable the implicit grant?'),
+    '#description' => t('The implicit grant has the potential to be used in an insecure way. Only enable this if you understand the risks. See https://tools.ietf.org/html/rfc6819#section-4.4.2 for more information.'),
+    '#default_value' => \Drupal::config('simple_oauth_extras.settings')->get('use_implicit'),
+  ];
+  $form['#submit'][] = 'simple_oauth_extras_form_oauth2_token_settings_submit';
+}
+
+/**
+ * Form submission handler.
+ *
+ * @param array $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function simple_oauth_extras_form_oauth2_token_settings_submit(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  $settings = \Drupal::configFactory()->getEditable('simple_oauth_extras.settings');
+  $settings->set('use_implicit', $form_state->getValue('use_implicit'));
+  $settings->save();
+}
+
+/**
+ * Implements hook_theme().
+ */
+function simple_oauth_extras_theme($existing, $type, $theme, $path) {
+  return array(
+    'oauth2_client' => [
+      'render element' => 'elements',
+    ]
+  );
+}
+
+
+/**
+ * Prepares variables for oauth2_client templates.
+ *
+ * Default template: oauth2-client.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - node: The node object.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function template_preprocess_oauth2_client(&$variables) {
+  $variables['client'] = $variables['elements']['#oauth2_client'];
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  $variables['label'] = $variables['elements']['label'];
+  $variables['description'] = $variables['elements']['description'];
+  $variables['image'] = $variables['elements']['image'];
+
+  // Helpful $content variable for templates.
+  $variables += array('content' => array());
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function simple_oauth_extras_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+  if ($entity_type->id() == 'oauth2_client') {
+    $fields['description'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Description'))
+      ->setDescription(t('A description of the client. This text will be shown to the users to authorize sharing their data to create an access token.'))
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'hidden',
+        'type' => 'text_default',
+        'weight' => 0,
+      ))
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', array(
+        'type' => 'text_textfield',
+        'weight' => 0,
+      ))
+      ->setDisplayConfigurable('form', TRUE);
+
+    $fields['image'] = BaseFieldDefinition::create('image')
+      ->setLabel(t('Logo'))
+      ->setDescription(t('Logo of the client. This text will be shown to the users to authorize sharing their data to create an access token.'))
+      ->setRevisionable(TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'weight' => -3,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'image',
+        'weight' => -3,
+        'settings' => array(
+          'preview_image_style' => 'thumbnail',
+          'progress_indicator' => 'throbber',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['redirect'] = BaseFieldDefinition::create('uri')
+      ->setLabel(new TranslatableMarkup('Redirect URI'))
+      ->setDescription(new TranslatableMarkup('The URI this client will redirect to when needed.'))
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'weight' => 4,
+      ])
+      ->setDisplayOptions('form', [
+        'weight' => 4,
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setTranslatable(TRUE)
+      // URIs are not length limited by RFC 2616, but we can only store 255
+      // characters in our entity DB schema.
+      ->setSetting('max_length', 255);
+
+    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(new TranslatableMarkup('User'))
+      ->setDescription(new TranslatableMarkup('When no specific user is authenticated Drupal will use this user as the author of all the actions made.'))
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'user')
+      ->setSetting('handler', 'default')
+      ->setTranslatable(FALSE)
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'entity_reference_label',
+        'weight' => 1,
+      ])
+      ->setCardinality(1)
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 0,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ],
+      ]);
+  }
+  return $fields;
+}

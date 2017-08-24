@@ -1,0 +1,101 @@
+# Oauth2Token routing definition
+entity.oauth2_token.canonical:
+  path: '/admin/config/people/simple_oauth/oauth2_token/{oauth2_token}'
+  defaults:
+    _entity_view: 'oauth2_token'
+    _title: 'Access Token'
+  requirements:
+    _entity_access: 'oauth2_token.view'
+  options:
+    _admin_route: TRUE
+
+entity.oauth2_token.collection:
+  path: '/admin/config/people/simple_oauth/oauth2_token'
+  defaults:
+    _entity_list: 'oauth2_token'
+    _title: 'Access Token list'
+  requirements:
+    _permission: 'administer simple_oauth entities'
+  options:
+    _admin_route: TRUE
+  base_route: system.admin_content
+
+entity.oauth2_token.delete_form:
+  path: '/admin/config/people/simple_oauth/oauth2_token/{oauth2_token}/delete'
+  defaults:
+    _entity_form: oauth2_token.delete
+    _title: 'Delete Access Token'
+  requirements:
+    _entity_access: 'oauth2_token.delete'
+  options:
+    _admin_route: TRUE
+
+oauth2_token.settings:
+  path: '/admin/config/people/simple_oauth'
+  defaults:
+   _form: '\Drupal\simple_oauth\Entity\Form\Oauth2TokenSettingsForm'
+   _title: 'Simple OAuth Settings'
+  requirements:
+    _permission: 'administer simple_oauth entities'
+  options:
+    _admin_route: TRUE
+  base_route: entity.user.admin_form
+
+# Oauth2Client routing definition
+entity.oauth2_client.canonical:
+  path: '/admin/config/people/simple_oauth/oauth2_client/{oauth2_client}'
+  defaults:
+    _entity_view: 'oauth2_client'
+    _title: 'Oauth2 Client'
+  requirements:
+    _entity_access: 'oauth2_client.view'
+  options:
+    _admin_route: TRUE
+
+entity.oauth2_client.collection:
+  path: '/admin/config/people/simple_oauth/oauth2_client'
+  defaults:
+    _entity_list: 'oauth2_client'
+    _title: 'Client'
+  requirements:
+    _permission: 'administer simple_oauth entities'
+  options:
+    _admin_route: TRUE
+
+entity.oauth2_client.add_form:
+  path: '/admin/config/people/simple_oauth/oauth2_client/add'
+  defaults:
+    _entity_form: 'oauth2_client.add'
+    _title: 'Add Client'
+  requirements:
+    _permission: 'administer simple_oauth entities'
+  options:
+    _admin_route: TRUE
+
+entity.oauth2_client.edit_form:
+  path: '/admin/config/people/simple_oauth/oauth2_client/{oauth2_client}/edit'
+  defaults:
+    _entity_form: 'oauth2_client.edit'
+    _title: 'Edit Client'
+  requirements:
+    _permission: 'administer simple_oauth entities'
+  options:
+    _admin_route: TRUE
+
+entity.oauth2_client.delete_form:
+  path: '/admin/config/people/simple_oauth/oauth2_client/{oauth2_client}/delete'
+  defaults:
+    _entity_form: 'oauth2_client.delete'
+    _title: 'Delete Client'
+  requirements:
+    _permission: 'administer simple_oauth entities'
+  options:
+    _admin_route: TRUE
+
+oauth2_token.token:
+  path: '/oauth/token'
+  defaults:
+    _controller: 'Drupal\simple_oauth\Controller\Oauth2Token::token'
+  methods: [POST]
+  requirements:
+    _access: 'TRUE'

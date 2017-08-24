@@ -1,0 +1,50 @@
+{
+    "name": "acquia/reservoir",
+    "description": "A backend for your frontend. Powered by Drupal.",
+    "type": "drupal-profile",
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "cweagans/composer-patches": "^1.5.0",
+        "composer/installers": "1.2.0",
+        "drupal-composer/drupal-scaffold": "^2.0.0",
+        "drupal/core": "^8.3.4",
+        "webflo/drupal-core-strict": "^8.3.4",
+        "drupal/openapi": "1.0.0-alpha1",
+        "drupal/jsonapi": "1.0.0",
+        "drupal/simple_oauth": "2.0-rc2"
+    },
+    "require-dev": {
+        "drush/drush": "~8.0",
+        "behat/mink": "~1.7",
+        "behat/mink-goutte-driver": "~1.2",
+        "jcalderonzumba/gastonjs": "~1.0.2",
+        "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
+        "mikey179/vfsstream": "~1.2",
+        "phpunit/phpunit": ">=4.8.28 <5",
+        "symfony/css-selector": "~2.8"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@composer drupal-scaffold"
+        ],
+        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
+    },
+    "extra": {
+        "patches": {
+            "drupal/core": {
+                "Fix toolbar active link handling": "https://www.drupal.org/files/issues/2885755-2-8.3.x.patch"
+            },
+            "drupal/simple_oauth": {
+                "simple_oauth cannot be installed in an install profile without also installing simple_oauth_extras": "https://www.drupal.org/files/issues/2883862-11.patch"
+            }
+        }
+    }
+}
