@@ -1,9 +1,0 @@
-<?php
-/**
- * Implements hook_uninstall().
- */
-function aoty_migrate_uninstall() {
-    db_query("DELETE FROM {config} WHERE name LIKE 'migrate_plus.migration.album%'");
-    drupal_flush_all_caches();
-}
-?>
