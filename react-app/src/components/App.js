@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import _filter from 'lodash/filter';
 import _orderBy from 'lodash/orderBy';
 
+import {getAllAlbumData} from '../utilities/utilities';
+
 // Custom components
 import ControlPanel from './ControlPanel';
 import AlbumTable from './AlbumTable';
@@ -17,6 +19,15 @@ import albums from '../data/albums';
 class App extends Component {
   constructor() {
     super();
+
+    const albumPromise = getAllAlbumData(`http://aoty-reservoir.dd:8083/jsonapi/node/album`);
+
+    albumPromise.then(data => {
+      console.log(data);
+      // TODO - Refactor to use the album data from the API
+      // Try moving most (all?) of the constructor in here. - get to point where albums2 is in state.
+      // Then will have to update other components to access new variable locations.
+    });
 
     // Cast strings to numbers in our original dataset.
     // TODO - Handle this on the Drupal side, or in our method that gets data from the service.
