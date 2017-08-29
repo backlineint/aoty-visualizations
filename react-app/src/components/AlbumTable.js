@@ -11,28 +11,28 @@ class AlbumTable extends React.Component {
 
     // Feels like this could be streamlined, but maybe it is a limitation of blueprint...
     const renderTitleCell = (rowIndex: number) => {
-      return <Cell>{albums[rowIndex].title}</Cell>
+      return <Cell>{albums[rowIndex].attributes.title}</Cell>
     };
     const renderGenreCell = (rowIndex: number) => {
-      return <Cell>{decodeURI(albums[rowIndex].field_genre)}</Cell>
+      return <Cell>{decodeURI(albums[rowIndex].attributes.field_genre)}</Cell>
     };
     const renderAvgCell = (rowIndex: number) => {
-      return <Cell>{albums[rowIndex].field_avg}</Cell>
+      return <Cell>{albums[rowIndex].attributes.field_avg}</Cell>
     };
     const renderConsScoreCell = (rowIndex: number) => {
-      return <Cell>{albums[rowIndex].field_cons_score}</Cell>
+      return <Cell>{albums[rowIndex].attributes.field_cons_score}</Cell>
     };
     const renderIdCell = (rowIndex: number) => {
-      return <Cell>{albums[rowIndex].field_id}</Cell>
+      return <Cell>{albums[rowIndex].attributes.field_id}</Cell>
     };
     const renderListsCell = (rowIndex: number) => {
-      return <Cell>{albums[rowIndex].field_lists}</Cell>
+      return <Cell>{albums[rowIndex].attributes.field_lists}</Cell>
     };
     const renderTopTenCell = (rowIndex: number) => {
-      return <Cell>{albums[rowIndex].field_top_10s}</Cell>
+      return <Cell>{albums[rowIndex].attributes.field_top_10s}</Cell>
     };
     const renderWtAvgCell = (rowIndex: number) => {
-      return <Cell>{albums[rowIndex].field_wt_avg}</Cell>
+      return <Cell>{albums[rowIndex].attributes.field_wt_avg}</Cell>
     };
 
     return (

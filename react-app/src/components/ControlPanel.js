@@ -50,7 +50,7 @@ class ControlPanel extends React.Component {
     };
 
     // Tried using new Set(_map(albums, 'field_genre')) here but it is capping at 100 for some reason.
-    const facetGenre = _uniq(_map(this.props.albums, 'field_genre'));
+    const facetGenre = _uniq(_map(this.props.albums, 'attributes.field_genre'));
 
     this.state = {
       rowControl,
@@ -75,7 +75,7 @@ class ControlPanel extends React.Component {
     this.setState({rowControl});
 
     // Update the facet lists when the album list is filtered.
-    const facetGenre = _uniq(_map(nextProps.albums, 'field_genre'));
+    const facetGenre = _uniq(_map(nextProps.albums, 'attributes.field_genre'));
     this.setState({facetGenre});
   }
 

@@ -13,51 +13,55 @@ import AlbumTable from './AlbumTable';
 // Styling
 import '@blueprintjs/core/dist/blueprint.css';
 
-// Data
-import albums from '../data/albums';
+// TODO - Replace with an udpated copy of JSON API data to allow for offline development.
+//import albums from '../data/albums';
 
 class App extends Component {
   constructor() {
     super();
 
-    const albumPromise = getAllAlbumData(`http://aoty-reservoir.dd:8083/jsonapi/node/album`);
-
-    albumPromise.then(data => {
-      console.log(data);
-      // TODO - Refactor to use the album data from the API
-      // Try moving most (all?) of the constructor in here. - get to point where albums2 is in state.
-      // Then will have to update other components to access new variable locations.
-    });
-
-    // Cast strings to numbers in our original dataset.
-    // TODO - Handle this on the Drupal side, or in our method that gets data from the service.
-    albums.map((value, key) => {
-      // TODO - Genre fix - encoding and case.
-      value.field_avg = parseFloat(value.field_avg);
-      value.field_cons_score = parseFloat(value.field_cons_score);
-      value.field_id = parseInt(value.field_id, 10);
-      value.field_lists = parseInt(value.field_lists, 10);
-      value.field_top_10s = parseInt(value.field_top_10s, 10);
-      value.field_wt_avg = parseFloat(value.field_wt_avg);
-      return value;
-    });
-
     const defaultSort = 'field_cons_score';
     const defaultSortOrder = 'asc';
-
-    // For now we'll leave our full dataset untouched, and instead sort and filter a copy.
-    const activeAlbums = _orderBy([...albums], defaultSort, defaultSortOrder);
 
     const rowOptions = [5, 10, 25, 50]; // Row options must be sorted asc
     const defaultRows = 50;
 
     this.state = {
-      albums,
-      activeAlbums,
       rowOptions,
       rows: defaultRows,
-      defaultSort
+      defaultSort,
+      defaultSortOrder
     };
+  }
+
+  componentWillMount() {
+    // Need to add albums to state after the constructor because data is loaded async.
+    const albumPromise = getAllAlbumData(`http://aoty-reservoir.dd:8083/jsonapi/node/album`);
+
+    // Once the promise is resolved, manipulate the album data and add to state.
+    albumPromise.then(albums => {
+      // Cast strings to numbers in our original dataset.
+      // TODO - Handle this on the Drupal side, or in our method that gets data from the service.
+      albums.map((value, key) => {
+        // TODO - Genre fix - encoding and case.
+        value.attributes.field_avg = parseFloat(value.attributes.field_avg);
+        value.attributes.field_cons_score = parseFloat(value.attributes.field_cons_score);
+        value.attributes.field_id = parseInt(value.attributes.field_id, 10);
+        value.attributes.field_lists = parseInt(value.attributes.field_lists, 10);
+        value.attributes.field_top_10s = parseInt(value.attributes.field_top_10s, 10);
+        value.attributes.field_wt_avg = parseFloat(value.attributes.field_wt_avg);
+        return value;
+      });
+
+      // For now we'll leave our full dataset untouched, and instead sort and filter a copy.
+      const activeAlbums = _orderBy([...albums], this.state.defaultSort, this.state.defaultSortOrder);
+
+      this.setState({
+        albums,
+        activeAlbums
+      });
+
+    });
   }
 
   setRows = (newRows) => {
@@ -69,7 +73,7 @@ class App extends Component {
   filterAlbums = (filter) => {
     // Text search on title or genre
     const filteredAlbums = _filter(this.state.albums, function(album) {
-      return album.title.includes(filter) || album.field_genre.includes(filter);
+      return album.attributes.title.includes(filter) || album.attributes.field_genre.includes(filter);
     });
 
     // Todo - is there a race condition here where rows aren't set it user types too fast?
@@ -106,28 +110,35 @@ class App extends Component {
   };
 
   sortAlbums = (column, order) => {
-    const sortedAlbums = _orderBy(this.state.activeAlbums, column, order);
+    // Wonky fix below, but adding attributes to the select value was causing problems.
+    const sortedAlbums = _orderBy(this.state.activeAlbums, 'attributes.'+ column, order);
     this.setState({activeAlbums: sortedAlbums});
   };
 
   render() {
-    return (
-      <div className="App">
-        <ControlPanel
-          albums={this.state.activeAlbums}
-          rowOptions={this.state.rowOptions}
-          rows={this.state.rows}
-          defaultSort={this.state.defaultSort}
-          setRows={this.setRows}
-          filterAlbums={this.filterAlbums}
-          sortAlbums={this.sortAlbums}
-        />
-        <AlbumTable
-          albums={this.state.activeAlbums}
-          rows={this.state.rows}
-        />
-      </div>
-    );
+    // If the API hasn't returned albums yet, indicate that we're loading.
+    if (this.state.albums) {
+      return (
+        <div className="App">
+          <ControlPanel
+            albums={this.state.activeAlbums}
+            rowOptions={this.state.rowOptions}
+            rows={this.state.rows}
+            defaultSort={this.state.defaultSort}
+            setRows={this.setRows}
+            filterAlbums={this.filterAlbums}
+            sortAlbums={this.sortAlbums}
+          />
+          <AlbumTable
+            albums={this.state.activeAlbums}
+            rows={this.state.rows}
+          />
+        </div>
+      );
+    }
+    else {
+      return (<div>Loading...</div>);
+    }
   }
 }
 
