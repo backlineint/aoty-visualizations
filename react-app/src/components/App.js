@@ -111,7 +111,7 @@ class App extends Component {
 
   sortAlbums = (column, order) => {
     // Wonky fix below, but adding attributes to the select value was causing problems.
-    const sortedAlbums = _orderBy(this.state.activeAlbums, 'attributes.'+ column, order);
+    const sortedAlbums = _orderBy(this.state.activeAlbums, 'attributes.' + column, order);
     this.setState({activeAlbums: sortedAlbums});
   };
 

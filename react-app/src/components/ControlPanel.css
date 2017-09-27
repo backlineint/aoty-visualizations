@@ -1,6 +1,24 @@
 .control-panel {
+  -webkit-transition: width 0.2s ease-out;
+  transition: width 0.2s ease-out;
   height: 100vh;
-  width: 25%;
   float: left;
+  width: 75px;
+  padding: 1rem;
   overflow: scroll;
+  background-color: #f5954b;
+  color: #fff;
+}
+.control-panel:hover {
+  -webkit-transition: width 0.2s ease-out;
+  transition: width 0.2s ease-out;
+  width: 25%;
+}
+.control-panel:hover * {
+  -webkit-transition: opacity 0.75s ease-in;
+  transition: opacity 0.75s ease-in;
+  opacity: 1;
+}
+.control-panel * {
+  opacity: 0;
 }

@@ -22,7 +22,7 @@ class ControlPanel extends React.Component {
           rows: item,
           disabled: false,
           active: true,
-          className: "pt-button pt-intent-primary pt-active"
+          className: "pt-button pt-active"
         };
       }
       else {
@@ -30,7 +30,7 @@ class ControlPanel extends React.Component {
           rows: item,
           disabled: false,
           active: false,
-          className: "pt-button pt-intent-primary"
+          className: "pt-button"
         }
       }
     }, this);
@@ -85,11 +85,11 @@ class ControlPanel extends React.Component {
     const rowControlIds = Object.keys(rowControl);
     rowControlIds.map((key) => {
       if (parseInt(key, 10) === numRows) {
-        rowControl[key].className = "pt-button pt-intent-primary pt-active";
+        rowControl[key].className = "pt-button pt-active";
         return rowControl[key].active = true;
       }
       else {
-        rowControl[key].className = "pt-button pt-intent-primary";
+        rowControl[key].className = "pt-button";
         return rowControl[key].active = false;
       }
     });
