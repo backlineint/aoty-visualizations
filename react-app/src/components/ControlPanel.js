@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Gear from './Gear';
 import Facet from './Facet';
 import _map from 'lodash/map';
 import _uniq from 'lodash/uniq';
@@ -108,6 +109,7 @@ class ControlPanel extends React.Component {
       // Todo - convert clases to BEM style syntax
       // Todo - consider splitting out some controls into their own components
       <div className="control-panel">
+        <Gear />
         <h2>Best of Best Of 2016</h2>
         <p>Number of Results:</p>
         {/* This is less useful now that filtering works. Serves as a good example

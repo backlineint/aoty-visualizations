@@ -1,5 +1,6 @@
-# PhpStorm IDE
+IDEs
 .idea/
+.vscode/
 
 # MacOS/Finder
 .DS_Store

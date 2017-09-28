@@ -19,6 +19,9 @@
   transition: opacity 0.75s ease-in;
   opacity: 1;
 }
+.control-panel:hover svg {
+  display: none;
+}
 .control-panel * {
   opacity: 0;
 }
