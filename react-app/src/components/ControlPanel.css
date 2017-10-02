@@ -19,7 +19,7 @@
   transition: opacity 0.75s ease-in;
   opacity: 1;
 }
-.control-panel:hover svg {
+.control-panel:hover span {
   display: none;
 }
 .control-panel * {
