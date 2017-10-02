@@ -19,7 +19,7 @@
   transition: opacity 0.75s ease-in;
   opacity: 1;
 }
-.control-panel:hover span {
+.control-panel:hover .pt-icon-standard {
   display: none;
 }
 .control-panel * {
