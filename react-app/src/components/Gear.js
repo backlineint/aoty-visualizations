@@ -7,15 +7,15 @@ import { Icon } from "@blueprintjs/core";
 const GearIcon = styled(Icon)`
   opacity: 1 !important;
   font-size: 2.5rem !important;
-  color: white;
+  color: black;
 `;
 
 class Gear extends React.Component {
-    render() {
-        return(
-          <GearIcon iconName="pt-icon-cog" /> 
-        )
-    }
+  render() {
+    return(
+      <GearIcon iconName="pt-icon-cog" />
+    )
+  }
 }
 
 export default Gear;

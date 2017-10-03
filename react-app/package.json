@@ -20,11 +20,14 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "styles": "stylus -u autoprefixer-stylus ./src/components",
-    "styles:watch": "stylus -u autoprefixer-stylus -w ./src/components"
+    "styles:watch": "stylus -u autoprefixer-stylus -w ./src/components",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
     "autoprefixer-stylus": "^0.14.0",
     "concurrently": "^3.5.0",
-    "stylus": "^0.54.5"
+    "stylus": "^0.54.5",
+    "@storybook/react": "^3.2.12"
   }
 }
