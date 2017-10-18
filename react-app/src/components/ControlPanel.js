@@ -14,29 +14,6 @@ class ControlPanel extends React.Component {
   constructor(props) {
     super(props);
 
-    // Create row controls
-    const rowOptions = this.props.rowOptions;
-    const rowControl = {};
-
-    rowOptions.forEach(function(item) {
-      if (item === this.props.rows) {
-        rowControl[item] = {
-          rows: item,
-          disabled: false,
-          active: true,
-          className: "pt-button pt-active"
-        };
-      }
-      else {
-        rowControl[item] = {
-          rows: item,
-          disabled: false,
-          active: false,
-          className: "pt-button"
-        }
-      }
-    }, this);
-
     const sortControl = {
       selectedSort: 'field_cons_score',
       options: {
@@ -55,61 +32,26 @@ class ControlPanel extends React.Component {
     const facetGenre = _uniq(_map(this.props.albums, 'attributes.field_genre'));
 
     this.state = {
-      rowControl,
       sortControl,
       facetGenre
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    // Check to see if any of the row controls need to be disabled or re-enabled.
-    const rowControl = {...this.state.rowControl};
-    const rowControlIds = Object.keys(rowControl);
-    for (const key of rowControlIds) {
-      // Disable or enable row controls based on filtered albums
-      if (rowControl[key].rows > nextProps.albums.length) {
-        rowControl[key].disabled = true;
-      }
-      else if(rowControl[key].disabled === true) {
-        rowControl[key].disabled = false;
-      }
-    }
-    this.setState({rowControl});
-
     // Update the facet lists when the album list is filtered.
     const facetGenre = _uniq(_map(nextProps.albums, 'attributes.field_genre'));
     this.setState({facetGenre});
   }
-
-  // TODO - Remove once row control component is refactored.
-  depHandleRowChange = (numRows) => {
-    this.props.setRows(numRows);
-    const rowControl = {...this.state.rowControl};
-    const rowControlIds = Object.keys(rowControl);
-    rowControlIds.map((key) => {
-      if (parseInt(key, 10) === numRows) {
-        rowControl[key].className = "pt-button pt-active";
-        return rowControl[key].active = true;
-      }
-      else {
-        rowControl[key].className = "pt-button";
-        return rowControl[key].active = false;
-      }
-    });
-    /* State seems to be updated here without me explicitly setting it, and I'm
-       not sure why. Feature of .map perhaps? */
-  };
 
   handleSortChange = (e) => {
     this.props.sortAlbums(e.target.value, this.state.sortControl.options[e.target.value].defaultSort);
   };
 
   render() {
-    const rowControlIds = Object.keys(this.state.rowControl);
     const sortOptions = Object.keys(this.state.sortControl.options);
     return (
       // Todo - convert clases to BEM style syntax
-      // Todo - consider splitting out some controls into their own components
+      // Todo - split out more controls into their own components
       <div className="control-panel">
         <Gear />
         <h2>Best of Best Of 2016</h2>
@@ -117,24 +59,6 @@ class ControlPanel extends React.Component {
           rowControl={this.props.rowControl}
           handleRowChange={this.props.handleRowChange}
         />
-        <p>Number of Results:</p>
-        {/* This is less useful now that filtering works. Serves as a good example
-            though so I'll keep in in for the time being */}
-        <div className="pt-button-group pt-large pt-fill">
-          {/* Could convert this to a render function but I think below is more readable */}
-          {rowControlIds.map(key =>
-            <button
-              key={key}
-              className={this.state.rowControl[key].className}
-              tabIndex="0"
-              type="button"
-              disabled={this.state.rowControl[key].disabled}
-              onClick={() => this.depHandleRowChange(this.state.rowControl[key].rows)}
-            >
-              {key}
-            </button>
-          )}
-        </div>
         <p>Filter Albums:</p>
         <div className="pt-input-group pt-large pt-minimal">
           <span className="pt-icon pt-icon-search"></span>
@@ -175,8 +99,6 @@ class ControlPanel extends React.Component {
 
 ControlPanel.propTypes = {
   albums: PropTypes.array.isRequired,
-  rowOptions: PropTypes.array.isRequired,
-  rows: PropTypes.number.isRequired,
   rowControl: PropTypes.object.isRequired,
   defaultSort: PropTypes.string.isRequired,
   setRows: PropTypes.func.isRequired,

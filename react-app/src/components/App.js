@@ -23,25 +23,31 @@ class App extends Component {
     const defaultSort = 'field_cons_score';
     const defaultSortOrder = 'asc';
 
+    // TODO - Deprecate this and use the rowControl object?
     const rowOptions = [5, 10, 25, 50]; // Row options must be sorted asc
+    // TODO - Deprecate this along with rows in state.  Instead, create a helper function that returns current rows.
     const defaultRows = 50;
 
     const rowControl = {
       5: {
         rows: 5,
-        active: false
+        active: false,
+        disabled: false
       },
       10: {
         rows: 10,
-        active: false
+        active: false,
+        disabled: false
       },
       25: {
         rows: 25,
-        active: false
+        active: false,
+        disabled: false
       },
       50: {
         rows: 50,
-        active: true
+        active: true,
+        disabled: false
       }
     };
 
@@ -102,6 +108,7 @@ class App extends Component {
     });
   };
 
+  // Todo - Refactor to use rowControl object rather than rows variable
   setRows = (newRows) => {
     // Does this copy the value rather than reference the variable?
     const rows = newRows;
@@ -160,8 +167,6 @@ class App extends Component {
         <div className="App">
           <ControlPanel
             albums={this.state.activeAlbums}
-            rowOptions={this.state.rowOptions}
-            rows={this.state.rows}
             defaultSort={this.state.defaultSort}
             setRows={this.setRows}
             filterAlbums={this.filterAlbums}
