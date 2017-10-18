@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Gear from './Gear';
 import Facet from './Facet';
+import RowControl from './RowControl';
 import _map from 'lodash/map';
 import _uniq from 'lodash/uniq';
 
@@ -80,7 +81,8 @@ class ControlPanel extends React.Component {
     this.setState({facetGenre});
   }
 
-  handleRowChange = (numRows) => {
+  // TODO - Remove once row control component is refactored.
+  depHandleRowChange = (numRows) => {
     this.props.setRows(numRows);
     const rowControl = {...this.state.rowControl};
     const rowControlIds = Object.keys(rowControl);
@@ -111,6 +113,10 @@ class ControlPanel extends React.Component {
       <div className="control-panel">
         <Gear />
         <h2>Best of Best Of 2016</h2>
+        <RowControl
+          rowControl={this.props.rowControl}
+          handleRowChange={this.props.handleRowChange}
+        />
         <p>Number of Results:</p>
         {/* This is less useful now that filtering works. Serves as a good example
             though so I'll keep in in for the time being */}
@@ -123,7 +129,7 @@ class ControlPanel extends React.Component {
               tabIndex="0"
               type="button"
               disabled={this.state.rowControl[key].disabled}
-              onClick={() => this.handleRowChange(this.state.rowControl[key].rows)}
+              onClick={() => this.depHandleRowChange(this.state.rowControl[key].rows)}
             >
               {key}
             </button>
@@ -171,10 +177,12 @@ ControlPanel.propTypes = {
   albums: PropTypes.array.isRequired,
   rowOptions: PropTypes.array.isRequired,
   rows: PropTypes.number.isRequired,
+  rowControl: PropTypes.object.isRequired,
   defaultSort: PropTypes.string.isRequired,
   setRows: PropTypes.func.isRequired,
   filterAlbums: PropTypes.func.isRequired,
-  sortAlbums: PropTypes.func.isRequired
+  sortAlbums: PropTypes.func.isRequired,
+  handleRowChange: PropTypes.func.isRequired
 };
 
 export default ControlPanel;

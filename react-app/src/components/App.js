@@ -26,11 +26,31 @@ class App extends Component {
     const rowOptions = [5, 10, 25, 50]; // Row options must be sorted asc
     const defaultRows = 50;
 
+    const rowControl = {
+      5: {
+        rows: 5,
+        active: false
+      },
+      10: {
+        rows: 10,
+        active: false
+      },
+      25: {
+        rows: 25,
+        active: false
+      },
+      50: {
+        rows: 50,
+        active: true
+      }
+    };
+
     this.state = {
       rowOptions,
       rows: defaultRows,
       defaultSort,
-      defaultSortOrder
+      defaultSortOrder,
+      rowControl
     };
   }
 
@@ -63,6 +83,24 @@ class App extends Component {
 
     });
   }
+
+  handleRowChange = (numRows) => {
+    const rowControl = {...this.state.rowControl};
+    // Set active states of buttons in button group
+    Object.keys(rowControl).map(key => {
+      if (parseInt(key, 10) === numRows) {
+        rowControl[key].active = true;
+      }
+      else {
+        rowControl[key].active = false;
+      }
+      return rowControl;
+    });
+    this.setState({
+      rowControl,
+      rows: numRows
+    });
+  };
 
   setRows = (newRows) => {
     // Does this copy the value rather than reference the variable?
@@ -128,6 +166,8 @@ class App extends Component {
             setRows={this.setRows}
             filterAlbums={this.filterAlbums}
             sortAlbums={this.sortAlbums}
+            rowControl={this.state.rowControl}
+            handleRowChange={this.handleRowChange}
           />
           <AlbumTable
             albums={this.state.activeAlbums}
