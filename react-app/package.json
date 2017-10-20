@@ -25,9 +25,10 @@
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@storybook/addon-knobs": "^3.2.12",
+    "@storybook/react": "^3.2.12",
     "autoprefixer-stylus": "^0.14.0",
     "concurrently": "^3.5.0",
-    "stylus": "^0.54.5",
-    "@storybook/react": "^3.2.12"
+    "stylus": "^0.54.5"
   }
 }

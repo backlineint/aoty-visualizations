@@ -7,7 +7,7 @@ class RowControl extends React.Component {
   render() {
     return(
       <div>
-        <p>Number of Results:</p>
+        <p>{this.props.label}</p>
         <div className="pt-button-group pt-large pt-fill">
           {Object.keys(this.props.rowControl).map(key =>
             <Button
@@ -25,6 +25,7 @@ class RowControl extends React.Component {
 }
 
 RowControl.propTypes = {
+  label: PropTypes.string,
   rowControl: PropTypes.object.isRequired,
   handleRowChange: PropTypes.func.isRequired
 };

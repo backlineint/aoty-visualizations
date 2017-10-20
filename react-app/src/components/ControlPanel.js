@@ -56,6 +56,7 @@ class ControlPanel extends React.Component {
         <Gear />
         <h2>Best of Best Of 2016</h2>
         <RowControl
+          label="Number of Results:"
           rowControl={this.props.rowControl}
           handleRowChange={this.props.handleRowChange}
         />
