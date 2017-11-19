@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Gear from './Gear';
 import Facet from './Facet';
 import RowControl from './RowControl';
+import SearchInput from './SearchInput';
 import _map from 'lodash/map';
 import _uniq from 'lodash/uniq';
 
@@ -50,7 +51,6 @@ class ControlPanel extends React.Component {
   render() {
     const sortOptions = Object.keys(this.state.sortControl.options);
     return (
-      // Todo - convert clases to BEM style syntax
       // Todo - split out more controls into their own components
       <div className="control-panel">
         <Gear />
@@ -60,17 +60,9 @@ class ControlPanel extends React.Component {
           rowControl={this.props.rowControl}
           handleRowChange={this.props.handleRowChange}
         />
-        <p>Filter Albums:</p>
-        <div className="pt-input-group pt-large pt-minimal">
-          <span className="pt-icon pt-icon-search"></span>
-          <input
-            className="pt-input"
-            type="search"
-            placeholder="Search input"
-            dir="auto"
-            onChange={(e) => this.props.filterAlbums(e.target.value)}
-          />
-        </div>
+        <SearchInput
+          filterAlbums={this.props.filterAlbums}
+        />
         <label className="pt-label">
           Sort by:
           <div className="pt-select pt-minimal pt-large">
@@ -102,7 +94,6 @@ ControlPanel.propTypes = {
   albums: PropTypes.array.isRequired,
   rowControl: PropTypes.object.isRequired,
   defaultSort: PropTypes.string.isRequired,
-  setRows: PropTypes.func.isRequired,
   filterAlbums: PropTypes.func.isRequired,
   sortAlbums: PropTypes.func.isRequired,
   handleRowChange: PropTypes.func.isRequired

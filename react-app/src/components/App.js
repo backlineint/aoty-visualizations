@@ -90,67 +90,56 @@ class App extends Component {
     });
   }
 
+  /*
+   * Updates the number of rows displayed and adjusts row control if necessary.
+   */
   handleRowChange = (numRows) => {
     const rowControl = {...this.state.rowControl};
-    // Set active states of buttons in button group
+
+    // Update row control for button group.
     Object.keys(rowControl).map(key => {
+      // Set active if we're displaying the same number of rows as a row control option.
       if (parseInt(key, 10) === numRows) {
         rowControl[key].active = true;
+        rowControl[key].disabled = false;
       }
       else {
         rowControl[key].active = false;
+        // Disable row control options if we have fewer rows than needed.
+        if (parseInt(key, 10) > numRows) {
+          rowControl[key].disabled = true;
+        }
+        else {
+          rowControl[key].disabled = false;
+        }
       }
       return rowControl;
     });
+
     this.setState({
       rowControl,
       rows: numRows
     });
+
   };
 
-  // Todo - Refactor to add logic to also update rowControl as necessary.
-  setRows = (newRows) => {
-    // Does this copy the value rather than reference the variable?
-    const rows = newRows;
-    this.setState({rows});
-  };
-
+  /*
+   * Filters album data and initiates changes to rows.
+   */
   filterAlbums = (filter) => {
     // Text search on title or genre
     const filteredAlbums = _filter(this.state.albums, function(album) {
       return album.attributes.title.includes(filter) || album.attributes.field_genre.includes(filter);
     });
 
-    // Todo - is there a race condition here where rows aren't set it user types too fast?
-    // If there are fewer results than table rows, shrink the table.
-    if (filteredAlbums.length < this.state.rows) {
-      let closestRowOption = 50;
-      for (const key of this.state.rowOptions.reverse()) {
-        if (filteredAlbums.length >= key) {
-          closestRowOption = key;
-          break;
-        }
-        else if (filteredAlbums.length < 5) {
-          closestRowOption = filteredAlbums.length;
-        }
-      }
-      this.setRows(closestRowOption);
+    // Change the rows accordingly
+    if (filteredAlbums.length > 50) {
+      this.handleRowChange(50);
+    }
+    else {
+      this.handleRowChange(filteredAlbums.length);
     }
 
-    // If there are more results than table rows, expand the table.
-    else if (filteredAlbums.length > this.state.rows) {
-      let closestRowOption = 0;
-      for (const key of this.state.rowOptions) {
-        if (filteredAlbums.length < 5) {
-          closestRowOption = filteredAlbums.length;
-          break;
-        }
-        else if (filteredAlbums.length >= key) {
-          closestRowOption = key;
-        }
-      }
-      this.setRows(closestRowOption);
-    }
     this.setState({activeAlbums: filteredAlbums});
   };
 
@@ -168,7 +157,6 @@ class App extends Component {
           <ControlPanel
             albums={this.state.activeAlbums}
             defaultSort={this.state.defaultSort}
-            setRows={this.setRows}
             filterAlbums={this.filterAlbums}
             sortAlbums={this.sortAlbums}
             rowControl={this.state.rowControl}

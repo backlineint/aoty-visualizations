@@ -47,7 +47,7 @@ storiesOf('Row Control', module)
       <RowControl
         label={text('label', 'Number of Results:')}
         rowControl={object('rowControl', rowControl)}
-        handleRowChange={ action('handleRowChange') }
+        handleRowChange={action('handleRowChange')}
       />
     );
   });

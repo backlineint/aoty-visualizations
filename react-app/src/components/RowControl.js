@@ -13,6 +13,7 @@ class RowControl extends React.Component {
             <Button
               key={key}
               active={this.props.rowControl[key].active}
+              disabled={this.props.rowControl[key].disabled}
               onClick={() => this.props.handleRowChange(this.props.rowControl[key].rows)}
             >
               {key}
