@@ -1,12 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { Button } from "@blueprintjs/core";
 
+const RowControlWrapper = styled.div`
+ margin-bottom: 1rem;
+`;
+
 class RowControl extends React.Component {
   render() {
     return(
-      <div>
+      <RowControlWrapper>
         <p>{this.props.label}</p>
         <div className="pt-button-group pt-large pt-fill">
           {Object.keys(this.props.rowControl).map(key =>
@@ -14,13 +19,13 @@ class RowControl extends React.Component {
               key={key}
               active={this.props.rowControl[key].active}
               disabled={this.props.rowControl[key].disabled}
-              onClick={() => this.props.handleRowChange(this.props.rowControl[key].rows)}
+              onClick={() => this.props.setRows(this.props.rowControl[key].rows)}
             >
               {key}
             </Button>
           )}
         </div>
-      </div>
+      </RowControlWrapper>
     )
   }
 }
@@ -28,7 +33,7 @@ class RowControl extends React.Component {
 RowControl.propTypes = {
   label: PropTypes.string,
   rowControl: PropTypes.object.isRequired,
-  handleRowChange: PropTypes.func.isRequired
+  setRows: PropTypes.func.isRequired
 };
 
 export default RowControl;

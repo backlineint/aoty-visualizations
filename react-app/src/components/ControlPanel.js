@@ -59,6 +59,7 @@ class ControlPanel extends React.Component {
           label="Number of Results:"
           rowControl={this.props.rowControl}
           handleRowChange={this.props.handleRowChange}
+          setRows={this.props.setRows}
         />
         <SearchInput
           filterAlbums={this.props.filterAlbums}

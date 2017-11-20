@@ -123,6 +123,30 @@ class App extends Component {
 
   };
 
+
+  /*
+   * Explicitly sets the number of displayed rows and updates row control state accordingly
+   */
+  setRows = (newRows) => {
+    const rowControl = {...this.state.rowControl};
+
+    // Update the active state of row control buttons
+    Object.keys(rowControl).map(key => {
+      if (parseInt(key, 10) === newRows) {
+        rowControl[key].active = true;
+      }
+      else {
+        rowControl[key].active = false;
+      }
+      return rowControl;
+    });
+
+    this.setState({
+      rowControl,
+      rows: newRows
+    });
+  };
+
   /*
    * Filters album data and initiates changes to rows.
    */
@@ -161,6 +185,7 @@ class App extends Component {
             sortAlbums={this.sortAlbums}
             rowControl={this.state.rowControl}
             handleRowChange={this.handleRowChange}
+            setRows={this.setRows}
           />
           <AlbumTable
             albums={this.state.activeAlbums}
