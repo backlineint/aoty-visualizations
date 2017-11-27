@@ -62,6 +62,7 @@ class ControlPanel extends React.Component {
           setRows={this.props.setRows}
         />
         <SearchInput
+          placeholder="Filter by Album or Genre"
           filterAlbums={this.props.filterAlbums}
         />
         <label className="pt-label">

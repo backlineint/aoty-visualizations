@@ -14,7 +14,7 @@ class SearchInput extends React.Component {
         <input
           className="pt-input"
           type="search"
-          placeholder="Filter by Album or Genre"
+          placeholder={this.props.placeholder}
           dir="auto"
           onChange={(e) => this.props.filterAlbums(e.target.value)}
         />
@@ -24,6 +24,7 @@ class SearchInput extends React.Component {
 }
 
 SearchInput.propTypes = {
+  placeholder: PropTypes.string,
   filterAlbums: PropTypes.func.isRequired
 };
 

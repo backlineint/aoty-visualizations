@@ -34,6 +34,29 @@ const rowControl = {
   }
 };
 
+const rowControlDisabled = {
+  5: {
+    rows: 5,
+    active: true,
+    disabled: false
+  },
+  10: {
+    rows: 10,
+    active: false,
+    disabled: false
+  },
+  25: {
+    rows: 25,
+    active: false,
+    disabled: true
+  },
+  50: {
+    rows: 50,
+    active: false,
+    disabled: true
+  }
+};
+
 storiesOf('Row Control', module)
   .addDecorator(withKnobs)
   .add('Row Control', () => {
@@ -47,7 +70,16 @@ storiesOf('Row Control', module)
       <RowControl
         label={text('label', 'Number of Results:')}
         rowControl={object('rowControl', rowControl)}
-        handleRowChange={action('handleRowChange')}
+        setRows={action('Set Rows')}
+      />
+    );
+  })
+  .add('Row Control Disabled', () => {
+    return (
+      <RowControl
+        label={text('label', 'Number of Results:')}
+        rowControl={object('rowControl', rowControlDisabled)}
+        setRows={action('Set Rows')}
       />
     );
   });
