@@ -179,7 +179,7 @@ class App extends Component {
       return (
         <div className="App">
           <ControlPanel
-            albums={this.state.activeAlbums}
+            header="Best of Best of 2016"
             defaultSort={this.state.defaultSort}
             filterAlbums={this.filterAlbums}
             sortAlbums={this.sortAlbums}

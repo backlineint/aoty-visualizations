@@ -8,8 +8,6 @@ import SortControl from './SortControl';
 import './ControlPanel.css';
 
 class ControlPanel extends React.Component {
-  // Pass props to the constructor / super to access them in the constructor.
-  // Seems like using props to set state is an antipattern / bad news.  Maybe refactor this eventually.
   constructor() {
     super();
 
@@ -33,10 +31,9 @@ class ControlPanel extends React.Component {
 
   render() {
     return (
-      // Todo - split out more controls into their own components
       <div className="control-panel">
         <Gear />
-        <h2>Best of Best Of 2016</h2>
+        <h2>{this.props.header}</h2>
         <RowControl
           label="Number of Results:"
           rowControl={this.props.rowControl}
@@ -59,12 +56,13 @@ class ControlPanel extends React.Component {
 }
 
 ControlPanel.propTypes = {
-  albums: PropTypes.array.isRequired,
+  header: PropTypes.string.isRequired,
   rowControl: PropTypes.object.isRequired,
   defaultSort: PropTypes.string.isRequired,
   filterAlbums: PropTypes.func.isRequired,
   sortAlbums: PropTypes.func.isRequired,
-  handleRowChange: PropTypes.func.isRequired
+  handleRowChange: PropTypes.func.isRequired,
+  setRows: PropTypes.func.isRequired
 };
 
 export default ControlPanel;
