@@ -4,6 +4,7 @@ import Gear from './Gear';
 import Facet from './Facet';
 import RowControl from './RowControl';
 import SearchInput from './SearchInput';
+import SortControl from './SortControl';
 import _map from 'lodash/map';
 import _uniq from 'lodash/uniq';
 
@@ -16,7 +17,6 @@ class ControlPanel extends React.Component {
     super(props);
 
     const sortControl = {
-      selectedSort: 'field_cons_score',
       options: {
         title: {field: 'title', label: 'Album', defaultSort: 'asc'},
         field_genre: {field: 'field_genre', label: 'Genre', defaultSort: 'asc'},
@@ -44,12 +44,7 @@ class ControlPanel extends React.Component {
     this.setState({facetGenre});
   }
 
-  handleSortChange = (e) => {
-    this.props.sortAlbums(e.target.value, this.state.sortControl.options[e.target.value].defaultSort);
-  };
-
   render() {
-    const sortOptions = Object.keys(this.state.sortControl.options);
     return (
       // Todo - split out more controls into their own components
       <div className="control-panel">
@@ -65,21 +60,12 @@ class ControlPanel extends React.Component {
           placeholder="Filter by Album or Genre"
           filterAlbums={this.props.filterAlbums}
         />
-        <label className="pt-label">
-          Sort by:
-          <div className="pt-select pt-minimal pt-large">
-            <select defaultValue={this.props.defaultSort} onChange={this.handleSortChange}>
-              {sortOptions.map(key =>
-                <option
-                  key={key}
-                  value={this.state.sortControl.options[key].field}
-                >
-                  {this.state.sortControl.options[key].label}
-                </option>
-              )}
-            </select>
-          </div>
-        </label>
+        <SortControl
+          label="Sort by:"
+          sortControl={this.state.sortControl}
+          defaultValue={this.props.defaultSort}
+          sortAlbums={this.props.sortAlbums}
+        />
         <div>
           <Facet
             name="Genre Filters"
