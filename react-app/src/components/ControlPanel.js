@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Gear from './Gear';
-import Facet from './Facet';
 import RowControl from './RowControl';
 import SearchInput from './SearchInput';
 import SortControl from './SortControl';
-import _map from 'lodash/map';
-import _uniq from 'lodash/uniq';
 
 import './ControlPanel.css';
 
 class ControlPanel extends React.Component {
   // Pass props to the constructor / super to access them in the constructor.
   // Seems like using props to set state is an antipattern / bad news.  Maybe refactor this eventually.
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     const sortControl = {
       options: {
@@ -29,19 +26,9 @@ class ControlPanel extends React.Component {
       }
     };
 
-    // Tried using new Set(_map(albums, 'field_genre')) here but it is capping at 100 for some reason.
-    const facetGenre = _uniq(_map(this.props.albums, 'attributes.field_genre'));
-
     this.state = {
       sortControl,
-      facetGenre
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // Update the facet lists when the album list is filtered.
-    const facetGenre = _uniq(_map(nextProps.albums, 'attributes.field_genre'));
-    this.setState({facetGenre});
   }
 
   render() {
@@ -66,13 +53,6 @@ class ControlPanel extends React.Component {
           defaultValue={this.props.defaultSort}
           sortAlbums={this.props.sortAlbums}
         />
-        <div>
-          <Facet
-            name="Genre Filters"
-            facets={this.state.facetGenre}
-            filterAlbums={this.props.filterAlbums}
-          />
-        </div>
       </div>
     )
   }
