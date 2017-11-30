@@ -8,7 +8,7 @@ import {getAllAlbumData} from '../utilities/utilities';
 
 // Custom components
 import ControlPanel from './ControlPanel';
-import AlbumTable from './AlbumTable';
+import Visualizations from './Visualizations';
 
 // Styling
 import '@blueprintjs/core/dist/blueprint.css';
@@ -69,7 +69,6 @@ class App extends Component {
       // Cast strings to numbers in our original dataset.
       // TODO - Handle this on the Drupal side, or in our method that gets data from the service.
       albums.map((value, key) => {
-        // TODO - Genre fix - encoding and case.
         value.attributes.field_avg = parseFloat(value.attributes.field_avg);
         value.attributes.field_cons_score = parseFloat(value.attributes.field_cons_score);
         value.attributes.field_id = parseInt(value.attributes.field_id, 10);
@@ -187,7 +186,7 @@ class App extends Component {
             handleRowChange={this.handleRowChange}
             setRows={this.setRows}
           />
-          <AlbumTable
+          <Visualizations
             albums={this.state.activeAlbums}
             rows={this.state.rows}
           />
