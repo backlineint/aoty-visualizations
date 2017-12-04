@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_lists
     - node.type.album
+_core: {  }
 id: node.album.field_lists
 field_name: field_lists
 entity_type: node

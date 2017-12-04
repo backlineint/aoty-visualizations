@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - node
+_core: {  }
 id: node.field_avg
 field_name: field_avg
 entity_type: node

@@ -3,9 +3,17 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.album.field_avg
+    - field.field.node.album.field_cons_score
+    - field.field.node.album.field_genre
+    - field.field.node.album.field_id
+    - field.field.node.album.field_lists
+    - field.field.node.album.field_top_10s
+    - field.field.node.album.field_wt_avg
     - node.type.album
   module:
     - user
+_core: {  }
 id: node.album.teaser
 targetEntityType: node
 bundle: album
@@ -13,6 +21,7 @@ mode: teaser
 content:
   links:
     weight: 100
+    region: content
 hidden:
   body: true
   field_avg: true

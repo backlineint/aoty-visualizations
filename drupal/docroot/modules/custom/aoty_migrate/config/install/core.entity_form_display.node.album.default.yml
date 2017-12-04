@@ -4,14 +4,17 @@ dependencies:
   config:
     - field.field.node.album.field_avg
     - field.field.node.album.field_cons_score
+    - field.field.node.album.field_cover_image
     - field.field.node.album.field_genre
     - field.field.node.album.field_id
     - field.field.node.album.field_lists
+    - field.field.node.album.field_spotify_album_id
     - field.field.node.album.field_top_10s
     - field.field.node.album.field_wt_avg
     - node.type.album
   module:
     - path
+_core: {  }
 id: node.album.default
 targetEntityType: node
 bundle: album
@@ -22,18 +25,29 @@ content:
     weight: 9
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_avg:
     weight: 3
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
   field_cons_score:
     weight: 5
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
+  field_cover_image:
+    weight: 27
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_genre:
     weight: 2
     settings:
@@ -41,47 +55,63 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_id:
     weight: 1
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
   field_lists:
     weight: 6
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
+  field_spotify_album_id:
+    weight: 26
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_top_10s:
     weight: 7
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
   field_wt_avg:
     weight: 4
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
   path:
     type: path
     weight: 12
     settings: {  }
     third_party_settings: {  }
+    region: content
   promote:
     type: boolean_checkbox
     settings:
       display_label: true
     weight: 10
     third_party_settings: {  }
+    region: content
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
     weight: 11
     third_party_settings: {  }
+    region: content
   title:
     type: string_textfield
     weight: 0
@@ -89,6 +119,7 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
   uid:
     type: entity_reference_autocomplete
     weight: 8
@@ -97,4 +128,5 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
 hidden: {  }

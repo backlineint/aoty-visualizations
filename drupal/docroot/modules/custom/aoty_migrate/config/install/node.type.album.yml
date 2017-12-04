@@ -1,5 +1,7 @@
 langcode: en
 status: true
+dependencies: {  }
+_core: {  }
 name: Album
 type: album
 description: ''

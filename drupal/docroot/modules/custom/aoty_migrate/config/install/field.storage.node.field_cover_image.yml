@@ -3,9 +3,8 @@ status: true
 dependencies:
   module:
     - node
-_core: {  }
-id: node.field_genre
-field_name: field_genre
+id: node.field_cover_image
+field_name: field_cover_image
 entity_type: node
 type: string
 settings:

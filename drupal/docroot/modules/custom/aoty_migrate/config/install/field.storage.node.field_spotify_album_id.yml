@@ -3,9 +3,8 @@ status: true
 dependencies:
   module:
     - node
-_core: {  }
-id: node.field_genre
-field_name: field_genre
+id: node.field_spotify_album_id
+field_name: field_spotify_album_id
 entity_type: node
 type: string
 settings:

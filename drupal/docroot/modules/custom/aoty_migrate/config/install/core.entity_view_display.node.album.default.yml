@@ -4,14 +4,17 @@ dependencies:
   config:
     - field.field.node.album.field_avg
     - field.field.node.album.field_cons_score
+    - field.field.node.album.field_cover_image
     - field.field.node.album.field_genre
     - field.field.node.album.field_id
     - field.field.node.album.field_lists
+    - field.field.node.album.field_spotify_album_id
     - field.field.node.album.field_top_10s
     - field.field.node.album.field_wt_avg
     - node.type.album
   module:
     - user
+_core: {  }
 id: node.album.default
 targetEntityType: node
 bundle: album
@@ -27,6 +30,7 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_decimal
+    region: content
   field_cons_score:
     weight: 4
     label: inline
@@ -37,6 +41,15 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_decimal
+    region: content
+  field_cover_image:
+    weight: 9
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_genre:
     weight: 1
     label: inline
@@ -44,6 +57,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_id:
     weight: 0
     label: inline
@@ -52,6 +66,7 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_integer
+    region: content
   field_lists:
     weight: 5
     label: inline
@@ -60,6 +75,15 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_integer
+    region: content
+  field_spotify_album_id:
+    weight: 8
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_top_10s:
     weight: 6
     label: inline
@@ -68,6 +92,7 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_integer
+    region: content
   field_wt_avg:
     weight: 3
     label: inline
@@ -78,8 +103,10 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_decimal
+    region: content
   links:
     weight: 7
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden: {  }

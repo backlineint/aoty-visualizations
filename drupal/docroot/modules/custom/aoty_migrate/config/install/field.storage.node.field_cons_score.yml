@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - node
+_core: {  }
 id: node.field_cons_score
 field_name: field_cons_score
 entity_type: node

@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - node.type.album
+_core: {  }
 id: node.album.promote
 field_name: promote
 entity_type: node

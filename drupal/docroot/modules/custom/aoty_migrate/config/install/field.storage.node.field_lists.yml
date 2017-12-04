@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - node
+_core: {  }
 id: node.field_lists
 field_name: field_lists
 entity_type: node
