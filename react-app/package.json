@@ -11,6 +11,7 @@
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10",
+    "spotify-web-api-js": "^0.22.1",
     "styled-components": "^2.2.0"
   },
   "scripts": {
