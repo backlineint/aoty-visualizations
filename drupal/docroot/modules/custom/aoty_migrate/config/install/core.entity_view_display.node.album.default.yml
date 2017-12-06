@@ -21,8 +21,8 @@ bundle: album
 mode: default
 content:
   field_avg:
-    weight: 2
-    label: inline
+    weight: 10
+    label: above
     settings:
       thousand_separator: ''
       decimal_separator: .
@@ -32,8 +32,8 @@ content:
     type: number_decimal
     region: content
   field_cons_score:
-    weight: 4
-    label: inline
+    weight: 11
+    label: above
     settings:
       thousand_separator: ''
       decimal_separator: .
@@ -94,8 +94,8 @@ content:
     type: number_integer
     region: content
   field_wt_avg:
-    weight: 3
-    label: inline
+    weight: 12
+    label: above
     settings:
       thousand_separator: ''
       decimal_separator: .

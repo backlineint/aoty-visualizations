@@ -3,13 +3,12 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.album.field_avg
-    - field.field.node.album.field_cons_score
+    - field.field.node.album.field_cover_image
     - field.field.node.album.field_genre
     - field.field.node.album.field_id
     - field.field.node.album.field_lists
+    - field.field.node.album.field_spotify_album_id
     - field.field.node.album.field_top_10s
-    - field.field.node.album.field_wt_avg
     - node.type.album
   module:
     - user
@@ -24,10 +23,9 @@ content:
     region: content
 hidden:
   body: true
-  field_avg: true
-  field_cons_score: true
+  field_cover_image: true
   field_genre: true
   field_id: true
   field_lists: true
+  field_spotify_album_id: true
   field_top_10s: true
-  field_wt_avg: true

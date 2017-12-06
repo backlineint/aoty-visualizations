@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_spotify_album_id
     - node.type.album
+_core: {  }
 id: node.album.field_spotify_album_id
 field_name: field_spotify_album_id
 entity_type: node

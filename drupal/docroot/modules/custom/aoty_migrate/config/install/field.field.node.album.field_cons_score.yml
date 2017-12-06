@@ -4,7 +4,6 @@ dependencies:
   config:
     - field.storage.node.field_cons_score
     - node.type.album
-_core: {  }
 id: node.album.field_cons_score
 field_name: field_cons_score
 entity_type: node
@@ -20,4 +19,4 @@ settings:
   max: null
   prefix: ''
   suffix: ''
-field_type: decimal
+field_type: float

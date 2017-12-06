@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_cover_image
     - node.type.album
+_core: {  }
 id: node.album.field_cover_image
 field_name: field_cover_image
 entity_type: node
