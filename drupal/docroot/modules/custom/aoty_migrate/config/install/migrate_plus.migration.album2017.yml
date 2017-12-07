@@ -1,7 +1,7 @@
 # This migration demonstrates importing from a monolithic JSON file.
-id: album2016
-label: 2016 Album Of the Year Project Data
-migration_group: aoty_legacy
+id: album2017
+label: 2017 Album Of the Year Project Data
+migration_group: aoty
 source:
   # We use the JSON source plugin.
   plugin: url
@@ -17,7 +17,7 @@ source:
   # Normally, this is one or more fully-qualified URLs or file paths. Because
   # we can't hardcode your local URL, we provide a relative path here which
   # hook_install() will rewrite to a full URL for the current site.
-  urls: https://spreadsheets.google.com/feeds/list/1qoiuqi8DzKgT2KVUKJBR7Xdo2dFNF8WT7uO9gtvoyFI/1/public/full?alt=json
+  urls: https://spreadsheets.google.com/feeds/list/1-uY5_BeeKH_e2-XROri85qpV8s_5hMEEoFoxigci61I/1/public/full?alt=json
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: feed/entry
   # Under 'fields', we list the data items to be imported. The first level keys
@@ -50,7 +50,7 @@ source:
     -
       name: cons_score
       label: 'Cons Score'
-      selector: gsx$cons-score/$t
+      selector: gsx$consscore/$t
     -
       name: lists
       label: 'Number of Lists'
@@ -73,7 +73,7 @@ process:
     default_value: album
   field_year:
       plugin: default_value
-      default_value: 2016
+      default_value: 2017
   title: album
   field_id: id
   field_genre: genre

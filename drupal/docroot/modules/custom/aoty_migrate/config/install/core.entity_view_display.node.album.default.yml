@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.album.field_spotify_album_id
     - field.field.node.album.field_top_10s
     - field.field.node.album.field_wt_avg
+    - field.field.node.album.field_year
     - node.type.album
   module:
     - user
@@ -103,6 +104,15 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_decimal
+    region: content
+  field_year:
+    weight: 13
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
     region: content
   links:
     weight: 7

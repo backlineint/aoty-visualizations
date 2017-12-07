@@ -75,6 +75,10 @@ class App extends Component {
         value.attributes.field_lists = parseInt(value.attributes.field_lists, 10);
         value.attributes.field_top_10s = parseInt(value.attributes.field_top_10s, 10);
         value.attributes.field_wt_avg = parseFloat(value.attributes.field_wt_avg);
+        // Protect from empty genre fields
+        if (!value.attributes.field_genre) {
+          value.attributes.field_genre = 'n/a';
+        }
         return value;
       });
 
