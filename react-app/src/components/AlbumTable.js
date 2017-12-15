@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Cell, Column, Table } from "@blueprintjs/table";
 
-import './AlbumTable.css';
 import '@blueprintjs/table/dist/table.css';
 
 class AlbumTable extends React.Component {

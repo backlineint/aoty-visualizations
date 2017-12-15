@@ -28,6 +28,8 @@ class App extends Component {
     // TODO - Can we refactor to make better use of rowControl object?
     const defaultRows = 50;
 
+    const controlPanelExpanded = false;
+
     const rowControl = {
       5: {
         rows: 5,
@@ -51,12 +53,16 @@ class App extends Component {
       }
     };
 
+    const selectedAlbum = 0;
+
     this.state = {
       rowOptions,
       rows: defaultRows,
       defaultSort,
       defaultSortOrder,
-      rowControl
+      rowControl,
+      controlPanelExpanded,
+      selectedAlbum
     };
   }
 
@@ -167,13 +173,37 @@ class App extends Component {
       this.handleRowChange(filteredAlbums.length);
     }
 
-    this.setState({activeAlbums: filteredAlbums});
+    this.setState({
+      activeAlbums: filteredAlbums,
+      selectedAlbum: 0
+    });
   };
 
   sortAlbums = (column, order) => {
     // Wonky fix below, but adding attributes to the select value was causing problems.
     const sortedAlbums = _orderBy(this.state.activeAlbums, 'attributes.' + column, order);
-    this.setState({activeAlbums: sortedAlbums});
+    this.setState({
+      activeAlbums: sortedAlbums,
+      selectedAlbums: 0
+    });
+  };
+
+  expandControlPanel = () => {
+    this.setState({
+      controlPanelExpanded: true
+    });
+  };
+
+  collapseControlPanel = () => {
+    this.setState({
+      controlPanelExpanded: false
+    });
+  };
+
+  selectAlbum = (key) => {
+    this.setState({
+      selectedAlbum: key
+    });
   };
 
   render() {
@@ -189,10 +219,15 @@ class App extends Component {
             rowControl={this.state.rowControl}
             handleRowChange={this.handleRowChange}
             setRows={this.setRows}
+            expandControlPanel={this.expandControlPanel}
+            collapseControlPanel={this.collapseControlPanel}
           />
           <Visualizations
             albums={this.state.activeAlbums}
             rows={this.state.rows}
+            controlPanelExpanded={this.state.controlPanelExpanded}
+            selectedAlbum={this.state.selectedAlbum}
+            selectAlbum={this.selectAlbum}
           />
         </div>
       );

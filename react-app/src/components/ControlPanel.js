@@ -31,7 +31,10 @@ class ControlPanel extends React.Component {
 
   render() {
     return (
-      <div className="control-panel">
+      <div className="control-panel"
+         onMouseEnter={this.props.expandControlPanel}
+         onMouseLeave={this.props.collapseControlPanel}
+      >
         <Gear />
         <h2>{this.props.header}</h2>
         <RowControl
@@ -62,7 +65,9 @@ ControlPanel.propTypes = {
   filterAlbums: PropTypes.func.isRequired,
   sortAlbums: PropTypes.func.isRequired,
   handleRowChange: PropTypes.func.isRequired,
-  setRows: PropTypes.func.isRequired
+  setRows: PropTypes.func.isRequired,
+  expandControlPanel: PropTypes.func.isRequired,
+  collapseControlPanel: PropTypes.func.isRequired
 };
 
 export default ControlPanel;
