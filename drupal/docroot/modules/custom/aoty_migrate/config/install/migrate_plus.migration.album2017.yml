@@ -59,6 +59,94 @@ source:
       name: top_10s
       label: 'Top 10s'
       selector: gsx$top10s/$t
+    -
+      name: rtrade
+      label: 'rtrade'
+      selector: gsx$rtrade/$t
+    -
+      name: rstone
+      label: 'rstone'
+      selector: gsx$rstone/$t
+    -
+      name: q
+      label: 'q'
+      selector: gsx$q/$t
+    -
+      name: paste
+      label: 'paste'
+      selector: gsx$paste/$t
+    -
+      name: nme
+      label: 'nme'
+      selector: gsx$nme/$t
+    -
+      name: mojo
+      label: 'mojo'
+      selector: gsx$mojo/$t
+    -
+      name: drwnd
+      label: 'drwnd'
+      selector: gsx$drwnd/$t
+    -
+      name: cos
+      label: 'cos'
+      selector: gsx$cos/$t
+    -
+      name: uncut
+      label: 'uncut'
+      selector: gsx$uncut/$t
+    -
+      name: skinny
+      label: 'skinny'
+      selector: gsx$skinny/$t
+    -
+      name: cmplx
+      label: 'cmplx'
+      selector: gsx$cmplx/$t
+    -
+      name: crack
+      label: 'crack'
+      selector: gsx$crack/$t
+    -
+      name: gvsb
+      label: 'gvsb'
+      selector: gsx$gvsb/$t
+    -
+      name: noisey
+      label: 'noisey'
+      selector: gsx$noisey/$t
+    -
+      name: quietus
+      label: 'quietus'
+      selector: gsx$quietus/$t
+    -
+      name: strgum
+      label: 'strgum'
+      selector: gsx$strgum/$t
+    -
+      name: uproxx
+      label: 'uproxx'
+      selector: gsx$uproxx/$t
+    -
+      name: vnlfct
+      label: 'vnlfct'
+      selector: gsx$vnlfct/$t
+    -
+      name: wire
+      label: 'wire'
+      selector: gsx$wire/$t
+    -
+      name: popmat
+      label: 'popmat'
+      selector: gsx$popmat/$t
+    -
+      name: pfork
+      label: 'pfork'
+      selector: gsx$pfork/$t
+    -
+      name: npr
+      label: 'npr'
+      selector: gsx$npr/$t
   # Under 'ids', we identify source fields populated above which will uniquely
   # identify each imported item. The 'type' makes sure the migration map table
   # uses the proper schema type for stored the IDs.
@@ -85,6 +173,7 @@ process:
   # TODO - apply this to 2016 migration.
   field_spotify_album_id: spotify_album_id
   field_cover_image: cover_image
+  field_list_rankings: list_rankings
   #field_spotify_album_id:
     #plugin: spotify_album_id_processor
     #source:
