@@ -24,8 +24,37 @@ class ControlPanel extends React.Component {
       }
     };
 
+    const sortControlList = {
+      options: {
+        field_cons_score: {field: 'field_cons_score', label: 'None', defaultSort: 'asc'},
+        rtrade: {field: 'rtrade', label: 'Rough Trade', defaultSort: 'asc'},
+        q: {field: 'q', label: 'Q', defaultSort: 'asc'},
+        rstone: {field: 'rstone', label: 'Rolling Stone', defaultSort: 'asc'},
+        paste: {field: 'paste', label: 'Paste', defaultSort: 'asc'},
+        nme: {field: 'nme', label: 'NME', defaultSort: 'asc'},
+        mojo: {field: 'mojo', label: 'Mojo', defaultSort: 'asc'},
+        drwnd: {field: 'drwnd', label: 'Drowned in Sound', defaultSort: 'asc'},
+        cos: {field: 'cos', label: 'Consequence of Sound', defaultSort: 'asc'},
+        uncut: {field: 'uncut', label: 'Uncut', defaultSort: 'asc'},
+        skinny: {field: 'skinny', label: 'The Skinny', defaultSort: 'asc'},
+        cmplx: {field: 'cmplx', label: 'Complex', defaultSort: 'asc'},
+        crack: {field: 'crack', label: 'Crack Magazine', defaultSort: 'asc'},
+        gvsb: {field: 'gvsb', label: 'Gorilla vs Bear', defaultSort: 'asc'},
+        noisey: {field: 'noisey', label: 'Noisey', defaultSort: 'asc'},
+        quietus: {field: 'quietus', label: 'The Quietus', defaultSort: 'asc'},
+        strgum: {field: 'strgum', label: 'Stereogum', defaultSort: 'asc'},
+        uproxx: {field: 'uproxx', label: 'Uproxx', defaultSort: 'asc'},
+        vnlfct: {field: 'vnlfct', label: 'The Vinyl Factory', defaultSort: 'asc'},
+        wire: {field: 'wire', label: 'Wire', defaultSort: 'asc'},
+        popmat: {field: 'popmat', label: 'Pop Matters', defaultSort: 'asc'},
+        pfork: {field: 'pfork', label: 'Pitchfork', defaultSort: 'asc'},
+        npr: {field: 'npr', label: 'NPR', defaultSort: 'asc'}
+      }
+    };
+
     this.state = {
       sortControl,
+      sortControlList
     };
   }
 
@@ -50,6 +79,12 @@ class ControlPanel extends React.Component {
         <SortControl
           label="Sort by:"
           sortControl={this.state.sortControl}
+          defaultValue={this.props.defaultSort}
+          sortAlbums={this.props.sortAlbums}
+        />
+        <SortControl
+          label="View List:"
+          sortControl={this.state.sortControlList}
           defaultValue={this.props.defaultSort}
           sortAlbums={this.props.sortAlbums}
         />

@@ -50,7 +50,7 @@ class CoverView extends React.Component {
 CoverView.propTypes = {
   albums: PropTypes.array.isRequired,
   rows: PropTypes.number.isRequired,
-  selectedAlbum: PropTypes.number.isRequired,
+  selectedAlbum: PropTypes.string.isRequired,
   selectAlbum: PropTypes.func.isRequired
 };
 

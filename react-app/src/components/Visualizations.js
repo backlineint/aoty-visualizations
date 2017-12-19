@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import CoverView from './CoverView';
+import ListView from './ListView';
 import AlbumTable from './AlbumTable';
 
 import { Tab2, Tabs2 } from "@blueprintjs/core";
@@ -25,6 +26,7 @@ class Visualizations extends React.Component {
     return(
       <VisualizationTabs id="Tabs" renderActiveTabPanelOnly="true" controlPanelExpanded={this.props.controlPanelExpanded}>
         <Tab2 id="cv" title="Covers" panel={<CoverView albums={this.props.albums} rows={this.props.rows} selectedAlbum={this.props.selectedAlbum} selectAlbum={this.props.selectAlbum} />} />
+        <Tab2 id="lv" title="Lists" panel={<ListView albums={this.props.albums} rows={this.props.rows} />} />
         <Tab2 id="tv" title="Table" panel={<AlbumTable albums={this.props.albums} rows={this.props.rows} />} />
       </VisualizationTabs>
     )
@@ -35,7 +37,7 @@ Visualizations.propTypes = {
   albums: PropTypes.array.isRequired,
   rows: PropTypes.number.isRequired,
   controlPanelExpanded: PropTypes.bool.isRequired,
-  selectedAlbum: PropTypes.number.isRequired,
+  selectedAlbum: PropTypes.string.isRequired,
   selectAlbum: PropTypes.func.isRequired
 };
 

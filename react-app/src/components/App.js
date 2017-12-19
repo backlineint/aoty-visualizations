@@ -53,7 +53,8 @@ class App extends Component {
       }
     };
 
-    const selectedAlbum = 0;
+    // Todo - convert this to int.
+    const selectedAlbum = '0';
 
     this.state = {
       rowOptions,
@@ -85,6 +86,14 @@ class App extends Component {
         if (!value.attributes.field_genre) {
           value.attributes.field_genre = 'n/a';
         }
+        // flatten list ranking values
+        value.attributes.field_list_rankings.forEach(function(list) {
+          const listRank = list.split(':');
+          // TODO - find a way to handle 0 values rather than this 101 hack.
+          const rank = isNaN(parseInt(listRank[1], 10)) ? 101 : parseInt(listRank[1], 10);
+          value.attributes[listRank[0]] = rank;
+        });
+        // Todo - create utility function to look up metadata for list keys
         return value;
       });
 
@@ -175,7 +184,7 @@ class App extends Component {
 
     this.setState({
       activeAlbums: filteredAlbums,
-      selectedAlbum: 0
+      selectedAlbum: '0'
     });
   };
 
@@ -184,7 +193,7 @@ class App extends Component {
     const sortedAlbums = _orderBy(this.state.activeAlbums, 'attributes.' + column, order);
     this.setState({
       activeAlbums: sortedAlbums,
-      selectedAlbums: 0
+      selectedAlbum: '0'
     });
   };
 
@@ -212,7 +221,7 @@ class App extends Component {
       return (
         <div className="App">
           <ControlPanel
-            header="Best of Best of 2016"
+            header="Best of Best of 2017"
             defaultSort={this.state.defaultSort}
             filterAlbums={this.filterAlbums}
             sortAlbums={this.sortAlbums}
