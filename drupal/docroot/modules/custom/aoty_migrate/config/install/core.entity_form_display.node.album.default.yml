@@ -2,9 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.album.field_album
+    - field.field.node.album.field_artist
     - field.field.node.album.field_avg
     - field.field.node.album.field_cons_score
     - field.field.node.album.field_cover_image
+    - field.field.node.album.field_cover_image_large
     - field.field.node.album.field_genre
     - field.field.node.album.field_id
     - field.field.node.album.field_list_rankings
@@ -28,6 +31,22 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  field_album:
+    weight: 34
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_artist:
+    weight: 33
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_avg:
     weight: 28
     settings:
@@ -44,6 +63,14 @@ content:
     region: content
   field_cover_image:
     weight: 27
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_cover_image_large:
+    weight: 35
     settings:
       size: 60
       placeholder: ''

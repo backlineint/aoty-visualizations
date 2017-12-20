@@ -2,9 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.album.field_album
+    - field.field.node.album.field_artist
     - field.field.node.album.field_avg
     - field.field.node.album.field_cons_score
     - field.field.node.album.field_cover_image
+    - field.field.node.album.field_cover_image_large
     - field.field.node.album.field_genre
     - field.field.node.album.field_id
     - field.field.node.album.field_list_rankings
@@ -22,6 +25,22 @@ targetEntityType: node
 bundle: album
 mode: default
 content:
+  field_album:
+    weight: 16
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_artist:
+    weight: 15
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_avg:
     weight: 10
     label: above
@@ -46,6 +65,14 @@ content:
     region: content
   field_cover_image:
     weight: 9
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_cover_image_large:
+    weight: 17
     label: above
     settings:
       link_to_entity: false

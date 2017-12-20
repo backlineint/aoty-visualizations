@@ -49,11 +49,13 @@ class AlbumSourcePlugin extends Url  {
       $spotify_album_id = $search->albums->items[0]->id;
       // images[0] would be 640 rather than 300.
       $cover_image = $search->albums->items[0]->images[2]->url;
+      $cover_image_large = $search->albums->items[0]->images[1]->url;
 
       $row->setSourceProperty('artist', $artist);
       $row->setSourceProperty('album_title', $album_title);
       $row->setSourceProperty('spotify_album_id', $spotify_album_id);
       $row->setSourceProperty('cover_image', $cover_image);
+      $row->setSourceProperty('cover_image_large', $cover_image_large);
 
       // Don't make the spotify API too mad.
       sleep(1);
@@ -83,6 +85,8 @@ class AlbumSourcePlugin extends Url  {
     $list_rankings[] = "popmat:" . $row->getSourceProperty('popmat');
     $list_rankings[] = "pfork:" . $row->getSourceProperty('pfork');
     $list_rankings[] = "npr:" . $row->getSourceProperty('npr');
+    $list_rankings[] = "spin:" . $row->getSourceProperty('spin');
+    $list_rankings[] = "line:" . $row->getSourceProperty('line');
 
     $row->setSourceProperty('list_rankings', $list_rankings);
 

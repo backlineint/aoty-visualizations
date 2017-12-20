@@ -147,6 +147,14 @@ source:
       name: npr
       label: 'npr'
       selector: gsx$npr/$t
+    -
+      name: spin
+      label: 'spin'
+      selector: gsx$spin/$t
+    -
+      name: line
+      label: 'line'
+      selector: gsx$line/$t
   # Under 'ids', we identify source fields populated above which will uniquely
   # identify each imported item. The 'type' makes sure the migration map table
   # uses the proper schema type for stored the IDs.
@@ -163,6 +171,8 @@ process:
       plugin: default_value
       default_value: 2017
   title: album
+  field_album: album_title
+  field_artist: artist
   field_id: id
   field_genre: genre
   field_avg: avg
@@ -173,6 +183,7 @@ process:
   # TODO - apply this to 2016 migration.
   field_spotify_album_id: spotify_album_id
   field_cover_image: cover_image
+  field_cover_image_large: cover_image_large
   field_list_rankings: list_rankings
   #field_spotify_album_id:
     #plugin: spotify_album_id_processor
