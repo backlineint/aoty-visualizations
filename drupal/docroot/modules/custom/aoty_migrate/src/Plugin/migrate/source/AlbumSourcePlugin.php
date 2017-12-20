@@ -43,21 +43,12 @@ class AlbumSourcePlugin extends Url  {
       $artist = $artist_and_title[0];
       $album_title = $artist_and_title[1];
 
-      //print "Title: " . $album_title . PHP_EOL;
+      // Would stripping the '-' make the query any more accurate?
+      $search = $api->search($album, 'album');
 
-      $search = $api->search($album_title, 'album');
-
-      // Can't find a way to query based on artist and album, so instead we'll
-      // check the results to see if we have the correct album.
-      foreach ($search->albums->items as $key => $album) {
-        if ((strtolower($album->artists[0]->name) == strtolower($artist)) && (strtolower($album->name) == strtolower($album_title))) {
-          break;
-        }
-      }
-
-      $spotify_album_id = $search->albums->items[$key]->id;
+      $spotify_album_id = $search->albums->items[0]->id;
       // images[0] would be 640 rather than 300.
-      $cover_image = $search->albums->items[$key]->images[2]->url;
+      $cover_image = $search->albums->items[0]->images[2]->url;
 
       $row->setSourceProperty('artist', $artist);
       $row->setSourceProperty('album_title', $album_title);
