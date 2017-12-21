@@ -7,32 +7,56 @@ const AlbumRow = styled.div`
 `;
 
 const Number = styled.li`
-	margin-left: .75rem;
+	margin-left: 1rem;
+	line-height: 1.25;
+  font-size: 16px;
+`;
+const AlbumSection = styled.div`
+	display: inline-block;
+	margin-left: .5rem;
+	margin-right: .5rem;
+	div {
+	  color: dodgerblue;
+	}
+	h4 {
+	  margin-bottom: 5px;
+	}
 `;
 
 class Album extends React.Component {
   render() {
     if (this.props.coverImage) {
-      const albumLink = 'https://open.spotify.com/album/' + this.props.albumId;
       return(
-        <AlbumRow onClick={() => this.props.selectAlbum(this.props.selectedAlbum)} className="pt-card pt-interactive">
+        <AlbumRow
+          onClick={() => this.props.selectAlbum(this.props.selectedAlbum)}
+          className="pt-card pt-interactive"
+        >
           <Number>
-            <a href={albumLink} target="_blank">
-            <img
-              src={this.props.coverImage}
-              alt={this.props.title}
-            />
-            </a>
-            {this.props.title}
+            <AlbumSection>
+              <img
+                src={this.props.coverImage}
+                alt={this.props.title}
+              />
+            </AlbumSection>
+            <AlbumSection>
+              <div className="pt-ui-text-large">{this.props.artist}</div>
+              <h4>{this.props.title}</h4>
+            </AlbumSection>
           </Number>
         </AlbumRow>
       )
     }
     else {
       return(
-        <AlbumRow className="pt-card pt-elevation-1 pt-interactive">
+        <AlbumRow
+          onClick={() => this.props.selectAlbum(this.props.selectedAlbum)}
+          className="pt-card pt-elevation-1 pt-interactive"
+        >
           <Number>
-            {this.props.title}
+            <AlbumSection>
+              <div className="pt-ui-text-large">{this.props.artist}</div>
+              <h4>{this.props.title}</h4>
+            </AlbumSection>
           </Number>
         </AlbumRow>
       )

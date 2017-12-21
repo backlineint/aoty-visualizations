@@ -6,7 +6,13 @@
   width: 75px;
   padding: 1rem;
   overflow: scroll;
-  background-color: #f5954b;
+  background-color: #1e90ff;
+  color: #fff;
+}
+.control-panel a,
+.control-panel a:visited,
+.control-panel a:hover,
+.control-panel a:active {
   color: #fff;
 }
 .control-panel:hover {

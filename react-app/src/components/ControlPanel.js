@@ -88,6 +88,7 @@ class ControlPanel extends React.Component {
           defaultValue={this.props.defaultSort}
           sortAlbums={this.props.sortAlbums}
         />
+        <p>Data: <a href="http://robmitchum.github.io/aotysheets.html" target="_blank" rel="noopener noreferrer">Album of the Year List Project</a></p>
       </div>
     )
   }

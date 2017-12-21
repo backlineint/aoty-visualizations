@@ -6,7 +6,7 @@ import Album from './Album';
 import AlbumDetail from './AlbumDetail';
 
 const AlbumList = styled.ol`
- width: 50%;
+ width: 60%;
  float: left;
  overflow: scroll;
  height: 100vh;
@@ -23,7 +23,8 @@ class CoverView extends React.Component {
             {Object.keys(this.props.albums).slice(0, this.props.rows).map(key =>
               <Album
                 key={key}
-                title={this.props.albums[key].attributes.title}
+                artist={this.props.albums[key].attributes.field_artist}
+                title={this.props.albums[key].attributes.field_album}
                 albumId={this.props.albums[key].attributes.field_spotify_album_id}
                 coverImage={this.props.albums[key].attributes.field_cover_image}
                 selectAlbum={this.props.selectAlbum}

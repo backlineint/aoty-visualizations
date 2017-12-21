@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 // Starting lite with specific lodash function imports.  If I wanted entire library:
 // import * as _ from 'lodash';
 import _filter from 'lodash/filter';
 import _orderBy from 'lodash/orderBy';
+import { Spinner } from '@blueprintjs/core';
 
 import {getAllAlbumData} from '../utilities/utilities';
 
@@ -15,6 +17,12 @@ import '@blueprintjs/core/dist/blueprint.css';
 
 // TODO - Replace with an udpated copy of JSON API data to allow for offline development.
 //import albums from '../data/albums';
+
+const PositionedSpinner = styled.div`
+ position: absolute;
+ top: 40vh;
+ left: 45vw;
+`;
 
 class App extends Component {
   constructor() {
@@ -242,7 +250,13 @@ class App extends Component {
       );
     }
     else {
-      return (<div>Loading...</div>);
+      return (
+        <PositionedSpinner>
+          <Spinner
+            className="pt-large"
+          />
+        </PositionedSpinner>
+      );
     }
   }
 }
