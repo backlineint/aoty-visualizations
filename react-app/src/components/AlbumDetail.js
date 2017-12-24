@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import Ranking from './Ranking';
 
 const AlbumContainer = styled.div`
  width: 40%;
@@ -25,26 +26,17 @@ class AlbumDetail extends React.Component {
     return(
       <AlbumContainer>
         <div className="pt-callout pt-intent-primary">
-          <p>
-            <h4>{this.props.album.field_artist}</h4>
-            <h2>{this.props.album.field_album}</h2>
-          </p>
+          <h4>{this.props.album.field_artist}</h4>
+          <h2>{this.props.album.field_album}</h2>
           <img
             src={this.props.album.field_cover_image_large}
             alt={this.props.album.title}
           />
           <p className="pt-ui-text-large"><a href={'https://open.spotify.com/album/' + this.props.album.field_spotify_album_id} target="_blank">Play on Spotify</a></p>
-          <p>
-            Rough Trade: {this.props.album.rtrade}<br />
-            Q: {this.props.album.q}<br />
-            Rolling Stone: {this.props.album.rstone}<br />
-            Paste: {this.props.album.paste}<br />
-            NME: {this.props.album.nme}<br />
-            Mojo: {this.props.album.mojo}<br />
-            Drowned in Sound: {this.props.album.drwnd}<br />
-            Consequence of Sound: {this.props.album.cos}<br />
-            Uncut: {this.props.album.uncut}
-          </p>
+          <Ranking
+            list="rtrade"
+            rank={this.props.album.rtrade}
+          />
         </div>
       </AlbumContainer>
     )
