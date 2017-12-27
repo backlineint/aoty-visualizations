@@ -48,7 +48,9 @@ class ControlPanel extends React.Component {
         wire: {field: 'wire', label: 'Wire', defaultSort: 'asc'},
         popmat: {field: 'popmat', label: 'Pop Matters', defaultSort: 'asc'},
         pfork: {field: 'pfork', label: 'Pitchfork', defaultSort: 'asc'},
-        npr: {field: 'npr', label: 'NPR', defaultSort: 'asc'}
+        npr: {field: 'npr', label: 'NPR', defaultSort: 'asc'},
+        spin: {field: 'spin', label: 'Spin', defaultSort: 'asc'},
+        line: {field: 'line', label: 'Line', defaultSort: 'asc'}
       }
     };
 

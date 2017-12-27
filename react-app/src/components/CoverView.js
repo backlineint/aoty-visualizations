@@ -9,7 +9,7 @@ const AlbumList = styled.ol`
  width: 60%;
  float: left;
  overflow: scroll;
- height: 100vh;
+ height: 88vh;
  padding-left: 1px;
  padding-right: .5rem;
 `;
