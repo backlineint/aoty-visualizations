@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 
 const AlbumRow = styled.div`
 	margin-top: 1rem;
+	:first-child {
+	  margin-top: .05rem;
+	}
+	:last-child {
+	  margin-bottom: 1rem;
+	}
 `;
 
 const Number = styled.li`
@@ -15,6 +21,9 @@ const AlbumSection = styled.div`
 	display: inline-block;
 	margin-left: .5rem;
 	margin-right: .5rem;
+	img {
+	  border: 1px solid dodgerblue;
+	}
 	div {
 	  color: dodgerblue;
 	}

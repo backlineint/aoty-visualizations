@@ -4,35 +4,43 @@ import PropTypes from 'prop-types';
 import Ranking from './Ranking';
 
 const AlbumContainer = styled.div`
- width: 40%;
- height: 90vh;
- float: left;
- padding-left: 1rem;
- overflow: scroll;
- overflow-wrap: break-word;
- hyphens: auto;
- .pt-callout {
-   max-width: 324px;
- }
- h4 {
-   color: dodgerblue;
- }
- img {
-   max-width: 100%;
- }
+  width: 40%;
+  height: 91vh;
+  float: left;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  overflow: scroll;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  .pt-callout {
+    max-width: 324px;
+    margin-right: 1.25rem;
+    border: 1px solid dodgerblue;
+  }
+  h4 {
+    color: dodgerblue;
+  }
+  img {
+    max-width: 100%;
+    border: 1px solid white;
+  }
 `;
 
 class AlbumDetail extends React.Component {
   render() {
+    let cover = null;
+    if (this.props.album.field_cover_image_large) {
+      cover = <img
+        src={this.props.album.field_cover_image_large}
+        alt={this.props.album.title}
+      />;
+    }
     return(
       <AlbumContainer>
         <div className="pt-callout pt-intent-primary">
           <h4>{this.props.album.field_artist}</h4>
           <h2>{this.props.album.field_album}</h2>
-          <img
-            src={this.props.album.field_cover_image_large}
-            alt={this.props.album.title}
-          />
+          {cover}
           <p className="pt-ui-text-large"><a href={'https://open.spotify.com/album/' + this.props.album.field_spotify_album_id} target="_blank">Play on Spotify</a></p>
           <Ranking list="rtrade" rank={this.props.album.rtrade} />
           <Ranking list="q" rank={this.props.album.q} />

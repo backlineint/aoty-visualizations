@@ -9,9 +9,10 @@ const AlbumList = styled.ol`
  width: 60%;
  float: left;
  overflow: scroll;
- height: 88vh;
+ height: 91vh;
  padding-left: 1px;
- padding-right: .5rem;
+ padding-right: 1.5rem;
+ margin-top: 0;
 `;
 
 class CoverView extends React.Component {
