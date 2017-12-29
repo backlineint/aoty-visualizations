@@ -26,7 +26,7 @@ class Visualizations extends React.Component {
     return(
       <VisualizationTabs id="Tabs" renderActiveTabPanelOnly="true" controlPanelExpanded={this.props.controlPanelExpanded}>
         <Tab2 id="cv" title="Covers" panel={<CoverView albums={this.props.albums} rows={this.props.rows} selectedAlbum={this.props.selectedAlbum} selectAlbum={this.props.selectAlbum} />} />
-        <Tab2 id="lv" title="Lists" panel={<ListView albums={this.props.albums} rows={this.props.rows} />} />
+        <Tab2 id="lv" title="Lists" panel={<ListView albums={this.props.albums} rows={this.props.rows} controlPanelExpanded={this.props.controlPanelExpanded} />} />
         <Tab2 id="tv" title="Table" panel={<AlbumTable albums={this.props.albums} rows={this.props.rows} />} />
       </VisualizationTabs>
     )
