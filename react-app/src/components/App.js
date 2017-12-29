@@ -97,11 +97,10 @@ class App extends Component {
         // flatten list ranking values
         value.attributes.field_list_rankings.forEach(function(list) {
           const listRank = list.split(':');
-          // TODO - find a way to handle 0 values rather than this 101 hack.
-          const rank = isNaN(parseInt(listRank[1], 10)) ? 101 : parseInt(listRank[1], 10);
-          value.attributes[listRank[0]] = rank;
+          // TODO - find a way to handle 0 values rather than this 101/'' hack.
+          value.attributes[listRank[0]] = isNaN(parseInt(listRank[1], 10)) ? 101 : parseInt(listRank[1], 10);
+          value.attributes[listRank[0] + '_heatmap'] = isNaN(parseInt(listRank[1], 10)) ? '' : parseInt(listRank[1], 10);
         });
-        // Todo - create utility function to look up metadata for list keys
         return value;
       });
 

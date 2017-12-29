@@ -21,32 +21,7 @@ class ListView extends React.Component {
     const heatmapData = [];
 
     defaultData.forEach(function(album){
-      const processedAlbum = {...album};
-      if (processedAlbum.attributes.rtrade === 101) { processedAlbum.attributes.rtrade = ''; }
-      if (processedAlbum.attributes.q === 101) { processedAlbum.attributes.q = ''; }
-      if (processedAlbum.attributes.rstone === 101) { processedAlbum.attributes.rstone = ''; }
-      if (processedAlbum.attributes.paste === 101) { processedAlbum.attributes.paste = ''; }
-      if (processedAlbum.attributes.nme === 101) { processedAlbum.attributes.nme = ''; }
-      if (processedAlbum.attributes.mojo === 101) { processedAlbum.attributes.mojo = ''; }
-      if (processedAlbum.attributes.drwnd === 101) { processedAlbum.attributes.drwnd = ''; }
-      if (processedAlbum.attributes.cos === 101) { processedAlbum.attributes.cos = ''; }
-      if (processedAlbum.attributes.uncut === 101) { processedAlbum.attributes.uncut = ''; }
-      if (processedAlbum.attributes.skinny === 101) { processedAlbum.attributes.skinny = ''; }
-      if (processedAlbum.attributes.cmplx === 101) { processedAlbum.attributes.cmplx = ''; }
-      if (processedAlbum.attributes.crack === 101) { processedAlbum.attributes.crack = ''; }
-      if (processedAlbum.attributes.gvsb === 101) { processedAlbum.attributes.gvsb = ''; }
-      if (processedAlbum.attributes.noisey === 101) { processedAlbum.attributes.noisey = ''; }
-      if (processedAlbum.attributes.quietus === 101) { processedAlbum.attributes.quietus = ''; }
-      if (processedAlbum.attributes.strgum === 101) { processedAlbum.attributes.strgum = ''; }
-      if (processedAlbum.attributes.uproxx === 101) { processedAlbum.attributes.uproxx = ''; }
-      if (processedAlbum.attributes.vnlfct === 101) { processedAlbum.attributes.vnlfct = ''; }
-      if (processedAlbum.attributes.wire === 101) { processedAlbum.attributes.wire = ''; }
-      if (processedAlbum.attributes.popmat === 101) { processedAlbum.attributes.popmat = ''; }
-      if (processedAlbum.attributes.pfork === 101) { processedAlbum.attributes.pfork = ''; }
-      if (processedAlbum.attributes.npr === 101) { processedAlbum.attributes.npr= ''; }
-      if (processedAlbum.attributes.spin === 101) { processedAlbum.attributes.spin = ''; }
-      if (processedAlbum.attributes.line === 101) { processedAlbum.attributes.line = ''; }
-      heatmapData.push(processedAlbum.attributes);
+      heatmapData.push(album.attributes);
     });
 
     this.state = {
@@ -60,32 +35,7 @@ class ListView extends React.Component {
     const heatmapData = [];
 
     defaultData.forEach(function(album){
-      const processedAlbum = {...album};
-      if (processedAlbum.attributes.rtrade === 101) { processedAlbum.attributes.rtrade = ''; }
-      if (processedAlbum.attributes.q === 101) { processedAlbum.attributes.q = ''; }
-      if (processedAlbum.attributes.rstone === 101) { processedAlbum.attributes.rstone = ''; }
-      if (processedAlbum.attributes.paste === 101) { processedAlbum.attributes.paste = ''; }
-      if (processedAlbum.attributes.nme === 101) { processedAlbum.attributes.nme = ''; }
-      if (processedAlbum.attributes.mojo === 101) { processedAlbum.attributes.mojo = ''; }
-      if (processedAlbum.attributes.drwnd === 101) { processedAlbum.attributes.drwnd = ''; }
-      if (processedAlbum.attributes.cos === 101) { processedAlbum.attributes.cos = ''; }
-      if (processedAlbum.attributes.uncut === 101) { processedAlbum.attributes.uncut = ''; }
-      if (processedAlbum.attributes.skinny === 101) { processedAlbum.attributes.skinny = ''; }
-      if (processedAlbum.attributes.cmplx === 101) { processedAlbum.attributes.cmplx = ''; }
-      if (processedAlbum.attributes.crack === 101) { processedAlbum.attributes.crack = ''; }
-      if (processedAlbum.attributes.gvsb === 101) { processedAlbum.attributes.gvsb = ''; }
-      if (processedAlbum.attributes.noisey === 101) { processedAlbum.attributes.noisey = ''; }
-      if (processedAlbum.attributes.quietus === 101) { processedAlbum.attributes.quietus = ''; }
-      if (processedAlbum.attributes.strgum === 101) { processedAlbum.attributes.strgum = ''; }
-      if (processedAlbum.attributes.uproxx === 101) { processedAlbum.attributes.uproxx = ''; }
-      if (processedAlbum.attributes.vnlfct === 101) { processedAlbum.attributes.vnlfct = ''; }
-      if (processedAlbum.attributes.wire === 101) { processedAlbum.attributes.wire = ''; }
-      if (processedAlbum.attributes.popmat === 101) { processedAlbum.attributes.popmat = ''; }
-      if (processedAlbum.attributes.pfork === 101) { processedAlbum.attributes.pfork = ''; }
-      if (processedAlbum.attributes.npr === 101) { processedAlbum.attributes.npr= ''; }
-      if (processedAlbum.attributes.spin === 101) { processedAlbum.attributes.spin = ''; }
-      if (processedAlbum.attributes.line === 101) { processedAlbum.attributes.line = ''; }
-      heatmapData.push(processedAlbum.attributes);
+      heatmapData.push(album.attributes);
     });
 
     this.setState({
@@ -99,30 +49,30 @@ class ListView extends React.Component {
         <ResponsiveHeatMapCanvas
           data={this.state.heatmapData}
           keys={[
-            "rtrade",
-            "q",
-            "rstone",
-            "paste",
-            "nme",
-            "mojo",
-            "drwnd",
-            "cos",
-            "uncut",
-            "skinny",
-            "cmplx",
-            "crack",
-            "gvsb",
-            "noisey",
-            "quietus",
-            "strgum",
-            "uproxx",
-            "vnlfct",
-            "wire",
-            "popmat",
-            "pfork",
-            "npr",
-            "spin",
-            "line"
+            "rtrade_heatmap",
+            "q_heatmap",
+            "rstone_heatmap",
+            "paste_heatmap",
+            "nme_heatmap",
+            "mojo_heatmap",
+            "drwnd_heatmap",
+            "cos_heatmap",
+            "uncut_heatmap",
+            "skinny_heatmap",
+            "cmplx_heatmap",
+            "crack_heatmap",
+            "gvsb_heatmap",
+            "noisey_heatmap",
+            "quietus_heatmap",
+            "strgum_heatmap",
+            "uproxx_heatmap",
+            "vnlfct_heatmap",
+            "wire_heatmap",
+            "popmat_heatmap",
+            "pfork_heatmap",
+            "npr_heatmap",
+            "spin_heatmap",
+            "line_heatmap"
           ]}
           indexBy="title"
           margin={{
