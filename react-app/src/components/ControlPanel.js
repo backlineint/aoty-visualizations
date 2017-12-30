@@ -17,11 +17,11 @@ class ControlPanel extends React.Component {
     const sortControl = {
       options: {
         none: {field: 'none', label: 'None', defaultSort: 'asc'},
-        title: {field: 'title', label: 'Album', defaultSort: 'asc'},
+        field_artist: {field: 'field_artist', label: 'Artist', defaultSort: 'asc'},
+        field_album: {field: 'field_album', label: 'Album', defaultSort: 'asc'},
         field_genre: {field: 'field_genre', label: 'Genre', defaultSort: 'asc'},
         field_avg: {field: 'field_avg', label: 'Average', defaultSort: 'asc'},
         field_cons_score: {field: 'field_cons_score', label: 'Consensus Score', defaultSort: 'asc'},
-        field_id: {field: 'field_id', label: 'ID', defaultSort: 'asc'},
         field_lists: {field: 'field_lists', label: 'Lists', defaultSort: 'desc'},
         field_top_10s: {field: 'field_top_10s', label: 'Top Ten', defaultSort: 'desc'},
         field_wt_avg: {field: 'field_wt_avg', label: 'Weighted Average', defaultSort: 'asc'}
@@ -96,7 +96,7 @@ class ControlPanel extends React.Component {
           setRows={this.props.setRows}
         />
         <SearchInput
-          placeholder="Filter by Album or Genre"
+          placeholder="Filter by Album, Artist or Genre"
           filterAlbums={this.props.filterAlbums}
         />
         <SortControl

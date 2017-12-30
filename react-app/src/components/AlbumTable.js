@@ -14,8 +14,11 @@ class AlbumTable extends React.Component {
     const albums = this.props.albums;
 
     // Feels like this could be streamlined, but maybe it is a limitation of blueprint...
-    const renderTitleCell = (rowIndex: number) => {
-      return <Cell>{albums[rowIndex].attributes.title}</Cell>
+    const renderArtistCell = (rowIndex: number) => {
+      return <Cell>{albums[rowIndex].attributes.field_artist}</Cell>
+    };
+    const renderAlbumCell = (rowIndex: number) => {
+      return <Cell>{albums[rowIndex].attributes.field_album}</Cell>
     };
     const renderGenreCell = (rowIndex: number) => {
       return <Cell>{decodeURI(albums[rowIndex].attributes.field_genre)}</Cell>
@@ -42,7 +45,8 @@ class AlbumTable extends React.Component {
     return (
       <StyledAlbumTable className="album-table">
         <Table numRows={this.props.rows}>
-          <Column name="Album" renderCell={renderTitleCell}/>
+          <Column name="Artist" renderCell={renderArtistCell}/>
+          <Column name="Album" renderCell={renderAlbumCell}/>
           <Column name="Genre" renderCell={renderGenreCell}/>
           <Column name="Average" renderCell={renderAvgCell}/>
           <Column name="Consensus Score" renderCell={renderConsScoreCell}/>
