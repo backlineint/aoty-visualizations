@@ -30,6 +30,7 @@ class CoverView extends React.Component {
                 coverImage={this.props.albums[key].attributes.field_cover_image}
                 selectAlbum={this.props.selectAlbum}
                 selectedAlbum={key}
+                activeAlbum={this.props.selectedAlbum === key}
               />
             )}
           </AlbumList>

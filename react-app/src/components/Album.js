@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 const AlbumRow = styled.div`
@@ -10,6 +10,10 @@ const AlbumRow = styled.div`
 	:last-child {
 	  margin-bottom: 1rem;
 	}
+
+  ${props => props.activeAlbum && css`
+    border: 1px solid dodgerblue;
+  `}
 `;
 
 const Number = styled.li`
@@ -39,6 +43,7 @@ class Album extends React.Component {
         <AlbumRow
           onClick={() => this.props.selectAlbum(this.props.selectedAlbum)}
           className="pt-card pt-interactive"
+          activeAlbum={this.props.activeAlbum}
         >
           <Number>
             <AlbumSection>

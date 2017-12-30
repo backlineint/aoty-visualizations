@@ -11,7 +11,6 @@ const VisualizationTabs = styled(Tabs2)`
 	margin-left: 75px;
   padding: .5rem 1rem 1rem 1rem;
   height: 100vh;
-  // Todo - Adjust so overflow is scroll when on table view.
   overflow: hidden;
   transition: all 0.2s ease-out;
   
