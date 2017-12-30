@@ -84,6 +84,8 @@ class App extends Component {
       // Cast strings to numbers in our original dataset.
       // TODO - Handle this on the Drupal side, or in our method that gets data from the service.
       albums.map((value, key) => {
+        value.attributes.title_display = value.attributes.title;
+        value.attributes.title = value.attributes.title.toLowerCase();
         value.attributes.field_avg = parseFloat(value.attributes.field_avg);
         value.attributes.field_cons_score = parseFloat(value.attributes.field_cons_score);
         value.attributes.field_id = parseInt(value.attributes.field_id, 10);
@@ -178,7 +180,7 @@ class App extends Component {
   filterAlbums = (filter) => {
     // Text search on title or genre
     const filteredAlbums = _filter(this.state.albums, function(album) {
-      return album.attributes.title.includes(filter) || album.attributes.field_genre.includes(filter);
+      return album.attributes.title.includes(filter.toLowerCase()) || album.attributes.field_genre.includes(filter.toLowerCase());
     });
 
     // Change the rows accordingly

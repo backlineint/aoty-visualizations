@@ -77,7 +77,7 @@ class ListView extends React.Component {
             "altern",
             "fact"
           ]}
-          indexBy="title"
+          indexBy="title_display"
           margin={{
             "top": 50,
             "right": 60,
