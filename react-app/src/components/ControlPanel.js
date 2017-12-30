@@ -11,8 +11,12 @@ class ControlPanel extends React.Component {
   constructor() {
     super();
 
+    const selectedSort = 'field_cons_score';
+    const selectedList = 'none';
+
     const sortControl = {
       options: {
+        none: {field: 'none', label: 'None', defaultSort: 'asc'},
         title: {field: 'title', label: 'Album', defaultSort: 'asc'},
         field_genre: {field: 'field_genre', label: 'Genre', defaultSort: 'asc'},
         field_avg: {field: 'field_avg', label: 'Average', defaultSort: 'asc'},
@@ -26,7 +30,7 @@ class ControlPanel extends React.Component {
 
     const sortControlList = {
       options: {
-        field_cons_score: {field: 'field_cons_score', label: 'None', defaultSort: 'asc'},
+        none: {field: 'none', label: 'None', defaultSort: 'asc'},
         rtrade_list: {field: 'rtrade_list', label: 'Rough Trade', defaultSort: 'asc'},
         q_list: {field: 'q_list', label: 'Q', defaultSort: 'asc'},
         rstone_list: {field: 'rstone_list', label: 'Rolling Stone', defaultSort: 'asc'},
@@ -59,9 +63,23 @@ class ControlPanel extends React.Component {
 
     this.state = {
       sortControl,
-      sortControlList
+      sortControlList,
+      selectedSort,
+      selectedList
     };
   }
+
+  updateSelectedSort = (sort) => {
+    this.setState({
+      selectedSort: sort
+    });
+  };
+
+  updateSelectedList = (list) => {
+    this.setState({
+      selectedList: list
+    });
+  };
 
   render() {
     return (
@@ -84,14 +102,18 @@ class ControlPanel extends React.Component {
         <SortControl
           label="Sort by:"
           sortControl={this.state.sortControl}
-          defaultValue={this.props.defaultSort}
           sortAlbums={this.props.sortAlbums}
+          value={this.state.selectedSort}
+          updateSelected={this.updateSelectedSort}
+          unsetSelected={this.updateSelectedList}
         />
         <SortControl
           label="View List:"
           sortControl={this.state.sortControlList}
-          defaultValue={this.props.defaultSort}
           sortAlbums={this.props.sortAlbums}
+          value={this.state.selectedList}
+          updateSelected={this.updateSelectedList}
+          unsetSelected={this.updateSelectedSort}
         />
         <p>Data: <a href="http://robmitchum.github.io/aotysheets.html" target="_blank" rel="noopener noreferrer">Album of the Year List Project</a></p>
       </div>
@@ -102,7 +124,6 @@ class ControlPanel extends React.Component {
 ControlPanel.propTypes = {
   header: PropTypes.string.isRequired,
   rowControl: PropTypes.object.isRequired,
-  defaultSort: PropTypes.string.isRequired,
   filterAlbums: PropTypes.func.isRequired,
   sortAlbums: PropTypes.func.isRequired,
   handleRowChange: PropTypes.func.isRequired,

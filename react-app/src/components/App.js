@@ -231,7 +231,6 @@ class App extends Component {
         <div className="App">
           <ControlPanel
             header="Best of Best of 2017"
-            defaultSort={this.state.defaultSort}
             filterAlbums={this.filterAlbums}
             sortAlbums={this.sortAlbums}
             rowControl={this.state.rowControl}

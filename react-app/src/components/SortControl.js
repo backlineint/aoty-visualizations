@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 class SortControl extends React.Component {
   handleSortChange = (e) => {
+    this.props.updateSelected(e.target.value);
+    this.props.unsetSelected('none');
     this.props.sortAlbums(e.target.value, this.props.sortControl.options[e.target.value].defaultSort);
   };
 
@@ -12,7 +14,7 @@ class SortControl extends React.Component {
       <label className="pt-label">
         {this.props.label}
         <div className="pt-select pt-minimal pt-large">
-          <select defaultValue={this.props.defaultValue} onChange={this.handleSortChange}>
+          <select value={this.props.value} onChange={this.handleSortChange}>
             {sortOptions.map(key =>
               <option
                 key={key}
@@ -31,7 +33,6 @@ class SortControl extends React.Component {
 SortControl.propTypes = {
   label: PropTypes.string,
   sortControl: PropTypes.object.isRequired,
-  defaultValue: PropTypes.string.isRequired,
   sortAlbums: PropTypes.func.isRequired
 };
 
