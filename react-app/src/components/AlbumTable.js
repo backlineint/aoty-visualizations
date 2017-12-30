@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Cell, Column, Table } from "@blueprintjs/table";
 
 import '@blueprintjs/table/dist/table.css';
+
+const StyledAlbumTable = styled.div`
+  height: 89vh;
+`;
 
 class AlbumTable extends React.Component {
   render() {
@@ -35,7 +40,7 @@ class AlbumTable extends React.Component {
     };
 
     return (
-      <div className="album-table">
+      <StyledAlbumTable className="album-table">
         <Table numRows={this.props.rows}>
           <Column name="Album" renderCell={renderTitleCell}/>
           <Column name="Genre" renderCell={renderGenreCell}/>
@@ -46,7 +51,7 @@ class AlbumTable extends React.Component {
           <Column name="Top Ten" renderCell={renderTopTenCell}/>
           <Column name="Weighted Average" renderCell={renderWtAvgCell}/>
         </Table>
-      </div>
+      </StyledAlbumTable>
     )
   }
 }
