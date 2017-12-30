@@ -72,7 +72,10 @@ class ListView extends React.Component {
             "pfork_heatmap",
             "npr_heatmap",
             "spin_heatmap",
-            "line_heatmap"
+            "line_heatmap",
+            "tmt_heatmap",
+            "altern_heatmap",
+            "fact_heatmap"
           ]}
           indexBy="title"
           margin={{

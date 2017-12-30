@@ -50,7 +50,10 @@ class ControlPanel extends React.Component {
         pfork: {field: 'pfork', label: 'Pitchfork', defaultSort: 'asc'},
         npr: {field: 'npr', label: 'NPR', defaultSort: 'asc'},
         spin: {field: 'spin', label: 'Spin', defaultSort: 'asc'},
-        line: {field: 'line', label: 'Line', defaultSort: 'asc'}
+        line: {field: 'line', label: 'Line', defaultSort: 'asc'},
+        tmt: {field: 'tmt', label: 'Tiny Mix Tapes', defaultSort: 'asc'},
+        altern: {field: 'altern', label: 'The Alternative', defaultSort: 'asc'},
+        fact: {field: 'fact', label: 'Fact', defaultSort: 'asc'}
       }
     };
 

@@ -66,6 +66,9 @@ class AlbumDetail extends React.Component {
           <Ranking list="npr" rank={this.props.album.npr} />
           <Ranking list="spin" rank={this.props.album.spin} />
           <Ranking list="line" rank={this.props.album.line} />
+          <Ranking list="tmt" rank={this.props.album.tmt} />
+          <Ranking list="altern" rank={this.props.album.altern} />
+          <Ranking list="fact" rank={this.props.album.fact} />
         </div>
       </AlbumContainer>
     )

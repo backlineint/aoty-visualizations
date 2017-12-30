@@ -87,6 +87,9 @@ class AlbumSourcePlugin extends Url  {
     $list_rankings[] = "npr:" . $row->getSourceProperty('npr');
     $list_rankings[] = "spin:" . $row->getSourceProperty('spin');
     $list_rankings[] = "line:" . $row->getSourceProperty('line');
+    $list_rankings[] = "tmt:" . $row->getSourceProperty('tmt');
+    $list_rankings[] = "altern:" . $row->getSourceProperty('altern');
+    $list_rankings[] = "fact:" . $row->getSourceProperty('fact');
 
     $row->setSourceProperty('list_rankings', $list_rankings);
 

@@ -101,6 +101,18 @@ class Ranking extends React.Component {
       line: {
         label: 'The Line of Best Fit',
         link: 'https://www.thelineofbestfit.com/features/listomania/best-albums-of-2017'
+      },
+      tmt: {
+        label: 'Tiny Mix Tapes',
+        link: 'https://www.tinymixtapes.com/features/2017-favorite-50-music-releases'
+      },
+      altern: {
+        label: 'The Alternative',
+        link: 'http://www.getalternative.com/alternatives-top-50-releases-2017-3/'
+      },
+      fact: {
+        label: 'Fact',
+        link: 'http://www.factmag.com/2017/12/20/best-albums-2017/'
       }
     };
 

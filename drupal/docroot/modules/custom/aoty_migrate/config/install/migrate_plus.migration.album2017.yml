@@ -155,6 +155,18 @@ source:
       name: line
       label: 'line'
       selector: gsx$line/$t
+    -
+      name: tmt
+      label: 'tmt'
+      selector: gsx$tmt/$t
+    -
+      name: altern
+      label: 'altern'
+      selector: gsx$altern/$t
+    -
+      name: fact
+      label: 'fact'
+      selector: gsx$fact/$t
   # Under 'ids', we identify source fields populated above which will uniquely
   # identify each imported item. The 'type' makes sure the migration map table
   # uses the proper schema type for stored the IDs.
