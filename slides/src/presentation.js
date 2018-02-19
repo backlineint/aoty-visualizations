@@ -1,6 +1,8 @@
 // Import React
 import React from 'react';
 
+// /import styled from 'styled-components';
+
 // Import Spectacle Core tags
 import {
   BlockQuote,
@@ -12,6 +14,9 @@ import {
   Quote,
   Slide,
   Text,
+  Layout,
+  Fill,
+  Image
 } from 'spectacle';
 
 // Import theme
@@ -21,7 +26,8 @@ import createTheme from 'spectacle/lib/themes/default';
 require('normalize.css');
 
 const images = {
-  briami: require('./assets/briami.jpg')
+  briami: require('./assets/briami.jpg'),
+  corn_maze: require('./assets/corn_maze.png'),
 };
 
 // Todo - preload images. See utils in specatcle repo.
@@ -49,27 +55,54 @@ export default class Presentation extends React.Component {
         transition={['slide']}
         transitionDuration={500}
         theme={theme}
+        contentHeight="100vh"
+        contentWidth="100vw"
       >
         <Slide
+          bgColor="tertiary"
           notes="These are notes"
         >
-          <Heading>Hot JAMS(tack)</Heading>
+          <Heading textColor="primary">Hot JAMS(tack)</Heading>
           <Text>Building a Music Discovery App with Drupal and React</Text>
         </Slide>
 
-        <Slide>
-          <Heading>About Me Slide</Heading>
+        <Slide
+          notes="This is the time I forced my 6 yr old son to run 3 miles in the pouring
+          rain. Dad of the year contender right here."
+        >
+          <Layout>
+            <Fill>
+              <Heading size={2} textColor="tertiary">Brian Perry</Heading>
+              <List>
+                <ListItem>Interactive Developer at HS2 Solutions</ListItem>
+                <ListItem>Rocking the Chicago suburbs</ListItem>
+                <ListItem>Lover of all things components</ListItem>
+                <ListItem>... and Nintendo</ListItem>
+              </List>
+              <Text>d.o: brianperry</Text>
+              <Text>twitter: bricomedy</Text>
+              <Text>github: backlineint</Text>
+              <Text>nintendo: wabrian</Text>
+            </Fill>
+            <Fill>
+              <Image src={images.corn_maze} />
+            </Fill>
+          </Layout>
         </Slide>
 
         <Slide>
-          <Heading>HS2 Slide</Heading>
+          HS2
         </Slide>
 
-        <Slide>
-          <Heading>Origin of a Side Project</Heading>
+        <Slide bgColor="tertiary">
+          <Heading textColor="primary">Origin of a Side Project</Heading>
         </Slide>
 
         <Slide bgImage={images.briami}></Slide>
+
+        <Slide>
+          <Text>Remaining slides are from boilerplate</Text>
+        </Slide>
 
         <Slide transition={['zoom']} bgColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
