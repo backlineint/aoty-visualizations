@@ -16,7 +16,8 @@ import {
   Text,
   Layout,
   Fill,
-  Image
+  Image,
+  Appear
 } from 'spectacle';
 
 // Import theme
@@ -27,7 +28,11 @@ require('normalize.css');
 
 const images = {
   briami: require('./assets/briami.jpg'),
-  corn_maze: require('./assets/corn_maze.png'),
+  cornMaze: require('./assets/corn_maze.png'),
+  clients: require('./assets/clients.png'),
+  hs2: require('./assets/hs2.png'),
+  switchedLogo: require('./assets/switched_on_pop.png'),
+  switchedEp: require('./assets/switched_ep.png'),
 };
 
 // Todo - preload images. See utils in specatcle repo.
@@ -85,20 +90,74 @@ export default class Presentation extends React.Component {
               <Text>nintendo: wabrian</Text>
             </Fill>
             <Fill>
-              <Image src={images.corn_maze} />
+              <Image
+                bgImage={images.cornMaze}
+                height="97vh"
+                width="50vw"
+              />
             </Fill>
           </Layout>
         </Slide>
 
         <Slide>
-          HS2
+          <Layout>
+            <Fill>
+              <Heading size={2} textColor="tertiary">HS2 Solutions</Heading>
+              <Image
+                src={images.clients}
+                margin="50px"
+              />
+            </Fill>
+            <Fill>
+              <Image
+                bgImage={images.hs2}
+                height="97vh"
+                width="50vw"
+              />
+            </Fill>
+          </Layout>
         </Slide>
 
-        <Slide bgColor="tertiary">
+        <Slide
+          bgColor="tertiary"
+          notes="It's a little bit of a walk, but let me tell you how I fell into
+          the project we're going to be talking about...
+          Todo - maybe re-theme to album quote concept. Or maybe that is two slides."
+        >
           <Heading textColor="primary">Origin of a Side Project</Heading>
         </Slide>
 
-        <Slide bgImage={images.briami}></Slide>
+        <Slide
+          bgImage={images.briami}
+          notes="I used to do comedy, but like many comedians I secretly wanted to be in a band.
+          This is me performing my solo musical show Briami Sound Machine which even though
+          it often led to walkouts, I secretly wanted to be the greatest frontman of all time.
+          One of the comedians I collaborated with in Boston was a friend named Chris Duffy..."
+        ></Slide>
+
+        <Slide
+          bgColor="#f2385a"
+          notes="Chris went to college with one of the guys behind the podcast Switched On Pop.
+          It breaks down popular music in amazing music nerd detail.  Super cool stuff.
+          One episode featured guest Rob Mitchum talking about the album of the year list,
+          which is this big ugly google spreadsheet...
+          todo - style padding between images."
+        >
+          <Image
+            src={images.switchedLogo}
+            width="50%"
+          />
+          <Appear>
+            <Image
+              src={images.switchedEp}
+              width="70%"
+            />
+          </Appear>
+        </Slide>
+
+        <Slide>
+          Album of the year spreadsheet image.
+        </Slide>
 
         <Slide>
           <Text>Remaining slides are from boilerplate</Text>
