@@ -33,6 +33,8 @@ const images = {
   hs2: require('./assets/hs2.png'),
   switchedLogo: require('./assets/switched_on_pop.png'),
   switchedEp: require('./assets/switched_ep.png'),
+  spreadsheet: require('./assets/spreadsheet.png'),
+  driesnote: require('./assets/driesnote.jpg'),
 };
 
 // Todo - preload images. See utils in specatcle repo.
@@ -60,24 +62,25 @@ export default class Presentation extends React.Component {
         transition={['slide']}
         transitionDuration={500}
         theme={theme}
-        contentHeight="100vh"
-        contentWidth="100vw"
+        contentHeight="97vh"
+        contentWidth="95vw"
       >
         <Slide
-          bgColor="tertiary"
+          bgColor="secondary"
           notes="These are notes"
         >
-          <Heading textColor="primary">Hot JAMS(tack)</Heading>
-          <Text>Building a Music Discovery App with Drupal and React</Text>
+          <Heading fit textColor="tertiary">HOT JAMS(tack)</Heading>
+          <Heading fit caps textColor="primary">Building a Music Discovery App with Drupal and React</Heading>
         </Slide>
 
         <Slide
+          bgColor="quartenary"
           notes="This is the time I forced my 6 yr old son to run 3 miles in the pouring
           rain. Dad of the year contender right here."
         >
           <Layout>
             <Fill>
-              <Heading size={2} textColor="tertiary">Brian Perry</Heading>
+              <Heading size={1} caps textColor="tertiary">Brian Perry</Heading>
               <List>
                 <ListItem>Interactive Developer at HS2 Solutions</ListItem>
                 <ListItem>Rocking the Chicago suburbs</ListItem>
@@ -92,14 +95,19 @@ export default class Presentation extends React.Component {
             <Fill>
               <Image
                 bgImage={images.cornMaze}
-                height="97vh"
+                height="94vh"
                 width="50vw"
               />
             </Fill>
           </Layout>
         </Slide>
 
-        <Slide>
+        <Slide
+          bgColor="quartenary"
+          notes="We focus on digital transformation. I didn't have time to sync up
+          with marketing, but I'm pretty sure that is what happens when a car turns into a giant robot.
+          Then standard stuff about great Drupal, great Drupal people."
+        >
           <Layout>
             <Fill>
               <Heading size={2} textColor="tertiary">HS2 Solutions</Heading>
@@ -111,7 +119,7 @@ export default class Presentation extends React.Component {
             <Fill>
               <Image
                 bgImage={images.hs2}
-                height="97vh"
+                height="94vh"
                 width="50vw"
               />
             </Fill>
@@ -119,12 +127,13 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          bgColor="tertiary"
+          bgColor="secondary"
           notes="It's a little bit of a walk, but let me tell you how I fell into
           the project we're going to be talking about...
           Todo - maybe re-theme to album quote concept. Or maybe that is two slides."
         >
-          <Heading textColor="primary">Origin of a Side Project</Heading>
+          <Heading size={1} fit caps textColor="tertiary">Origin of a</Heading>
+          <Heading size={1} fit caps textColor="primary">Side Project</Heading>
         </Slide>
 
         <Slide
@@ -155,8 +164,69 @@ export default class Presentation extends React.Component {
           </Appear>
         </Slide>
 
-        <Slide>
-          Album of the year spreadsheet image.
+        <Slide
+          bgImage={images.spreadsheet}
+          notes="... where he takes all off the music critics best of lists and aggregates them
+          into one best-of-best-of list crowning an undeniable critical darling.
+          Sure, spreasheets are ugly, but a lot of love and data goes into this one.
+          different averages, a calculated score for consensus, metadata about the albums
+          and lists, and so on. So in the back of my mind (and deep in my evernote) I
+          really wanted to use this awesome dataset for something fun."
+        >
+        </Slide>
+
+        <Slide
+          bgImage={images.driesnote}
+          bgDarken={0.75}
+          notes="Meanwhile in the Drupal communtity I'm hearing decoupled, decoupled,
+          decoupled and had been looking for a good way to learn more"
+        >
+          <Appear>
+            <Heading size={1} caps fit textColor="primary">
+              Decoupled
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={1} caps fit textColor="tertiary">
+              Progressively Decoupled
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={1} caps fit textColor="primary">
+              Fully Decoupled
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={1} caps fit textColor="tertiary">
+              Decoupled
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={1} caps fit textColor="primary">
+              Decoupled decoupled decoupled decoupled
+            </Heading>
+          </Appear>
+        </Slide>
+
+        <Slide
+          notes="In JS Framework-vile I'm hearing React, React, React. Some people
+          are shouting Vue too, but man, so much React"
+        >
+          Word cloud of React related things?
+        </Slide>
+
+        <Slide
+          notes="Seemed like a great opportunity to jam all of these things together
+          and see what I could learn about this whole decoupled Drupal thing."
+        >
+          Spreadsheet, Drupal, And React Slide.
+        </Slide>
+
+        <Slide
+          bgColor="tertiary"
+          notes=""
+        >
+          <Heading textColor="primary">Choosing a Decoupled Architecture</Heading>
         </Slide>
 
         <Slide>
