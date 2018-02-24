@@ -1,7 +1,6 @@
 // Import React
 import React from 'react';
-
-// /import styled from 'styled-components';
+import styled from 'styled-components';
 
 // Import Spectacle Core tags
 import {
@@ -35,6 +34,7 @@ const images = {
   switchedEp: require('./assets/switched_ep.png'),
   spreadsheet: require('./assets/spreadsheet.png'),
   driesnote: require('./assets/driesnote.jpg'),
+  react: require('./assets/react.jpg'),
 };
 
 // Todo - preload images. See utils in specatcle repo.
@@ -52,6 +52,18 @@ const theme = createTheme(
     secondary: 'Helvetica',
   }
 );
+
+const CustomListItem = styled(ListItem)`
+  font-size: 4rem !important;
+  margin-bottom: 1.5rem;
+  color: white;
+`;
+
+const CustomText = styled(Text)`
+  font-size: 4rem !important;
+  margin-bottom: 1.5rem !important;
+  color: white !important;
+`;
 
 // Todo - start splitting slides out into sections/components.
 
@@ -74,7 +86,7 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          bgColor="quartenary"
+          bgColor="secondary"
           notes="This is the time I forced my 6 yr old son to run 3 miles in the pouring
           rain. Dad of the year contender right here."
         >
@@ -82,15 +94,15 @@ export default class Presentation extends React.Component {
             <Fill>
               <Heading size={1} caps textColor="tertiary">Brian Perry</Heading>
               <List>
-                <ListItem>Interactive Developer at HS2 Solutions</ListItem>
-                <ListItem>Rocking the Chicago suburbs</ListItem>
-                <ListItem>Lover of all things components</ListItem>
-                <ListItem>... and Nintendo</ListItem>
+                <CustomListItem>Interactive Developer at HS2 Solutions</CustomListItem>
+                <CustomListItem>Rocking the Chicago suburbs</CustomListItem>
+                <CustomListItem>Lover of all things components</CustomListItem>
+                <CustomListItem>... and Nintendo</CustomListItem>
               </List>
-              <Text>d.o: brianperry</Text>
-              <Text>twitter: bricomedy</Text>
-              <Text>github: backlineint</Text>
-              <Text>nintendo: wabrian</Text>
+              <CustomText>d.o: brianperry</CustomText>
+              <CustomText>twitter: bricomedy</CustomText>
+              <CustomText>github: backlineint</CustomText>
+              <CustomText>nintendo: wabrian</CustomText>
             </Fill>
             <Fill>
               <Image
@@ -103,14 +115,14 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          bgColor="quartenary"
+          bgColor="secondary"
           notes="We focus on digital transformation. I didn't have time to sync up
           with marketing, but I'm pretty sure that is what happens when a car turns into a giant robot.
           Then standard stuff about great Drupal, great Drupal people."
         >
           <Layout>
             <Fill>
-              <Heading size={2} textColor="tertiary">HS2 Solutions</Heading>
+              <Heading caps size={1} textColor="tertiary">HS2 Solutions</Heading>
               <Image
                 src={images.clients}
                 margin="50px"
@@ -198,21 +210,52 @@ export default class Presentation extends React.Component {
           </Appear>
           <Appear>
             <Heading size={1} caps fit textColor="tertiary">
-              Decoupled
+              We don't say 'headless' anymore
             </Heading>
           </Appear>
           <Appear>
             <Heading size={1} caps fit textColor="primary">
+              Decoupled
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={1} caps fit textColor="tertiary">
               Decoupled decoupled decoupled decoupled
             </Heading>
           </Appear>
         </Slide>
 
         <Slide
+          bgImage={images.react}
+          bgDarken={0.25}
           notes="In JS Framework-vile I'm hearing React, React, React. Some people
           are shouting Vue too, but man, so much React"
         >
-          Word cloud of React related things?
+          <Appear>
+            <Heading size={1} caps fit textColor="tertiary">
+              React
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={1} caps fit textColor="primary">
+              React and Redux
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={1} caps fit textColor="tertiary">
+              I'm sure vue is great but...
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={1} caps fit textColor="primary">
+              So many people are talking about react
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={1} caps fit textColor="tertiary">
+              React react react react react react
+            </Heading>
+          </Appear>
         </Slide>
 
         <Slide
