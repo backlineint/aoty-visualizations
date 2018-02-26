@@ -16,7 +16,8 @@ import {
   Layout,
   Fill,
   Image,
-  Appear
+  Appear,
+  S
 } from 'spectacle';
 
 // Import theme
@@ -35,6 +36,13 @@ const images = {
   spreadsheet: require('./assets/spreadsheet.png'),
   driesnote: require('./assets/driesnote.jpg'),
   react: require('./assets/react.jpg'),
+  d8: require('./assets/d8.png'),
+  reactIcon: require('./assets/react_icon.png'),
+  flowChart: require('./assets/flowchart-full.jpg'),
+};
+
+const albums = {
+  commonSense: require('./assets/albums/common_sense.jpeg')
 };
 
 // Todo - preload images. See utils in specatcle repo.
@@ -74,6 +82,8 @@ export default class Presentation extends React.Component {
         transition={['slide']}
         transitionDuration={500}
         theme={theme}
+        controls={false}
+        progress="bar"
         contentHeight="97vh"
         contentWidth="95vw"
       >
@@ -259,17 +269,92 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
+          bgColor="secondary"
           notes="Seemed like a great opportunity to jam all of these things together
           and see what I could learn about this whole decoupled Drupal thing."
         >
-          Spreadsheet, Drupal, And React Slide.
+          <Layout>
+            <Fill>
+              <Heading caps>Data</Heading>
+              <Image src={images.spreadsheet} />
+            </Fill>
+            <Fill>
+              <Heading caps>Drupal</Heading>
+              <Image src={images.d8} />
+            </Fill>
+            <Fill>
+              <Heading caps>React</Heading>
+              <Image src={images.reactIcon} />
+            </Fill>
+          </Layout>
+          <Heading textColor="primary">Let's Jam (them all together)</Heading>
         </Slide>
 
         <Slide
-          bgColor="tertiary"
+          bgColor="secondary"
           notes=""
         >
-          <Heading textColor="primary">Choosing a Decoupled Architecture</Heading>
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Choosing a Decoupled Architecture</Heading>
+          <Layout>
+            <Fill>
+              <BlockQuote>
+                <Quote>Don't think I'm shy 'cause I'm quiet</Quote>
+                <Quote>I'm just plottin', I'm plottin'</Quote>
+                <Quote>I got dem where I want dem</Quote>
+                <Cite>J Hus - Plottin</Cite>
+              </BlockQuote>
+            </Fill>
+            <Fill>
+              <Image src={albums.commonSense} />
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+          notes="Here are the flavors, so how do we decide what is right for us."
+        >
+          <Heading textColor="tertiary">
+            The Flavors
+          </Heading>
+          <List>
+            <CustomListItem><S type="bold" textColor="tertiary">Fully Coupled</S> - All Drupal all the time, baby</CustomListItem>
+            <Appear><CustomListItem><S type="bold" textColor="tertiary">Progressively Decoupled</S> - Drupal with strategically sprinkled JavaScript flavor</CustomListItem></Appear>
+            <Appear><CustomListItem><S type="bold" textColor="tertiary">Fully Coupled</S> - JS framework of choice is in control and communicates with Drupal as necessary for content</CustomListItem></Appear>
+          </List>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+          notes="Holy flow chart."
+        >
+          <Image src={images.flowChart} />
+        </Slide>
+
+        <Slide>
+          Zoom into top part of flow chart.
+        </Slide>
+
+        <Slide>
+          Zoom into bottom part of flow chart.
+        </Slide>
+
+        <Slide
+          notes="Props are external forces acting on a component. Like your mom
+          buying you a halloween costume.  You're going to be a ghost. Here's all
+          the stuff you need to be a ghost. Cool.  I'm a ghost now."
+        >
+          Props and state slide.  Way in the future.
+        </Slide>
+
+        <Slide
+          notes="State what the component knows to be true about itself. Like how
+          in high school I thought I was a punk rock kid, even though I lived in Cranston
+          Rhode Island. You might give me other props, but until I decide otherwise
+          I'm still a punk rock kid. Slide of me with crazy hair.  (I still contend
+          that the ska-punk scene in Providence was really great btw.)"
+        >
+          State
         </Slide>
 
         <Slide>
