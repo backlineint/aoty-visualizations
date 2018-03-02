@@ -1,6 +1,6 @@
 // Import React
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // Import Spectacle Core tags
 import {
@@ -39,10 +39,21 @@ const images = {
   d8: require('./assets/d8.png'),
   reactIcon: require('./assets/react_icon.png'),
   flowChart: require('./assets/flowchart-full.jpg'),
+  flowChartTop: require('./assets/flowchart-top.jpg'),
+  flowChartMiddle: require('./assets/flowchart-middle.jpg'),
+  contentaLogo: require('./assets/contenta-logo.png'),
+  reservoirLogo: require('./assets/reservoir-logo.png'),
+  contentaMenu: require('./assets/contenta_menu.png'),
+  reservoirMenu: require('./assets/reservoir_menu.png'),
+  apiDoc: require('./assets/api_doc.png'),
+  postmanResponse: require('./assets/postman_response.png'),
 };
 
 const albums = {
-  commonSense: require('./assets/albums/common_sense.jpeg')
+  commonSense: require('./assets/albums/common_sense.jpeg'),
+  ctrl: require('./assets/albums/ctrl.jpeg'),
+  americanDream: require('./assets/albums/american_dream.jpeg'),
+  drunk: require('./assets/albums/drunk.jpeg'),
 };
 
 // Todo - preload images. See utils in specatcle repo.
@@ -50,8 +61,8 @@ const albums = {
 
 const theme = createTheme(
   {
-    primary: 'white',
-    secondary: '#1F2022',
+    primary: '#1F2022',
+    secondary: 'white',
     tertiary: '#03A9FC',
     quartenary: '#CECECE',
   },
@@ -61,10 +72,24 @@ const theme = createTheme(
   }
 );
 
+const BigList = styled(List)`
+  li {
+    font-size: 4rem !important;
+    margin-bottom: 1.5rem;
+    color: white;
+    ${props => props.lightBackground && css`
+      color: black;
+    `}  
+  }
+`;
+
 const CustomListItem = styled(ListItem)`
   font-size: 4rem !important;
   margin-bottom: 1.5rem;
   color: white;
+  ${props => props.lightBackground && css`
+    color: black;
+  `}
 `;
 
 const CustomText = styled(Text)`
@@ -79,7 +104,7 @@ export default class Presentation extends React.Component {
   render() {
     return (
       <Deck
-        transition={['slide']}
+        transition={['fade']}
         transitionDuration={500}
         theme={theme}
         controls={false}
@@ -88,21 +113,21 @@ export default class Presentation extends React.Component {
         contentWidth="95vw"
       >
         <Slide
+          transition={['slide']}
           bgColor="secondary"
-          notes="These are notes"
+          notes="Maybe take a quick decouped / react poll here."
         >
-          <Heading fit textColor="tertiary">HOT JAMS(tack)</Heading>
+          <Heading fit>HOT JAMS(tack)</Heading>
           <Heading fit caps textColor="primary">Building a Music Discovery App with Drupal and React</Heading>
         </Slide>
 
         <Slide
-          bgColor="secondary"
           notes="This is the time I forced my 6 yr old son to run 3 miles in the pouring
           rain. Dad of the year contender right here."
         >
           <Layout>
             <Fill>
-              <Heading size={1} caps textColor="tertiary">Brian Perry</Heading>
+              <Heading size={1} caps>Brian Perry</Heading>
               <List>
                 <CustomListItem>Interactive Developer at HS2 Solutions</CustomListItem>
                 <CustomListItem>Rocking the Chicago suburbs</CustomListItem>
@@ -132,7 +157,7 @@ export default class Presentation extends React.Component {
         >
           <Layout>
             <Fill>
-              <Heading caps size={1} textColor="tertiary">HS2 Solutions</Heading>
+              <Heading caps size={1}>HS2 Solutions</Heading>
               <Image
                 src={images.clients}
                 margin="50px"
@@ -149,13 +174,28 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          bgColor="secondary"
+          transition={['slide']}
           notes="It's a little bit of a walk, but let me tell you how I fell into
           the project we're going to be talking about...
-          Todo - maybe re-theme to album quote concept. Or maybe that is two slides."
+          Todo - maybe re-theme to album quote concept. Or maybe that is two slides.
+          TODO - Style quote to make side line white"
         >
-          <Heading size={1} fit caps textColor="tertiary">Origin of a</Heading>
-          <Heading size={1} fit caps textColor="primary">Side Project</Heading>
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Origin of a Side Project</Heading>
+          <Layout>
+            <Fill>
+              <BlockQuote textColor="secondary">
+                <Quote textColor="secondary">And luck is always better than skill at things</Quote>
+                <Quote textColor="secondary">We're flying blind</Quote>
+                <Quote textColor="secondary">Oh good gracious</Quote>
+                <Quote textColor="secondary">I sound like my mom</Quote>
+                <Cite>LCD Soundystem - tonite</Cite>
+                <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: American Dream (#6 of 2017)</Text>
+              </BlockQuote>
+            </Fill>
+            <Fill>
+              <Image src={albums.americanDream} />
+            </Fill>
+          </Layout>
         </Slide>
 
         <Slide
@@ -198,71 +238,73 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
+          transition={['slide']}
           bgImage={images.driesnote}
           bgDarken={0.75}
           notes="Meanwhile in the Drupal communtity I'm hearing decoupled, decoupled,
           decoupled and had been looking for a good way to learn more"
         >
           <Appear>
-            <Heading size={1} caps fit textColor="primary">
+            <Heading size={1} caps fit textColor="secondary">
               Decoupled
             </Heading>
           </Appear>
           <Appear>
-            <Heading size={1} caps fit textColor="tertiary">
+            <Heading size={1} caps fit>
               Progressively Decoupled
             </Heading>
           </Appear>
           <Appear>
-            <Heading size={1} caps fit textColor="primary">
+            <Heading size={1} caps fit textColor="secondary">
               Fully Decoupled
             </Heading>
           </Appear>
           <Appear>
-            <Heading size={1} caps fit textColor="tertiary">
+            <Heading size={1} caps fit>
               We don't say 'headless' anymore
             </Heading>
           </Appear>
           <Appear>
-            <Heading size={1} caps fit textColor="primary">
+            <Heading size={1} caps fit textColor="secondary">
               Decoupled
             </Heading>
           </Appear>
           <Appear>
-            <Heading size={1} caps fit textColor="tertiary">
+            <Heading size={1} caps fit>
               Decoupled decoupled decoupled decoupled
             </Heading>
           </Appear>
         </Slide>
 
         <Slide
+          transition={['slide']}
           bgImage={images.react}
           bgDarken={0.25}
           notes="In JS Framework-vile I'm hearing React, React, React. Some people
           are shouting Vue too, but man, so much React"
         >
           <Appear>
-            <Heading size={1} caps fit textColor="tertiary">
+            <Heading size={1} caps fit>
               React
             </Heading>
           </Appear>
           <Appear>
-            <Heading size={1} caps fit textColor="primary">
+            <Heading size={1} caps fit textColor="secondary">
               React and Redux
             </Heading>
           </Appear>
           <Appear>
-            <Heading size={1} caps fit textColor="tertiary">
+            <Heading size={1} caps fit>
               I'm sure vue is great but...
             </Heading>
           </Appear>
           <Appear>
-            <Heading size={1} caps fit textColor="primary">
+            <Heading size={1} caps fit textColor="secondary">
               So many people are talking about react
             </Heading>
           </Appear>
           <Appear>
-            <Heading size={1} caps fit textColor="tertiary">
+            <Heading size={1} caps fit>
               React react react react react react
             </Heading>
           </Appear>
@@ -291,17 +333,18 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          bgColor="secondary"
-          notes=""
+          transition={['slide']}
+          notes="TODO - Style quote to make side line white"
         >
           <Heading textColor="secondary" bgColor="tertiary" padding="15px">Choosing a Decoupled Architecture</Heading>
           <Layout>
             <Fill>
-              <BlockQuote>
-                <Quote>Don't think I'm shy 'cause I'm quiet</Quote>
-                <Quote>I'm just plottin', I'm plottin'</Quote>
-                <Quote>I got dem where I want dem</Quote>
+              <BlockQuote textColor="secondary">
+                <Quote textColor="secondary">Don't think I'm shy 'cause I'm quiet</Quote>
+                <Quote textColor="secondary">I'm just plottin', I'm plottin'</Quote>
+                <Quote textColor="secondary">I got dem where I want dem</Quote>
                 <Cite>J Hus - Plottin</Cite>
+                <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Common Sense (#30 of 2017)</Text>
               </BlockQuote>
             </Fill>
             <Fill>
@@ -311,16 +354,13 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          bgColor="secondary"
           notes="Here are the flavors, so how do we decide what is right for us."
         >
-          <Heading textColor="tertiary">
-            The Flavors
-          </Heading>
+          <Heading>The Flavors</Heading>
           <List>
             <CustomListItem><S type="bold" textColor="tertiary">Fully Coupled</S> - All Drupal all the time, baby</CustomListItem>
             <Appear><CustomListItem><S type="bold" textColor="tertiary">Progressively Decoupled</S> - Drupal with strategically sprinkled JavaScript flavor</CustomListItem></Appear>
-            <Appear><CustomListItem><S type="bold" textColor="tertiary">Fully Coupled</S> - JS framework of choice is in control and communicates with Drupal as necessary for content</CustomListItem></Appear>
+            <Appear><CustomListItem><S type="bold" textColor="tertiary">Fully Decoupled</S> - JS framework of choice is in control and communicates with Drupal as necessary for content</CustomListItem></Appear>
           </List>
         </Slide>
 
@@ -331,18 +371,223 @@ export default class Presentation extends React.Component {
           <Image src={images.flowChart} />
         </Slide>
 
-        <Slide>
-          Zoom into top part of flow chart.
+        <Slide
+          bgColor="secondary"
+          transition={['zoom']}
+          notes="..."
+        >
+          <Image src={images.flowChartTop} />
         </Slide>
 
-        <Slide>
-          Zoom into bottom part of flow chart.
+        <Slide
+          bgColor="secondary"
+          transition={['zoom']}
+          notes="..."
+        >
+          <Image src={images.flowChartMiddle} />
         </Slide>
+
+        <Slide
+          transition={['slide']}
+          notes="TODO - Style quote to make side line white"
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Choosing a Drupal Distribution</Heading>
+          <Layout>
+            <Fill>
+              <BlockQuote textColor="secondary">
+                <Quote textColor="secondary">Maybe I should pray a little harder</Quote>
+                <Quote textColor="secondary">Or work a little smarter</Quote>
+                <Quote textColor="secondary">This time baby promise I have learned my lesson ooh</Quote>
+                <Cite>SZA - Anything</Cite>
+                <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: CTRL (#2 of 2017)</Text>
+              </BlockQuote>
+            </Fill>
+            <Fill>
+              <Image src={albums.ctrl} />
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+          notes="."
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Your Options</Heading>
+          <Layout>
+            <Fill>
+              <Heading caps>Reservoir</Heading>
+              <Image src={images.reservoirLogo} />
+            </Fill>
+            <Fill>
+              <Heading caps>Contenta</Heading>
+              <Image src={images.contentaLogo} />
+            </Fill>
+            <Fill>
+              <Heading caps>Drupal</Heading>
+              <Image src={images.d8} />
+            </Fill>
+          </Layout>
+          <Text textColor="primary" textAlign="left" margin="0 0 0 8%">* Also Headless Lightning</Text>
+        </Slide>
+
+        <Slide
+          notes="Things they have in common...
+          Contenta's API is focused around content models and the API
+          Reservoir is stripped down to the bare essentials."
+        >
+          <Heading>API Focused Admin UIs</Heading>
+          <Image src={images.contentaMenu} />
+          <Image src={images.reservoirMenu} />
+        </Slide>
+
+        <Slide
+          notes="Self documenting API via ReDoc"
+        >
+          <Heading>Automatic API Documentation</Heading>
+          <Image src={images.apiDoc} />
+        </Slide>
+
+        <Slide
+          notes="Oh yeah, they expose APIs too"
+        >
+          <Heading>JSON API</Heading>
+          <Image src={images.postmanResponse} />
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+          notes="We also need to evaluate these things based on their slogans..."
+        >
+          <Layout>
+            <Fill>
+              <Heading>Reservoir</Heading>
+              <Text>"A back end for your front end"</Text>
+              <Image src={images.reservoirLogo} />
+            </Fill>
+            <Fill>
+              <Text>You might reach for Resevoir if...</Text>
+              <BigList lightBackground>
+                <ListItem>You want the quickest path to a Drupal based API</ListItem>
+                <ListItem>Nodes and node types alone can meet your needs</ListItem>
+                <ListItem>You won't miss your Drupalisms</ListItem>
+              </BigList>
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+        >
+          <Layout>
+            <Fill>
+              <Heading>Contenta</Heading>
+              <Text>"Contenta makes your content happy"</Text>
+              <Image src={images.contentaLogo} />
+            </Fill>
+            <Fill>
+              <Text>You might reach for Contenta if...</Text>
+              <BigList lightBackground>
+                <ListItem>You want to use vocabularies, comments, media</ListItem>
+                <ListItem>You want a more drupal like approach to extending and customizing</ListItem>
+                <ListItem>You want example content and consumers to experiment with</ListItem>
+              </BigList>
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+        >
+          <Layout>
+            <Fill>
+              <Heading>Roll Your Own</Heading>
+              <Text>"For the DYI-ers"</Text>
+              <Image src={images.d8} />
+            </Fill>
+            <Fill>
+              <Text>Sure, you could just build it yourself...</Text>
+              <BigList lightBackground>
+                <ListItem>JSON API</ListItem>
+                <ListItem>Open API and ReDoc</ListItem>
+                <ListItem>Simple OAuth</ListItem>
+                <ListItem>Many other odds and ends</ListItem>
+              </BigList>
+              <Text>But really, why would you?</Text>
+              <Text>Pray a little harder / work a little smarter...</Text>
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+          notes="Looking back at this slide, things go left to right in order of flexibility and complexity"
+        >
+          <Layout>
+            <Fill>
+              <Heading caps>Reservoir</Heading>
+              <Image src={images.reservoirLogo} />
+            </Fill>
+            <Fill>
+              <Heading caps>Contenta</Heading>
+              <Image src={images.contentaLogo} />
+            </Fill>
+            <Fill>
+              <Heading caps>Drupal</Heading>
+              <Image src={images.d8} />
+            </Fill>
+          </Layout>
+          <Text textColor="primary" textAlign="left" margin="0 0 0 8%">* Also Headless Lightning</Text>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+          notes="We also need to evaluate these things based on their slogans..."
+        >
+          <Layout>
+            <Fill>
+              <Heading>I Chose...</Heading>
+              <Image src={images.reservoirLogo} />
+              <Heading size={3}>Reservoir</Heading>
+            </Fill>
+            <Fill>
+              <BigList lightBackground>
+                <ListItem>Had very simple needs</ListItem>
+                <ListItem>Worked with no config (may have been a little early on Contenta)</ListItem>
+                <ListItem>But I've used Contenta since</ListItem>
+              </BigList>
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          transition={['slide']}
+          notes="TODO - Style quote to make side line white"
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Migrate to the Rescue</Heading>
+          <Layout>
+            <Fill>
+              <BlockQuote textColor="secondary">
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>
+                <Cite>Thundercat - ...</Cite>
+                <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Drunk (#11 of 2017)</Text>
+              </BlockQuote>
+            </Fill>
+            <Fill>
+              <Image src={albums.drunk} />
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide>Migrate code!</Slide>
 
         <Slide
           notes="Props are external forces acting on a component. Like your mom
           buying you a halloween costume.  You're going to be a ghost. Here's all
-          the stuff you need to be a ghost. Cool.  I'm a ghost now."
+          the stuff you need to be a ghost. Cool.  I'm a ghost now.
+          Or maybe use the dinos photo - my neighbor said, we should be inflatable 
+          "
         >
           Props and state slide.  Way in the future.
         </Slide>
@@ -357,58 +602,6 @@ export default class Presentation extends React.Component {
           State
         </Slide>
 
-        <Slide>
-          <Text>Remaining slides are from boilerplate</Text>
-        </Slide>
-
-        <Slide transition={['zoom']} bgColor="primary">
-          <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Spectacle Boilerplate
-          </Heading>
-          <Text margin="10px 0 0" textColor="tertiary" size={1} fit bold>
-            open the presentation/index.js file to get started
-          </Text>
-        </Slide>
-        <Slide transition={['fade']} bgColor="tertiary">
-          <Heading size={6} textColor="primary" caps>
-            Typography
-          </Heading>
-          <Heading size={1} textColor="secondary">
-            Heading 1
-          </Heading>
-          <Heading size={2} textColor="secondary">
-            Heading 2
-          </Heading>
-          <Heading size={3} textColor="secondary">
-            Heading 3
-          </Heading>
-          <Heading size={4} textColor="secondary">
-            Heading 4
-          </Heading>
-          <Heading size={5} textColor="secondary">
-            Heading 5
-          </Heading>
-          <Text size={6} textColor="secondary">
-            Standard text
-          </Text>
-        </Slide>
-        <Slide transition={['fade']} bgColor="primary" textColor="tertiary">
-          <Heading size={6} textColor="secondary" caps>
-            Standard List
-          </Heading>
-          <List>
-            <ListItem>Item 1</ListItem>
-            <ListItem>Item 2</ListItem>
-            <ListItem>Item 3</ListItem>
-            <ListItem>Item 4</ListItem>
-          </List>
-        </Slide>
-        <Slide transition={['fade']} bgColor="secondary" textColor="primary">
-          <BlockQuote>
-            <Quote>Example Quote</Quote>
-            <Cite>Author</Cite>
-          </BlockQuote>
-        </Slide>
       </Deck>
     );
   }
