@@ -17,7 +17,8 @@ import {
   Fill,
   Image,
   Appear,
-  S
+  S,
+  Code
 } from 'spectacle';
 
 // Import theme
@@ -47,6 +48,8 @@ const images = {
   reservoirMenu: require('./assets/reservoir_menu.png'),
   apiDoc: require('./assets/api_doc.png'),
   postmanResponse: require('./assets/postman_response.png'),
+  publishToWeb: require('./assets/publish-to-web.png'),
+  sheetsResponse: require('./assets/sheets-response.png')
 };
 
 const albums = {
@@ -567,10 +570,12 @@ export default class Presentation extends React.Component {
           <Layout>
             <Fill>
               <BlockQuote textColor="secondary">
-                <Quote textColor="secondary">...</Quote>
-                <Quote textColor="secondary">...</Quote>
-                <Quote textColor="secondary">...</Quote>
-                <Cite>Thundercat - ...</Cite>
+                <Quote textColor="secondary">Your heart is struggling, baby</Quote>
+                <Quote textColor="secondary">Trying to believe</Quote>
+                <Quote textColor="secondary">That there might be something you just couldn't see</Quote>
+                <Quote textColor="secondary">But what if I told you babe</Quote>
+                <Quote textColor="secondary">It’s all so easy</Quote>
+                <Cite>Kenny Loggins - Show You the Way</Cite>
                 <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Drunk (#11 of 2017)</Text>
               </BlockQuote>
             </Fill>
@@ -580,7 +585,74 @@ export default class Presentation extends React.Component {
           </Layout>
         </Slide>
 
-        <Slide>Migrate code!</Slide>
+        <Slide
+          notes="While we're on Thundercat, this song also contains some good advice for conference
+          attendees who plan on socializing."
+        >
+          <BlockQuote>
+            <Quote textColor="secondary">
+              Hey, how's it going? This is your boy, Thundercat. If you're going to fill your water bottle with vodka, 
+              always make sure you have a friend with a bottle that actually has water in it.
+            </Quote>
+          </BlockQuote>
+        </Slide>
+
+        <Slide
+
+          notes=""
+        >
+          <Heading textColor="secondary">So how the hell do we get...</Heading>
+          <Layout>
+            <Fill>
+              <Heading caps>Data</Heading>
+              <Image src={images.spreadsheet} />
+            </Fill>
+            <Fill>
+              <Heading caps>&rarr;</Heading>
+            </Fill>
+            <Fill>
+              <Heading caps>Drupal</Heading>
+              <Image src={images.d8} />
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          notes="todo: fix the code portion - style and indent."
+        >
+          <Heading>Drupal Migrate to the Rescue!</Heading>
+          <BigList>
+            <ListItem>Created custom migrate module</ListItem>
+            <ListItem>Installs Album content type.</ListItem>
+            <ListItem><Code>drupal config:export --remove-uuid --remove-config-hash</Code></ListItem>
+            <ListItem>Pulls data directly from Google Spreadsheet</ListItem>
+            <ListItem>Augments with data from Spotify API</ListItem>
+          </BigList>
+        </Slide>
+
+        <Slide
+          notes=""
+        >
+          <Heading>Google Sheet JSON Hack</Heading>
+          <Image height="75vh" src={images.publishToWeb} />
+        </Slide>
+
+        <Slide>
+          <Heading fit>https://spreadsheets.google.com/feeds/list/(DocumentID)/1/public/full?alt=json</Heading>
+          <Image src={images.sheetsResponse} />
+        </Slide>
+
+        <Slide
+          notes="More like mi-great"
+        >
+          Code!
+        </Slide>
+
+        <Slide
+          notes="More like mi-great"
+        >
+          Migrate terminal!
+        </Slide>
 
         <Slide
           notes="Props are external forces acting on a component. Like your mom
@@ -600,6 +672,12 @@ export default class Presentation extends React.Component {
           that the ska-punk scene in Providence was really great btw.)"
         >
           State
+        </Slide>
+
+        <Slide
+          notes="spotify playlist with all songs referenced in slides, and then some of my other favorites from 2017"
+        >
+          Spotify Playlist
         </Slide>
 
       </Deck>
