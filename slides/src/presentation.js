@@ -21,6 +21,9 @@ import {
   Code
 } from 'spectacle';
 
+// Import code slide
+import CodeSlide from 'spectacle-code-slide';
+
 // Import theme
 import createTheme from 'spectacle/lib/themes/default';
 
@@ -642,11 +645,55 @@ export default class Presentation extends React.Component {
           <Image src={images.sheetsResponse} />
         </Slide>
 
-        <Slide
-          notes="More like mi-great"
-        >
-          Code!
-        </Slide>
+        <CodeSlide
+          bgColor="secondary"
+          lang="yaml"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={`# This migration demonstrates importing from a monolithic JSON file.
+id: album2017
+label: 2017 Album Of the Year Project Data
+migration_group: aoty
+source:
+  # We use the JSON source plugin.
+  plugin: album_source_plugin
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  # This migration demonstrates importing from a monolithic JSON file.
+id: album2017
+label: 2017 Album Of the Year Project Data
+migration_group: aoty
+source:
+  # We use the JSON source plugin.
+  plugin: album_source_plugin
+  data_fetcher_plugin: http
+  data_parser_plugin: json 
+  # This migration demonstrates importing from a monolithic JSON file.
+id: album2017
+label: 2017 Album Of the Year Project Data
+migration_group: aoty
+source:
+  # We use the JSON source plugin.
+  plugin: album_source_plugin
+  data_fetcher_plugin: http
+  data_parser_plugin: json 
+  # This migration demonstrates importing from a monolithic JSON file.
+id: album2017
+label: 2017 Album Of the Year Project Data
+migration_group: aoty
+source:
+  # We use the JSON source plugin.
+  plugin: album_source_plugin
+  data_fetcher_plugin: http
+  data_parser_plugin: json           
+          `}
+          // Can't believe I have to include this inlne, but here we are...
+          ranges={[
+            { loc: [0, 10], title: "Queue Stack" },
+            { loc: [12, 17], note: "Yeah, part 1" },
+            { loc: [25, 26], note: "Killing it." }
+          ]}
+          notes="Notes are still ok"
+        />
 
         <Slide
           notes="More like mi-great"
