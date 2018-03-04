@@ -29,6 +29,7 @@ import createTheme from 'spectacle/lib/themes/default';
 
 // Require CSS
 require('normalize.css');
+require('prismjs/themes/prism.css');
 
 const images = {
   briami: require('./assets/briami.jpg'),
