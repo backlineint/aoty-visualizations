@@ -18,11 +18,12 @@ import {
   Image,
   Appear,
   S,
-  Code
+  Code,
+  Link
 } from 'spectacle';
 
-// Import code slide
 import CodeSlide from 'spectacle-code-slide';
+import Terminal from "spectacle-terminal";
 
 // Import theme
 import createTheme from 'spectacle/lib/themes/default';
@@ -55,7 +56,10 @@ const images = {
   apiDoc: require('./assets/api_doc.png'),
   postmanResponse: require('./assets/postman_response.png'),
   publishToWeb: require('./assets/publish-to-web.png'),
-  sheetsResponse: require('./assets/sheets-response.png')
+  sheetsResponse: require('./assets/sheets-response.png'),
+  migrateContent: require('./assets/migrate_content.png'),
+  drupalAlbum: require('./assets/drupal_album.png'),
+  aotyApp: require('./assets/aoty_app.png')
 };
 
 const albums = {
@@ -63,6 +67,7 @@ const albums = {
   ctrl: require('./assets/albums/ctrl.jpeg'),
   americanDream: require('./assets/albums/american_dream.jpeg'),
   drunk: require('./assets/albums/drunk.jpeg'),
+  jayZ: require('./assets/albums/444.jpg'),
 };
 
 // Todo - preload images. See utils in specatcle repo.
@@ -396,6 +401,10 @@ export default class Presentation extends React.Component {
           <Image src={images.flowChartMiddle} />
         </Slide>
 
+        <Slide>
+          <Heading>I went with...</Heading>
+        </Slide>
+
         <Slide
           transition={['slide']}
           notes="TODO - Style quote to make side line white"
@@ -690,10 +699,100 @@ export default class Presentation extends React.Component {
         />
 
         <Slide
-          notes="More like mi-great"
+          notes=""
         >
-          Migrate terminal!
+          <Heading>Run the migration via drush</Heading>
+          <Terminal title="docroot --- -bash" output={[
+              "drush en -y aoty_migrate",
+              "The following extensions will be enabled: aoty_migrate, migrate_tools,",
+              "migrate_plus, migrate",
+              "Do you really want to continue? (y/n): y",
+              "aoty_migrate was enabled successfully.         [ok]",
+              "migrate was enabled successfully.              [ok]",
+              "migrate_plus was enabled successfully.         [ok]",
+              "migrate_tools was enabled successfully.         [ok]",
+              "migrate_tools defines the following permissions: administer migrations",
+              "drush migrate-import album2017 -y",
+              "Processed 550 items (550 created, 0 updated, 0 failed, 0 ignored)",
+              "- done with 'album2017'",
+              ]}
+            />
         </Slide>
+
+        <Slide
+          notes=""
+        >
+          <Heading>More Like Mi-great</Heading>
+          <Image src={images.migrateContent} />
+        </Slide>
+
+        <Slide
+          notes=""
+        >
+          <Image src={images.drupalAlbum} />
+        </Slide>
+
+        <Slide
+          transition={['slide']}
+          notes="TODO - Style quote to make side line white"
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">4:44 of React Basics*</Heading>
+          <Text textColor="secondary">* actual time may vary</Text>
+          <Layout>
+            <Fill>
+              <BlockQuote textColor="secondary">
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>  
+                <Cite>Jay-Z - Something</Cite>
+                <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: 4:44 (#16 of 2017)</Text>
+              </BlockQuote>
+            </Fill>
+            <Fill>
+              <Image src={albums.jayZ} />
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          notes="Since it is probably a little harder to visualize, let's jump ahead and look at the React app
+          before we deconstruct it.
+          TODO - make sure we have an offline version of this. Maybe don't bundle entire app, just smaller components."
+        >
+          <Heading>Spoiler Alert:</Heading>
+          <Link href="http://brianperryinteractive.com/aoty-visualizations/" target="_blank">
+            <Image src={images.aotyApp} />
+          </Link>
+        </Slide>
+
+        <Slide
+          notes=""
+        >
+          <Heading>Create react app</Heading>
+          <Terminal title="aoty-visualizations --- -bash" output={[
+              "npx create-react-app my-app",
+              "A bunch of output...",
+              "cd my-app",
+              "npm start",
+              "Webserver output...",
+              "npm run build",
+              "# DRAGONS",
+              "npm run eject"
+              ]}
+            />
+        </Slide>
+
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/fetch.example")}
+          ranges={[
+            { loc: [0, 18], title: "Loading Data with Fetch", note: "Lives in react-app/src/utilities" },
+          ]}
+          notes=""
+        />
 
         <Slide
           notes="Props are external forces acting on a component. Like your mom
