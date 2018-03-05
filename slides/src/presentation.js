@@ -650,43 +650,7 @@ export default class Presentation extends React.Component {
           bgColor="secondary"
           lang="yaml"
           // eslint-disable-next-line import/no-webpack-loader-syntax
-          code={`# This migration demonstrates importing from a monolithic JSON file.
-id: album2017
-label: 2017 Album Of the Year Project Data
-migration_group: aoty
-source:
-  # We use the JSON source plugin.
-  plugin: album_source_plugin
-  data_fetcher_plugin: http
-  data_parser_plugin: json
-  # This migration demonstrates importing from a monolithic JSON file.
-id: album2017
-label: 2017 Album Of the Year Project Data
-migration_group: aoty
-source:
-  # We use the JSON source plugin.
-  plugin: album_source_plugin
-  data_fetcher_plugin: http
-  data_parser_plugin: json 
-  # This migration demonstrates importing from a monolithic JSON file.
-id: album2017
-label: 2017 Album Of the Year Project Data
-migration_group: aoty
-source:
-  # We use the JSON source plugin.
-  plugin: album_source_plugin
-  data_fetcher_plugin: http
-  data_parser_plugin: json 
-  # This migration demonstrates importing from a monolithic JSON file.
-id: album2017
-label: 2017 Album Of the Year Project Data
-migration_group: aoty
-source:
-  # We use the JSON source plugin.
-  plugin: album_source_plugin
-  data_fetcher_plugin: http
-  data_parser_plugin: json           
-          `}
+          code={require("raw-loader!./assets/code/migration_config.example")}
           // Can't believe I have to include this inlne, but here we are...
           ranges={[
             { loc: [0, 10], title: "Queue Stack" },
