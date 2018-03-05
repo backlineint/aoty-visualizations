@@ -27,6 +27,8 @@ import CodeSlide from 'spectacle-code-slide';
 // Import theme
 import createTheme from 'spectacle/lib/themes/default';
 
+import './assets/css/fixes.css';
+
 // Require CSS
 require('normalize.css');
 require('prismjs/themes/prism.css');
@@ -608,14 +610,14 @@ export default class Presentation extends React.Component {
           <Heading textColor="secondary">So how the hell do we get...</Heading>
           <Layout>
             <Fill>
-              <Heading caps>Data</Heading>
+              <Heading>Google Sheet</Heading>
               <Image src={images.spreadsheet} />
             </Fill>
             <Fill>
               <Heading caps>&rarr;</Heading>
             </Fill>
             <Fill>
-              <Heading caps>Drupal</Heading>
+              <Heading>Drupal</Heading>
               <Image src={images.d8} />
             </Fill>
           </Layout>
@@ -629,7 +631,7 @@ export default class Presentation extends React.Component {
             <ListItem>Created custom migrate module</ListItem>
             <ListItem>Installs Album content type.</ListItem>
             <ListItem><Code>drupal config:export --remove-uuid --remove-config-hash</Code></ListItem>
-            <ListItem>Pulls data directly from Google Spreadsheet</ListItem>
+            <ListItem>Pulls data directly from Google Spreadsheet using migrate_plus JSON</ListItem>
             <ListItem>Augments with data from Spotify API</ListItem>
           </BigList>
         </Slide>
@@ -647,17 +649,44 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <CodeSlide
+          className="code-slide"
           bgColor="secondary"
           lang="yaml"
           // eslint-disable-next-line import/no-webpack-loader-syntax
           code={require("raw-loader!./assets/code/migration_config.example")}
-          // Can't believe I have to include this inlne, but here we are...
           ranges={[
-            { loc: [0, 10], title: "Queue Stack" },
-            { loc: [12, 17], note: "Yeah, part 1" },
-            { loc: [25, 26], note: "Killing it." }
+            { loc: [0, 4], title: "migrate_plus.migration.album2017.yml", note: "Lives in aoty_migrate/config/install" },
+            { loc: [0, 6], title: "migrate_plus.migration.album2017.yml", note: "Custom source plugin - we'll look at that in a bit" },
+            { loc: [0, 8], title: "migrate_plus.migration.album2017.yml", note: "Fetch http and parse json" },
+            { loc: [0, 19], title: "migrate_plus.migration.album2017.yml", note: "Our big ugly google sheets json url" },
+            { loc: [0, 21], title: "migrate_plus.migration.album2017.yml", note: "Traverse to feed/entry to find all items to import" },
+            { loc: [20, 70], note: "Define fields and select them using Google's ugly field names" },
+            { loc: [168, 174], note: "Use the spreadsheet's ID to idenfity items in the migration source map" },
+            { loc: [174, 180], note: "Save these as album content types" },
+            { loc: [174, 183], note: "Manually set album year" },
+            { loc: [174, 197], note: "Map source fields to album node fields" },
           ]}
-          notes="Notes are still ok"
+          notes=""
+        />
+
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="php"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/album_source_plugin.example")}
+          ranges={[
+            { loc: [0, 3], title: "AlbumSourcePlugin.php", note: "Our custom row plugin - mainly exists to interact with the Spotify API during import" },
+            { loc: [0, 7], title: "AlbumSourcePlugin.php", note: "Spotify Web API PHP - https://github.com/jwilsson/spotify-web-api-php" },
+            { loc: [0, 22], title: "AlbumSourcePlugin.php", note: "Extend URL source plugin and implement prepareRow()" },
+            { loc: [0, 22], title: "AlbumSourcePlugin.php", note: "Extend URL source plugin and implement prepareRow()" },
+            { loc: [17, 34], title: "AlbumSourcePlugin.php", note: "Create an instance of Spotify Web API and get token.  Room for improvement here - could persist session, store API data in config and so on." },
+            { loc: [35, 42], title: "AlbumSourcePlugin.php", note: "Search based on album column in spreadsheet to get Spotify album" },
+            { loc: [35, 53], title: "AlbumSourcePlugin.php", note: "Queue up Spotify album data for Drupal. Spotify Album ID is especially useful" },
+            { loc: [58, 89], title: "AlbumSourcePlugin.php", note: "Add all rankings to a single field" },
+            { loc: [89, 93], title: "AlbumSourcePlugin.php", note: "Return the modified row" },
+          ]}
+          notes=""
         />
 
         <Slide

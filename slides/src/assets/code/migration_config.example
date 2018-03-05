@@ -3,7 +3,6 @@ id: album2017
 label: 2017 Album Of the Year Project Data
 migration_group: aoty
 source:
-  # We use the JSON source plugin.
   plugin: album_source_plugin
   data_fetcher_plugin: http
   data_parser_plugin: json
@@ -171,7 +170,7 @@ source:
   # identify each imported item. The 'type' makes sure the migration map table
   # uses the proper schema type for stored the IDs.
   ids:
-    album:
+    id:
       type: string
 destination:
   plugin: entity:node
@@ -192,13 +191,8 @@ process:
   field_cons_score: cons_score
   field_lists: lists
   field_top_10s: top_10s
-  # TODO - apply this to 2016 migration.
   field_spotify_album_id: spotify_album_id
   field_cover_image: cover_image
   field_cover_image_large: cover_image_large
   field_list_rankings: list_rankings
-  #field_spotify_album_id:
-    #plugin: spotify_album_id_processor
-    #source:
-     #- album
-
+  
