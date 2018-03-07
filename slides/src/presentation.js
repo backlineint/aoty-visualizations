@@ -18,12 +18,14 @@ import {
   Image,
   Appear,
   S,
-  Code,
-  Link
+  Link,
+  ComponentPlayground
 } from 'spectacle';
 
 import CodeSlide from 'spectacle-code-slide';
 import Terminal from "spectacle-terminal";
+
+import Album from './components/Album';
 
 // Import theme
 import createTheme from 'spectacle/lib/themes/default';
@@ -111,6 +113,81 @@ const CustomText = styled(Text)`
   margin-bottom: 1.5rem !important;
   color: white !important;
 `;
+
+// Additional styling for album component in slides
+const SlideAlbum = styled.ol`
+  width: 60%;
+  margin: auto;
+`;
+
+const albumCode = (`
+// const warCover = "https://i.scdn.co/image/94ddbce0291c58f6431f52b69820376391c75544";
+render(
+  <Album
+    key="0"
+    artist="Kendrick Lamar"
+    title="DAMN."
+    albumId="4eLPsYPBmXABThSJ821sqY"
+    coverImage="https://i.scdn.co/image/f2e751ee3dbfec80737094585f59a76806a51797"
+    selectAlbum={() => {}}
+    selectedAlbum="0"
+    activeAlbum={true}
+  />
+);
+`).trim()
+
+const stateCode =(`
+class ControlPanel extends React.Component {
+  constructor() {
+    super();
+
+    const selectedSort = 'field_cons_score';
+    const selectedList = 'none';
+    
+    this.state = {
+      selectedSort,
+      selectedList
+    };
+
+    this.handleSortChange = this.handleSortChange.bind(this);
+    this.handleListChange = this.handleListChange.bind(this);
+  }
+
+  handleSortChange(e) {
+    this.setState({
+      selectedSort: e.target.value,
+      // selectedList: 'none'
+    });
+  }
+
+  handleListChange(e) {
+    this.setState({
+      selectedList: e.target.value
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>Super Simple Control Panel</h2>
+        <p>this.state.selectedSort: {this.state.selectedSort}</p>
+        <p>this.state.selectedList: {this.state.selectedList}</p>
+        <select value={this.state.selectedSort} onChange={this.handleSortChange}>
+          <option value="field_avg">Average</option>
+          <option value="field_cons_score">Consensus Score</option>
+        </select>
+        <select value={this.state.selectedList} onChange={this.handleListChange}>
+          <option value="none">None</option>
+          <option value="rolling_stone">Rolling Stone</option>
+        </select>
+      </div>
+    );
+  }
+}
+render(<ControlPanel />);
+`)
+
+
 
 // Todo - start splitting slides out into sections/components.
 
@@ -372,7 +449,7 @@ export default class Presentation extends React.Component {
         >
           <Heading>The Flavors</Heading>
           <List>
-            <CustomListItem><S type="bold" textColor="tertiary">Fully Coupled</S> - All Drupal all the time, baby</CustomListItem>
+            <CustomListItem><S type="bold" textColor="tertiary">Coupled</S> - All Drupal all the time, baby</CustomListItem>
             <Appear><CustomListItem><S type="bold" textColor="tertiary">Progressively Decoupled</S> - Drupal with strategically sprinkled JavaScript flavor</CustomListItem></Appear>
             <Appear><CustomListItem><S type="bold" textColor="tertiary">Fully Decoupled</S> - JS framework of choice is in control and communicates with Drupal as necessary for content</CustomListItem></Appear>
           </List>
@@ -387,22 +464,17 @@ export default class Presentation extends React.Component {
 
         <Slide
           bgColor="secondary"
-          transition={['zoom']}
-          notes="..."
-        >
-          <Image src={images.flowChartTop} />
-        </Slide>
-
-        <Slide
-          bgColor="secondary"
-          transition={['zoom']}
           notes="..."
         >
           <Image src={images.flowChartMiddle} />
         </Slide>
 
         <Slide>
-          <Heading>I went with...</Heading>
+          <Heading>I went with fully decoupled...</Heading>
+          <BigList>
+            <ListItem>Reason</ListItem>
+            <ListItem>Reason 2</ListItem>
+          </BigList>
         </Slide>
 
         <Slide
@@ -446,30 +518,6 @@ export default class Presentation extends React.Component {
             </Fill>
           </Layout>
           <Text textColor="primary" textAlign="left" margin="0 0 0 8%">* Also Headless Lightning</Text>
-        </Slide>
-
-        <Slide
-          notes="Things they have in common...
-          Contenta's API is focused around content models and the API
-          Reservoir is stripped down to the bare essentials."
-        >
-          <Heading>API Focused Admin UIs</Heading>
-          <Image src={images.contentaMenu} />
-          <Image src={images.reservoirMenu} />
-        </Slide>
-
-        <Slide
-          notes="Self documenting API via ReDoc"
-        >
-          <Heading>Automatic API Documentation</Heading>
-          <Image src={images.apiDoc} />
-        </Slide>
-
-        <Slide
-          notes="Oh yeah, they expose APIs too"
-        >
-          <Heading>JSON API</Heading>
-          <Image src={images.postmanResponse} />
         </Slide>
 
         <Slide
@@ -537,29 +585,32 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          bgColor="secondary"
-          notes="Looking back at this slide, things go left to right in order of flexibility and complexity"
+          notes="Things they have in common...
+          Contenta's API is focused around content models and the API
+          Reservoir is stripped down to the bare essentials."
         >
-          <Layout>
-            <Fill>
-              <Heading caps>Reservoir</Heading>
-              <Image src={images.reservoirLogo} />
-            </Fill>
-            <Fill>
-              <Heading caps>Contenta</Heading>
-              <Image src={images.contentaLogo} />
-            </Fill>
-            <Fill>
-              <Heading caps>Drupal</Heading>
-              <Image src={images.d8} />
-            </Fill>
-          </Layout>
-          <Text textColor="primary" textAlign="left" margin="0 0 0 8%">* Also Headless Lightning</Text>
+          <Heading>API Focused Admin UIs</Heading>
+          <Image src={images.contentaMenu} />
+          <Image src={images.reservoirMenu} />
+        </Slide>
+
+        <Slide
+          notes="Self documenting API via ReDoc"
+        >
+          <Heading>Automatic API Documentation</Heading>
+          <Image src={images.apiDoc} />
+        </Slide>
+
+        <Slide
+          notes="Oh yeah, they expose APIs too"
+        >
+          <Heading>JSON API</Heading>
+          <Image src={images.postmanResponse} />
         </Slide>
 
         <Slide
           bgColor="secondary"
-          notes="We also need to evaluate these things based on their slogans..."
+          notes=""
         >
           <Layout>
             <Fill>
@@ -581,7 +632,7 @@ export default class Presentation extends React.Component {
           transition={['slide']}
           notes="TODO - Style quote to make side line white"
         >
-          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Migrate to the Rescue</Heading>
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Migrating Our Data</Heading>
           <Layout>
             <Fill>
               <BlockQuote textColor="secondary">
@@ -633,13 +684,13 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          notes="todo: fix the code portion - style and indent."
+          notes="Note about drupal config:export --remove-uuid --remove-config-hash
+          todo: fix the code portion - style and indent."
         >
           <Heading>Drupal Migrate to the Rescue!</Heading>
           <BigList>
             <ListItem>Created custom migrate module</ListItem>
             <ListItem>Installs Album content type.</ListItem>
-            <ListItem><Code>drupal config:export --remove-uuid --remove-config-hash</Code></ListItem>
             <ListItem>Pulls data directly from Google Spreadsheet using migrate_plus JSON</ListItem>
             <ListItem>Augments with data from Spotify API</ListItem>
           </BigList>
@@ -685,7 +736,7 @@ export default class Presentation extends React.Component {
           // eslint-disable-next-line import/no-webpack-loader-syntax
           code={require("raw-loader!./assets/code/album_source_plugin.example")}
           ranges={[
-            { loc: [0, 3], title: "AlbumSourcePlugin.php", note: "Our custom row plugin - mainly exists to interact with the Spotify API during import" },
+            { loc: [0, 3], title: "AlbumSourcePlugin.php", note: "Our custom source plugin - mainly exists to interact with the Spotify API during import" },
             { loc: [0, 7], title: "AlbumSourcePlugin.php", note: "Spotify Web API PHP - https://github.com/jwilsson/spotify-web-api-php" },
             { loc: [0, 22], title: "AlbumSourcePlugin.php", note: "Extend URL source plugin and implement prepareRow()" },
             { loc: [0, 22], title: "AlbumSourcePlugin.php", note: "Extend URL source plugin and implement prepareRow()" },
@@ -697,27 +748,6 @@ export default class Presentation extends React.Component {
           ]}
           notes=""
         />
-
-        <Slide
-          notes=""
-        >
-          <Heading>Run the migration via drush</Heading>
-          <Terminal title="docroot --- -bash" output={[
-              "drush en -y aoty_migrate",
-              "The following extensions will be enabled: aoty_migrate, migrate_tools,",
-              "migrate_plus, migrate",
-              "Do you really want to continue? (y/n): y",
-              "aoty_migrate was enabled successfully.         [ok]",
-              "migrate was enabled successfully.              [ok]",
-              "migrate_plus was enabled successfully.         [ok]",
-              "migrate_tools was enabled successfully.         [ok]",
-              "migrate_tools defines the following permissions: administer migrations",
-              "drush migrate-import album2017 -y",
-              "Processed 550 items (550 created, 0 updated, 0 failed, 0 ignored)",
-              "- done with 'album2017'",
-              ]}
-            />
-        </Slide>
 
         <Slide
           notes=""
@@ -789,19 +819,74 @@ export default class Presentation extends React.Component {
           // eslint-disable-next-line import/no-webpack-loader-syntax
           code={require("raw-loader!./assets/code/fetch.example")}
           ranges={[
-            { loc: [0, 18], title: "Loading Data with Fetch", note: "Lives in react-app/src/utilities" },
+            { loc: [0, 1], title: "Loading JSON API Data with Fetch", note: "Utility function that takes an endpoint url and defines an array for albums" },
+            { loc: [0, 2], title: "Loading JSON API Data with Fetch", note: "Fetch API calls the endpoint and returns a promise with the response" },
+            { loc: [0, 3], title: "Loading JSON API Data with Fetch", note: "Chaining promises together - the first resolves with the json data from the response" },
+            { loc: [0, 12], title: "Loading JSON API Data with Fetch", note: "The second promise..." },
+            { loc: [0, 18], title: "Loading JSON API Data with Fetch", note: "And we handle any potential errors (probably not enough of them...)" },
           ]}
-          notes=""
+          notes="Some ES6 Here and from this point on..."
         />
 
         <Slide
-          notes="Props are external forces acting on a component. Like your mom
+          notes="If you wanted to render our album component, here is what it might look like.
+          In the render function we have some JSX which lets you write html like markup in Javascript.
+          It also allows you to render custom JSX tags you've created, like our album here.
+          It takes a number of props which are passed to the component. These could be static values, could be vraiables, and could be even be 
+          functions. I can go ahead and change this to my favorite album of the year for example.
+          This also shows that if the props for a compnent change, it is re-rendered
+          http://lucybain.com/blog/2017/react-js-when-to-rerender/"
+        >
+          <Heading>Album Component</Heading>
+          <ComponentPlayground
+            theme="light"
+            scope={{Album: Album}}
+            code={albumCode}
+          />
+        </Slide>
+
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/component.example")}
+          ranges={[
+            { loc: [0, 4], title: "Defining Our Album Component", note: "Import react and extend React.Component" },
+            { loc: [0, 7], title: "Defining Our Album Component", note: "Render method returns JSX" },
+            { loc: [4, 27], note: "Have some logic here to return different version of component if cover image exists" },
+            { loc: [7, 12], note: "Think of <AlbumRow> as another custom component - we'll take a closer look in a bit " },
+            { loc: [27, 42], note: "Render the version of the album without an image" },
+            { loc: [45, 55], note: "Validating our props and exporting the component" },
+          ]}
+          notes="Let's look a little more closely about how this album component came to be"
+        />
+
+        <Slide
+          notes="React components also have the concept of state which is data managed 
+          within the component.
+          Control panel as an example of state.  Not sure if this should be a code slide, 
+          or a simplified component playground.  Maybe simplfied component playground.
+          Note about passing function into component."
+        >
+          <Heading>Component State</Heading>
+          <ComponentPlayground
+            theme="light"
+            code={stateCode}
+            style={{color: "black"}}
+          />
+        </Slide>
+
+        <Slide
+          notes="I found it a bit confusing at first when I should be using props vs state.
+          Here's another way to think about it.
+          Props are external forces acting on a component. Like your mom
           buying you a halloween costume.  You're going to be a ghost. Here's all
           the stuff you need to be a ghost. Cool.  I'm a ghost now.
-          Or maybe use the dinos photo - my neighbor said, we should be inflatable 
+          Or maybe use the dinos photo - my neighbor said, we should be inflatable dinos. I said, sure.
           "
         >
-          Props and state slide.  Way in the future.
+          Props slide. 
         </Slide>
 
         <Slide
@@ -815,9 +900,82 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
+          notes="Passing up control panel expanded.  Passing up album data all the way to the top."
+        >
+          Higher order components pattern.
+        </Slide>
+
+        <Slide
+          transition={['slide']}
+          notes="TODO - Style quote to make side line white"
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">CSS in JS</Heading>
+          <Layout>
+            <Fill>
+              <BlockQuote textColor="secondary">
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>  
+                <Cite>Jay-Z - Something</Cite>
+                <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: 4:44 (#16 of 2017)</Text>
+              </BlockQuote>
+            </Fill>
+            <Fill>
+              <Image src={albums.jayZ} />
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide>
+          Saw this - style =
+          Colin head in hand pic
+          There are many alternatives, glamor, can still import a css file.  But I like styled components.
+          Show the truth of the album component.
+          Seperation of concerns image.
+          Component Playground to show what props in a styled component can do.
+        </Slide>
+
+        <Slide>
+          Jamstack
+          Think bout static.
+        </Slide>
+
+        <Slide>
+          All the odds and ends.
+        </Slide>
+
+        <Slide>
+          Did we need Drupal?
+        </Slide>
+
+        <Slide
           notes="spotify playlist with all songs referenced in slides, and then some of my other favorites from 2017"
         >
           Spotify Playlist
+        </Slide>
+
+        <Slide>
+          Save for later
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+          notes="Now that we know how we're going to get data into our app, let's zoom in a bit and look
+          at a custom React component. In this case the album component"
+        >
+          <Heading>Album Component</Heading>
+          <SlideAlbum>
+            <Album
+              key="0"
+              artist="Kendrick Lamar"
+              title="DAMN."
+              albumId="4eLPsYPBmXABThSJ821sqY"
+              coverImage="https://i.scdn.co/image/f2e751ee3dbfec80737094585f59a76806a51797"
+              selectAlbum={function(){}}
+              selectedAlbum="0"
+              activeAlbum={true}
+            />
+          </SlideAlbum>
         </Slide>
 
       </Deck>

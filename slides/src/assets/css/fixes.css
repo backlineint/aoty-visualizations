@@ -2,3 +2,36 @@
   color: black !important;
   border: 10px solid #03A9FC !important;
 }
+
+/* Styles from Blueprint Card Components */
+.pt-card {
+  border-radius: 3px;
+  -webkit-box-shadow: 0 0 0 1px rgba(16,22,26,.15), 0 0 0 rgba(16,22,26,0), 0 0 0 rgba(16,22,26,0);
+  box-shadow: 0 0 0 1px rgba(16,22,26,.15), 0 0 0 rgba(16,22,26,0), 0 0 0 rgba(16,22,26,0);
+  background-color: #fff;
+  padding: 20px;
+  -webkit-transition: -webkit-transform .2s cubic-bezier(.4,1,.75,.9),-webkit-box-shadow .2s cubic-bezier(.4,1,.75,.9);
+  transition: -webkit-transform .2s cubic-bezier(.4,1,.75,.9),-webkit-box-shadow .2s cubic-bezier(.4,1,.75,.9);
+  -o-transition: transform .2s cubic-bezier(.4,1,.75,.9),box-shadow .2s cubic-bezier(.4,1,.75,.9);
+  transition: transform .2s cubic-bezier(.4,1,.75,.9),box-shadow .2s cubic-bezier(.4,1,.75,.9);
+  transition: transform .2s cubic-bezier(.4,1,.75,.9),box-shadow .2s cubic-bezier(.4,1,.75,.9),-webkit-transform .2s cubic-bezier(.4,1,.75,.9),-webkit-box-shadow .2s cubic-bezier(.4,1,.75,.9);
+}
+
+.pt-card.pt-interactive:hover {
+  -webkit-box-shadow: 0 0 0 1px rgba(16,22,26,.1), 0 2px 4px rgba(16,22,26,.2), 0 8px 24px rgba(16,22,26,.2);
+  box-shadow: 0 0 0 1px rgba(16,22,26,.1), 0 2px 4px rgba(16,22,26,.2), 0 8px 24px rgba(16,22,26,.2);
+  cursor: pointer;
+}
+
+.pt-card h4 {
+  color: #182026;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  padding: 0;
+  line-height: .9em;
+}
+
+.react-live-preview {
+  color: black;
+}
