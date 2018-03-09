@@ -1,5 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
+
+const AlbumRow = styled.div`
+	margin-top: 1rem;
+	:first-child {
+	  margin-top: .05rem;
+	}
+	:last-child {
+	  margin-bottom: 1rem;
+	}
+
+  ${props => props.activeAlbum && css`
+    border: 1px solid dodgerblue;
+  `}
+`;
+
+const Number = styled.li`
+	margin-left: 1rem;
+	line-height: 1.25;
+  font-size: 16px;
+`;
+const AlbumSection = styled.div`
+	display: inline-block;
+	margin-left: .5rem;
+	margin-right: .5rem;
+	img {
+	  border: 1px solid dodgerblue;
+	}
+	div {
+	  color: dodgerblue;
+	}
+	h4 {
+	  margin-bottom: 5px;
+	}
+`;
 
 class Album extends React.Component {
   render() {

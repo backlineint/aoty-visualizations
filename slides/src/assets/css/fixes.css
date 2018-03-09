@@ -35,3 +35,7 @@
 .react-live-preview {
   color: black;
 }
+
+.react-live-preview li {
+  color: white;
+}

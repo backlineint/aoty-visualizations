@@ -31,6 +31,7 @@ import Album from './components/Album';
 import createTheme from 'spectacle/lib/themes/default';
 
 import './assets/css/fixes.css';
+import './assets/css/emoji.css'; // https://afeld.github.io/emoji-css/
 
 // Require CSS
 require('normalize.css');
@@ -61,7 +62,11 @@ const images = {
   sheetsResponse: require('./assets/sheets-response.png'),
   migrateContent: require('./assets/migrate_content.png'),
   drupalAlbum: require('./assets/drupal_album.png'),
-  aotyApp: require('./assets/aoty_app.png')
+  aotyApp: require('./assets/aoty_app.png'),
+  dinos: require('./assets/dinos.jpg'),
+  car: require('./assets/car.jpg'),
+  colin: require('./assets/colin.jpg'),
+  concerns: require('./assets/concerns.png'),
 };
 
 const albums = {
@@ -114,10 +119,13 @@ const CustomText = styled(Text)`
   color: white !important;
 `;
 
-// Additional styling for album component in slides
-const SlideAlbum = styled.ol`
-  width: 60%;
-  margin: auto;
+const CapHeading = styled(Heading)`
+  text-align: left;
+  color: white !important;
+  font-size: 175px !important;
+  ::first-letter {
+    color: #03A9FC !important;
+  }
 `;
 
 const albumCode = (`
@@ -210,6 +218,7 @@ export default class Presentation extends React.Component {
         >
           <Heading fit>HOT JAMS(tack)</Heading>
           <Heading fit caps textColor="primary">Building a Music Discovery App with Drupal and React</Heading>
+          <Text>Github Link</Text>
         </Slide>
 
         <Slide
@@ -470,10 +479,10 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <Heading>I went with fully decoupled...</Heading>
+          <Heading>I Went With Fully Decoupled</Heading>
           <BigList>
-            <ListItem>Reason</ListItem>
-            <ListItem>Reason 2</ListItem>
+            <Appear><ListItem>Limited editorial needs</ListItem></Appear>
+            <Appear><ListItem>Wanted to go all-in and learn more React</ListItem></Appear>
           </BigList>
         </Slide>
 
@@ -518,6 +527,30 @@ export default class Presentation extends React.Component {
             </Fill>
           </Layout>
           <Text textColor="primary" textAlign="left" margin="0 0 0 8%">* Also Headless Lightning</Text>
+        </Slide>
+
+        <Slide
+          notes="Things they have in common...
+          Contenta's API is focused around content models and the API
+          Reservoir is stripped down to the bare essentials."
+        >
+          <Heading>API Focused Admin UIs</Heading>
+          <Image src={images.contentaMenu} />
+          <Image src={images.reservoirMenu} />
+        </Slide>
+
+        <Slide
+          notes="Self documenting API via ReDoc"
+        >
+          <Heading>Automatic API Documentation</Heading>
+          <Image src={images.apiDoc} />
+        </Slide>
+
+        <Slide
+          notes="Oh yeah, they expose APIs too"
+        >
+          <Heading>JSON API</Heading>
+          <Image src={images.postmanResponse} />
         </Slide>
 
         <Slide
@@ -582,30 +615,6 @@ export default class Presentation extends React.Component {
               <Text>Pray a little harder / work a little smarter...</Text>
             </Fill>
           </Layout>
-        </Slide>
-
-        <Slide
-          notes="Things they have in common...
-          Contenta's API is focused around content models and the API
-          Reservoir is stripped down to the bare essentials."
-        >
-          <Heading>API Focused Admin UIs</Heading>
-          <Image src={images.contentaMenu} />
-          <Image src={images.reservoirMenu} />
-        </Slide>
-
-        <Slide
-          notes="Self documenting API via ReDoc"
-        >
-          <Heading>Automatic API Documentation</Heading>
-          <Image src={images.apiDoc} />
-        </Slide>
-
-        <Slide
-          notes="Oh yeah, they expose APIs too"
-        >
-          <Heading>JSON API</Heading>
-          <Image src={images.postmanResponse} />
         </Slide>
 
         <Slide
@@ -689,8 +698,7 @@ export default class Presentation extends React.Component {
         >
           <Heading>Drupal Migrate to the Rescue!</Heading>
           <BigList>
-            <ListItem>Created custom migrate module</ListItem>
-            <ListItem>Installs Album content type.</ListItem>
+            <ListItem>Created custom migrate module (also installs album content type)</ListItem>
             <ListItem>Pulls data directly from Google Spreadsheet using migrate_plus JSON</ListItem>
             <ListItem>Augments with data from Spotify API</ListItem>
           </BigList>
@@ -800,13 +808,13 @@ export default class Presentation extends React.Component {
         >
           <Heading>Create react app</Heading>
           <Terminal title="aoty-visualizations --- -bash" output={[
-              "npx create-react-app my-app",
-              "A bunch of output...",
+              "npm install -g create-react-app",
+              "create-react-app my-app",
+              "===== A bunch of output... =====",
               "cd my-app",
               "npm start",
-              "Webserver output...",
               "npm run build",
-              "# DRAGONS",
+              <div># DRAGONS <i class="em em-dragon"></i><i class="em em-dragon"></i><i class="em em-dragon"></i><i class="em em-dragon"></i><i class="em em-dragon"></i></div>,
               "npm run eject"
               ]}
             />
@@ -886,7 +894,9 @@ export default class Presentation extends React.Component {
           Or maybe use the dinos photo - my neighbor said, we should be inflatable dinos. I said, sure.
           "
         >
-          Props slide. 
+          <Heading>Props are like a Halloween costume</Heading>
+          <Text textColor="secondary">Stay with me on this one...</Text>
+          <Image src={images.dinos} /> 
         </Slide>
 
         <Slide
@@ -896,13 +906,17 @@ export default class Presentation extends React.Component {
           I'm still a punk rock kid. Slide of me with crazy hair.  (I still contend
           that the ska-punk scene in Providence was really great btw.)"
         >
-          State
+          <Heading><i class="em em-rainbow"></i>State Is Inside Your Heart<i class="em em-rainbow"></i></Heading>
+          <Image src={images.car} /> 
         </Slide>
 
         <Slide
-          notes="Passing up control panel expanded.  Passing up album data all the way to the top."
+          notes="Passing up control panel expanded.  Passing up album data all the way to the top.
+          Maybe something here about filtering functions in app? Name drop lodash?
+          TODO - Maybe an example of passing state down."
         >
-          Higher order components pattern.
+          <Heading>Lifting State Up</Heading>
+          <Image src={images.aotyApp} />
         </Slide>
 
         <Slide
@@ -926,56 +940,184 @@ export default class Presentation extends React.Component {
           </Layout>
         </Slide>
 
-        <Slide>
-          Saw this - style =
-          Colin head in hand pic
-          There are many alternatives, glamor, can still import a css file.  But I like styled components.
-          Show the truth of the album component.
-          Seperation of concerns image.
-          Component Playground to show what props in a styled component can do.
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/control_panel.example")}
+          ranges={[
+            { loc: [0, 9], title: "How Do I Style This Stuff?", note: "You could just import a regular old CSS file" },
+            { loc: [83, 97], note: "And then add classes with the className prop" },
+          ]}
+          notes="Let's look a little more closely about how this album component came to be"
+        />
+
+        <Slide
+          notes="Why the hell would you do that, I asked."
+        >
+          <Heading>But all the cool kids are writing CSS in JS</Heading>
+          <Appear><Image src={images.colin} width="50%"/></Appear>
+        </Slide>
+
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/styled.example")}
+          ranges={[
+            { loc: [0, 3], title: "Styled Components", note: "Import styled components" },
+            { loc: [4 , 17], title: "Styled Components", note: "Define styles inside your component, with many sass-like niceties" },
+            { loc: [13, 16], note: "Adapt styles based on props." },
+            { loc: [42, 47], note: "Use your styled component in JSX like any other custom component." },
+          ]}
+          notes="Let's look a little more closely about how this album component came to be"
+        />
+
+        <Slide
+          bgColor="secondary"
+          notes="Todo: Maybe follow with a code slide to show what styled components can do..."
+        >
+          <Image src={images.concerns} />
+        </Slide>
+
+        <Slide
+          transition={['slide']}
+          notes="TODO - Style quote to make side line white"
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Building and Deploying</Heading>
+          <Layout>
+            <Fill>
+              <BlockQuote textColor="secondary">
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>  
+                <Cite>Jay-Z - Something</Cite>
+                <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: 4:44 (#16 of 2017)</Text>
+              </BlockQuote>
+            </Fill>
+            <Fill>
+              <Image src={albums.jayZ} />
+            </Fill>
+          </Layout>
         </Slide>
 
         <Slide>
-          Jamstack
-          Think bout static.
+          <Heading>JAM Stack</Heading>
+          <Appear><CapHeading>JavaScript</CapHeading></Appear>
+          <Appear><CapHeading>APIs</CapHeading></Appear>
+          <Appear><CapHeading>Markup</CapHeading></Appear>
+        </Slide>
+
+        <Slide>
+          <Heading>Our Hot JAMS(Tack)</Heading>
+          <BigList>
+            <Appear><ListItem><S type="bold" textColor="tertiary">JavaScript</S> - React on client side</ListItem></Appear>
+            <Appear><ListItem><S type="bold" textColor="tertiary">APIs</S> - Drupal - hosted anywhere that can Drupal</ListItem></Appear>
+            <Appear><ListItem><S type="bold" textColor="tertiary">Markup</S> - Production bundle hosted on GitHub Pages. Not so static, more SPA.</ListItem></Appear>
+          </BigList>
+        </Slide>
+
+        <Slide>
+          <Heading>Static Markup</Heading>
+          <Heading textColor="secondary">The secret sauce of the JAM Stack</Heading>
+          <CustomText>(think static site generators like Gatsby)</CustomText>
+          <Appear><CustomText>Could more of this app be static?</CustomText></Appear>
+          <Appear><CustomText>Could more of your app be static?</CustomText></Appear>
         </Slide>
 
         <Slide>
           All the odds and ends.
         </Slide>
 
+        <Slide
+          transition={['slide']}
+          notes="TODO - Style quote to make side line white"
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">The OOZ</Heading>
+          <Layout>
+            <Fill>
+              <BlockQuote textColor="secondary">
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>  
+                <Cite>Jay-Z - Something</Cite>
+                <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: 4:44 (#16 of 2017)</Text>
+              </BlockQuote>
+            </Fill>
+            <Fill>
+              <Image src={albums.jayZ} />
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          notes="Maybe just cut this?"
+        >
+          <Heading>What I ignored</Heading>
+          <BigList>
+            <ListItem>Routing</ListItem>
+            <ListItem>Authentication</ListItem>
+          </BigList>
+          <Heading>What I'd do differently</Heading>
+          <BigList>
+            <ListItem>Reducing Client Side Load / More Frequent API Calls</ListItem>
+            <ListItem>State management with Redux</ListItem>
+          </BigList>
+        </Slide>  
+
+        <Slide
+          transition={['slide']}
+          notes="TODO - Style quote to make side line white"
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Melodrama</Heading>
+          <Layout>
+            <Fill>
+              <BlockQuote textColor="secondary">
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>
+                <Quote textColor="secondary">...</Quote>  
+                <Cite>Jay-Z - Something</Cite>
+                <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: 4:44 (#16 of 2017)</Text>
+              </BlockQuote>
+            </Fill>
+            <Fill>
+              <Image src={albums.jayZ} />
+            </Fill>
+          </Layout>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+        >
+          <Heading caps fit>Did we need Drupal</Heading>
+          <Heading caps fit>For This Project?</Heading>
+        </Slide>
+
         <Slide>
-          Did we need Drupal?
+          <Heading caps fit>No.</Heading>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+        >
+          <Heading textColor="primary">but....</Heading>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+        >
+          <Heading caps fit>Yes.</Heading>
         </Slide>
 
         <Slide
           notes="spotify playlist with all songs referenced in slides, and then some of my other favorites from 2017"
         >
-          Spotify Playlist
-        </Slide>
-
-        <Slide>
-          Save for later
-        </Slide>
-
-        <Slide
-          bgColor="secondary"
-          notes="Now that we know how we're going to get data into our app, let's zoom in a bit and look
-          at a custom React component. In this case the album component"
-        >
-          <Heading>Album Component</Heading>
-          <SlideAlbum>
-            <Album
-              key="0"
-              artist="Kendrick Lamar"
-              title="DAMN."
-              albumId="4eLPsYPBmXABThSJ821sqY"
-              coverImage="https://i.scdn.co/image/f2e751ee3dbfec80737094585f59a76806a51797"
-              selectAlbum={function(){}}
-              selectedAlbum="0"
-              activeAlbum={true}
-            />
-          </SlideAlbum>
+          <Heading>Questions?</Heading>
+          <Heading>Feedback</Heading>
+          <Heading>Playlist:</Heading>
+          <Heading>Thanks!</Heading>
         </Slide>
 
       </Deck>
