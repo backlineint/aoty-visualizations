@@ -214,7 +214,7 @@ class ControlPanel extends React.Component {
   render() {
     return (
       <div>
-        <h2>Super Simple Control Panel</h2>
+        <h2>Simplified Control Panel</h2>
         <p>this.state.selectedSort: {this.state.selectedSort}</p>
         <p>this.state.selectedList: {this.state.selectedList}</p>
         <select value={this.state.selectedSort} onChange={this.handleSortChange}>
@@ -298,7 +298,7 @@ export default class Presentation extends React.Component {
               <Image
                 src={images.clientList}
                 width="60%"
-                margin="30px 0 0 100px"
+                margin="30px 0 0 20%"
               />
             </Fill>
             <Fill>
@@ -509,13 +509,6 @@ export default class Presentation extends React.Component {
 
         <Slide
           bgColor="secondary"
-          notes="Holy flow chart."
-        >
-          <Image src={images.flowChart} />
-        </Slide>
-
-        <Slide
-          bgColor="secondary"
           notes="..."
         >
           <Image src={images.flowChartMiddle} />
@@ -632,7 +625,7 @@ export default class Presentation extends React.Component {
             <CustomText lightBackground>You might reach for Contenta if...</CustomText>
               <BigList lightBackground>
                 <ListItem>You want to use vocabularies, comments, media</ListItem>
-                <ListItem>You want a more drupal like approach to extending and customizing</ListItem>
+                <ListItem>You want a more Drupal like approach to extending and customizing</ListItem>
                 <ListItem>You want example content and consumers to experiment with</ListItem>
               </BigList>
             </Fill>
@@ -778,9 +771,7 @@ export default class Presentation extends React.Component {
             { loc: [0, 19], title: "migrate_plus.migration.album2017.yml", note: "Our big ugly google sheets json url" },
             { loc: [0, 21], title: "migrate_plus.migration.album2017.yml", note: "Traverse to feed/entry to find all items to import" },
             { loc: [20, 70], note: "Define fields and select them using Google's ugly field names" },
-            { loc: [168, 174], note: "Use the spreadsheet's ID to idenfity items in the migration source map" },
             { loc: [174, 180], note: "Save these as album content types" },
-            { loc: [174, 183], note: "Manually set album year" },
             { loc: [174, 197], note: "Map source fields to album node fields" },
           ]}
           notes=""
@@ -796,11 +787,9 @@ export default class Presentation extends React.Component {
             { loc: [0, 3], title: "AlbumSourcePlugin.php", note: "Our custom source plugin - mainly exists to interact with the Spotify API during import" },
             { loc: [0, 7], title: "AlbumSourcePlugin.php", note: "Spotify Web API PHP - https://github.com/jwilsson/spotify-web-api-php" },
             { loc: [0, 22], title: "AlbumSourcePlugin.php", note: "Extend URL source plugin and implement prepareRow()" },
-            { loc: [0, 22], title: "AlbumSourcePlugin.php", note: "Extend URL source plugin and implement prepareRow()" },
             { loc: [17, 34], title: "AlbumSourcePlugin.php", note: "Create an instance of Spotify Web API and get token.  Room for improvement here - could persist session, store API data in config and so on." },
             { loc: [35, 42], title: "AlbumSourcePlugin.php", note: "Search based on album column in spreadsheet to get Spotify album" },
             { loc: [35, 53], title: "AlbumSourcePlugin.php", note: "Queue up Spotify album data for Drupal. Spotify Album ID is especially useful" },
-            { loc: [58, 89], title: "AlbumSourcePlugin.php", note: "Add all rankings to a single field" },
             { loc: [89, 93], title: "AlbumSourcePlugin.php", note: "Return the modified row" },
           ]}
           notes=""
@@ -836,7 +825,7 @@ export default class Presentation extends React.Component {
                 </BlockQuote>
               </Fill>
               <Fill>
-                <Image src={albums.jayZ} />
+                <Image src={albums.jayZ} height="65%" />
               </Fill>
             </Layout>
           </HovCoverLayout>
@@ -880,7 +869,8 @@ export default class Presentation extends React.Component {
             { loc: [0, 1], title: "Loading JSON API Data with Fetch", note: "Utility function that takes an endpoint url and defines an array for albums" },
             { loc: [0, 2], title: "Loading JSON API Data with Fetch", note: "Fetch API calls the endpoint and returns a promise with the response" },
             { loc: [0, 3], title: "Loading JSON API Data with Fetch", note: "Chaining promises together - the first resolves with the json data from the response" },
-            { loc: [0, 12], title: "Loading JSON API Data with Fetch", note: "The second promise..." },
+            { loc: [0, 8], title: "Loading JSON API Data with Fetch", note: "The next adds album data to array and either calls getAllAlbumData recursively (if we have more pages of data)..." },
+            { loc: [0, 12], title: "Loading JSON API Data with Fetch", note: "...or returns the album data (if we have it all)" },
             { loc: [0, 18], title: "Loading JSON API Data with Fetch", note: "And we log potential errors (probably should do more here...)" },
           ]}
           notes="Some ES6 Here and from this point on..."
@@ -936,34 +926,9 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          notes="I found it a bit confusing at first when I should be using props vs state.
-          Here's another way to think about it.
-          Props are external forces acting on a component. Like your mom
-          buying you a halloween costume.  You're going to be a ghost. Here's all
-          the stuff you need to be a ghost. Cool.  I'm a ghost now.
-          Or maybe use the dinos photo - my neighbor said, we should be inflatable dinos. I said, sure.
-          "
-        >
-          <Heading>Props Are Like A Halloween Costume</Heading>
-          <Text textColor="secondary" margin="0 auto 2rem auto">(Stay with me on this one...)</Text>
-          <Image src={images.dinos} /> 
-        </Slide>
-
-        <Slide
-          notes="State what the component knows to be true about itself. Like how
-          in high school I thought I was a punk rock kid, even though I lived in Cranston
-          Rhode Island. You might give me other props, but until I decide otherwise
-          I'm still a punk rock kid. Slide of me with crazy hair.  (I still contend
-          that the ska-punk scene in Providence was really great btw.)"
-        >
-          <MarginHeading><i class="em em-rainbow"></i> State Is Inside Your Heart <i class="em em-rainbow"></i></MarginHeading>
-          <Image src={images.car} /> 
-        </Slide>
-
-        <Slide
           notes="Passing up control panel expanded.  Passing up album data all the way to the top.
           Maybe something here about filtering functions in app? Name drop lodash?
-          TODO - Maybe an example of passing state down."
+          TODO - Maybe a code example of passing state down. Really want to add this."
         >
           <MarginHeading>Lifting State Up</MarginHeading>
           <Image src={images.state1} height="75vh" />
@@ -1027,7 +992,7 @@ export default class Presentation extends React.Component {
           // eslint-disable-next-line import/no-webpack-loader-syntax
           code={require("raw-loader!./assets/code/styled.example")}
           ranges={[
-            { loc: [0, 3], title: "Styled Components", note: "Import styled components" },
+            { loc: [0, 3], title: "Styled Components", note: "Import styled components library" },
             { loc: [4 , 17], title: "Styled Components", note: "Define styles inside your component, with many sass-like niceties" },
             { loc: [13, 16], note: "Adapt styles based on props." },
             { loc: [42, 47], note: "Use your styled component in JSX like any other custom component." },
