@@ -78,6 +78,8 @@ class App extends Component {
   componentWillMount() {
     // Need to add albums to state after the constructor because data is loaded async.
     const albumPromise = getAllAlbumData(`http://backlineint.webfactional.com/jsonapi/node/album`);
+    // If we need a local version for offline demos
+    //const albumPromise = getAllAlbumData(`http://aoty-reservoir.dd:8083/jsonapi/node/album`);
 
     // Once the promise is resolved, manipulate the album data and add to state.
     albumPromise.then(albums => {
