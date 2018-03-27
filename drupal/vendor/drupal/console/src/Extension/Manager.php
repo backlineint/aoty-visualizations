@@ -332,7 +332,7 @@ class Manager
         $module = $this->getModule($moduleName);
         $modulePath = $module->getPath();
         if ($moduleFile) {
-            $this->site->loadLegacyFile($modulePath . '/'. $moduleFile);
+            $this->site->loadLegacyFile($modulePath . '/' . $moduleFile);
         } else {
             $this->site->loadLegacyFile($modulePath . '/' . $module->getName() . '.module');
         }
@@ -352,7 +352,7 @@ class Manager
     {
         $module = $this->getModule($moduleName);
 
-        return $module->getPath() . '/src/Plugin/'.$pluginType;
+        return $module->getPath() . '/src/Plugin/' . $pluginType;
     }
 
     public function getDrupalExtension($type, $name)
@@ -387,7 +387,7 @@ class Manager
             } else {
                 try {
                     $response = $this->httpClient->head('https://www.drupal.org/project/' . $extension);
-                    $header_link = explode(';', $response->getHeader('link'));
+                    $header_link = $response->getHeader('link');
                     if (empty($header_link[0])) {
                         $checkextensions['no_extensions'][] = $extension;
                     } else {

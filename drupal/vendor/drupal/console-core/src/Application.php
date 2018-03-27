@@ -2,6 +2,7 @@
 
 namespace Drupal\Console\Core;
 
+use Drupal\Console\Core\EventSubscriber\RemoveMessagesListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateCountCodeLinesListener;
 use Drupal\Console\Core\Utils\TranslatorManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -10,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Console\Input\ArrayInput;
 use Drupal\Console\Core\EventSubscriber\DefaultValueEventListener;
 use Drupal\Console\Core\EventSubscriber\ShowGenerateChainListener;
 use Drupal\Console\Core\EventSubscriber\ShowTipsListener;
@@ -59,7 +61,7 @@ class Application extends BaseApplication
      * @param string             $version
      */
     public function __construct(
-        ContainerInterface$container,
+        ContainerInterface $container,
         $name,
         $version
     ) {
@@ -111,10 +113,7 @@ class Application extends BaseApplication
             $output->write(sprintf("\033\143"));
         }
 
-        $this->registerGenerators();
-        $this->registerCommands();
-        $this->registerEvents();
-        $this->registerExtendCommands();
+        $this->loadCommands();
 
         /**
          * @var ConfigurationManager $configurationManager
@@ -122,23 +121,10 @@ class Application extends BaseApplication
         $configurationManager = $this->container
             ->get('console.configuration_manager');
 
-        $config = $configurationManager->getConfiguration()
-            ->get('application.extras.config')?:'true';
-        if ($config === 'true') {
-            $this->registerCommandsFromAutoWireConfiguration();
-        }
-
-        $chains = $configurationManager->getConfiguration()
-            ->get('application.extras.chains')?:'true';
-        if ($chains === 'true') {
-            $this->registerChainCommands();
-        }
-
         if (!$this->has($this->commandName)) {
             $isValidCommand = false;
             $config = $configurationManager->getConfiguration();
-            $mappings = $config
-                ->get('application.commands.mappings');
+            $mappings = $config->get('application.commands.mappings');
 
             if (array_key_exists($this->commandName, $mappings)) {
                 $commandNameMap = $mappings[$this->commandName];
@@ -170,6 +156,18 @@ class Application extends BaseApplication
                 );
             }
 
+            $namespaces = $this->getNamespaces();
+            if (in_array($this->commandName, $namespaces)) {
+                $input = new ArrayInput(
+                    [
+                        'command' => 'list',
+                        'namespace' => $this->commandName
+                    ]
+                );
+                $this->commandName = 'list';
+                $isValidCommand = true;
+            }
+
             if (!$isValidCommand) {
                 $io->error(
                     sprintf(
@@ -187,27 +185,66 @@ class Application extends BaseApplication
             $output
         );
 
-        $missingConfigurationFiles =  $configurationManager
-            ->getMissingConfigurationFiles();
-        if ($this->commandName != 'init' && $missingConfigurationFiles) {
-            $io->warning(
-                $this->trans('application.site.errors.missing-config-file')
-            );
-            $io->listing($missingConfigurationFiles);
-            $io->commentBlock(
-                $this->trans(
-                    'application.site.errors.missing-config-file-command'
-                )
-            );
-        }
-        $messages = $messageManager->getMessages();
+        // Propagate Drupal messages.
+        $this->addDrupalMessages($messageManager);
 
-        foreach ($messages as $message) {
-            $type = $message['type'];
-            $io->$type($message['message']);
+        if ($this->showMessages($input)) {
+            $messages = $messageManager->getMessages();
+
+            foreach ($messages as $message) {
+                $showBy = $message['showBy'];
+                if ($showBy!=='all' && $showBy!==$this->commandName) {
+                    continue;
+                }
+                $type = $message['type'];
+                $io->$type($message['message']);
+            }
         }
+
 
         return $code;
+    }
+
+    public function loadCommands()
+    {
+        $this->registerGenerators();
+        $this->registerCommands();
+        $this->registerEvents();
+        $this->registerExtendCommands();
+
+        /**
+         * @var ConfigurationManager $configurationManager
+         */
+        $configurationManager = $this->container
+            ->get('console.configuration_manager');
+
+        $config = $configurationManager->getConfiguration()
+            ->get('application.extras.config')?:'true';
+        if ($config === 'true') {
+            $this->registerCommandsFromAutoWireConfiguration();
+        }
+
+        $chains = $configurationManager->getConfiguration()
+            ->get('application.extras.chains')?:'true';
+        if ($chains === 'true') {
+            $this->registerChainCommands();
+        }
+    }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @return bool
+     */
+    private function showMessages(InputInterface $input)
+    {
+        $format = $input->hasOption('format')?$input->getOption('format'):'txt';
+
+        if ($format !== 'txt') {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -264,6 +301,12 @@ class Application extends BaseApplication
                 new ShowGenerateCountCodeLinesListener(
                     $this->container->get('console.translator_manager'),
                     $this->container->get('console.count_code_lines')
+                )
+            );
+
+            $dispatcher->addSubscriber(
+                new RemoveMessagesListener(
+                    $this->container->get('console.message_manager')
                 )
             );
 
@@ -379,9 +422,10 @@ class Application extends BaseApplication
             ->get('application.commands.aliases')?:[];
 
         $invalidCommands = [];
-        if ($this->container->has('console.invalid_commands')) {
-            $invalidCommands = (array)$this->container
-                ->get('console.invalid_commands');
+        if ($this->container->has('console.key_value_storage')) {
+            $invalidCommands = $this->container
+                ->get('console.key_value_storage')
+                ->get('invalid_commands', []);
         }
 
         foreach ($consoleCommands as $name => $tags) {
@@ -414,6 +458,12 @@ class Application extends BaseApplication
             if (method_exists($command, 'setContainer')) {
                 $command->setContainer(
                     $this->container->get('service_container')
+                );
+            }
+
+            if (method_exists($command, 'setDrupalFinder')) {
+                $command->setDrupalFinder(
+                    $this->container->get('console.drupal_finder')
                 );
             }
 
@@ -457,6 +507,7 @@ class Application extends BaseApplication
             if (!$generator) {
                 continue;
             }
+
             if (method_exists($generator, 'setRenderer')) {
                 $generator->setRenderer(
                     $this->container->get('console.renderer')
@@ -472,6 +523,12 @@ class Application extends BaseApplication
             if (method_exists($generator, 'setCountCodeLines')) {
                 $generator->setCountCodeLines(
                     $this->container->get('console.count_code_lines')
+                );
+            }
+
+            if (method_exists($generator, 'setDrupalFinder')) {
+                $generator->setDrupalFinder(
+                    $this->container->get('console.drupal_finder')
                 );
             }
         }
@@ -585,12 +642,11 @@ class Application extends BaseApplication
             try {
                 $file = $chainCommand['file'];
                 $description = $chainCommand['description'];
-                $placeHolders = $chainCommand['placeholders'];
                 $command = new ChainCustomCommand(
                     $name,
                     $description,
-                    $placeHolders,
-                    $file
+                    $file,
+                    $chainDiscovery
                 );
                 $this->add($command);
             } catch (\Exception $e) {
@@ -608,13 +664,13 @@ class Application extends BaseApplication
             ->loadExtendConfiguration();
     }
 
-
     public function getData()
     {
         $singleCommands = [
             'about',
             'chain',
             'check',
+            'composerize',
             'exec',
             'help',
             'init',
@@ -794,6 +850,47 @@ class Application extends BaseApplication
     public function setContainer($container)
     {
         $this->container = $container;
+    }
+
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * Add Drupal system messages.
+     */
+    protected function addDrupalMessages($messageManager) {
+        if (function_exists('drupal_get_messages')) {
+            $drupalMessages = drupal_get_messages();
+            foreach ($drupalMessages as $type => $messages) {
+                foreach ($messages as $message) {
+                    $method = $this->getMessageMethod($type);
+                    $messageManager->{$method}((string)$message);
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets method name for MessageManager.
+     *
+     * @param string $type
+     *   Type of the message.
+     *
+     * @return string
+     *   Name of the method
+     */
+    protected function getMessageMethod($type) {
+        $methodName = 'info';
+        switch ($type) {
+            case 'error':
+            case 'warning':
+                $methodName = $type;
+                break;
+        }
+
+        return $methodName;
     }
 
     /**

@@ -1,18 +1,18 @@
-description: "Show all tables in a given database."
-help: 'The <info>database:table:debug</info> command helps you debug database tables.'
+description: 'Show all tables in a given database.'
+help: 'The <info>debug:database:table</info> command helps you debug database tables.'
 arguments:
   table: 'Table to debug'
 options:
-  database: "Database key from settings.php"
+  database: 'Database key from settings.php'
 messages:
   table-show: 'Showing tables for "%s" database'
   table: 'Table'
   column: 'Column'
   type: 'Type'
 examples:
-    - description: 'Show all tables on a database'
+    - description: 'Show all tables in a database'
       execution: |
         drupal debug:database:table
-    - description: 'Show fields on the node table or another specified on the argument'
+    - description: 'Show fields in the node table or another specified in the argument'
       execution: |
         drupal debug:database:table node

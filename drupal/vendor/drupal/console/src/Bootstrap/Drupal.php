@@ -13,6 +13,7 @@ use Drupal\Console\Core\Utils\ArgvInputReader;
 use Drupal\Console\Core\Bootstrap\DrupalConsoleCore;
 use Drupal\Console\Core\Utils\DrupalFinder;
 use Drupal\Console\Core\Bootstrap\DrupalInterface;
+use Drupal\Console\Core\Utils\ConfigurationManager;
 
 class Drupal implements DrupalInterface
 {
@@ -24,15 +25,25 @@ class Drupal implements DrupalInterface
     protected $drupalFinder;
 
     /**
+     * @var ConfigurationManager
+     */
+    protected $configurationManager;
+
+    /**
      * Drupal constructor.
      *
      * @param $autoload
      * @param $drupalFinder
+     * @param $configurationManager
      */
-    public function __construct($autoload, DrupalFinder $drupalFinder)
-    {
+    public function __construct(
+        $autoload,
+        DrupalFinder $drupalFinder,
+        ConfigurationManager $configurationManager
+    ) {
         $this->autoload = $autoload;
         $this->drupalFinder = $drupalFinder;
+        $this->configurationManager = $configurationManager;
     }
 
     /**
@@ -129,11 +140,14 @@ class Drupal implements DrupalInterface
                 $io->writeln('➤ Registering dynamic services');
             }
 
+            $configuration = $this->configurationManager->getConfiguration();
+
             $drupalKernel->addServiceModifier(
                 new DrupalServiceModifier(
                     $this->drupalFinder->getComposerRoot(),
                     'drupal.command',
-                    'drupal.generator'
+                    'drupal.generator',
+                    $configuration
                 )
             );
 
@@ -177,13 +191,10 @@ class Drupal implements DrupalInterface
 
             AnnotationRegistry::registerLoader([$this->autoload, "loadClass"]);
 
-            // Load configuration from directory
-            $container->get('console.configuration_manager')
-                ->loadConfiguration($this->drupalFinder->getComposerRoot())
-                ->getConfiguration();
-
-            $configuration = $container->get('console.configuration_manager')
-                ->getConfiguration();
+            $container->set(
+                'console.configuration_manager',
+                $this->configurationManager
+            );
 
             $container->get('console.translator_manager')
                 ->loadCoreLanguage(
@@ -200,6 +211,11 @@ class Drupal implements DrupalInterface
                 );
 
             $container->set(
+                'console.drupal_finder',
+                $this->drupalFinder
+            );
+
+            $container->set(
                 'console.cache_key',
                 $drupalKernel->getContainerKey()
             );
@@ -209,6 +225,14 @@ class Drupal implements DrupalInterface
             $container = $this->bootDrupalConsoleCore();
             $container->set('class_loader', $this->autoload);
 
+            $container->get('console.renderer')
+                ->setSkeletonDirs(
+                    [
+                        $this->drupalFinder->getComposerRoot().DRUPAL_CONSOLE.'/templates/',
+                        $this->drupalFinder->getComposerRoot().DRUPAL_CONSOLE_CORE.'/templates/'
+                    ]
+                );
+
             $notifyErrorCodes = [
                 0,
                 1045,
@@ -217,10 +241,15 @@ class Drupal implements DrupalInterface
             ];
 
             if (in_array($e->getCode(), $notifyErrorCodes)) {
+                /**
+                 * @var \Drupal\Console\Core\Utils\MessageManager $messageManager
+                 */
                 $messageManager = $container->get('console.message_manager');
                 $messageManager->error(
                     $e->getMessage(),
-                    $e->getCode()
+                    $e->getCode(),
+                    'list',
+                    'site:install'
                 );
             }
 
@@ -237,7 +266,8 @@ class Drupal implements DrupalInterface
     {
         $drupal = new DrupalConsoleCore(
             $this->drupalFinder->getComposerRoot(),
-            $this->drupalFinder->getDrupalRoot()
+            $this->drupalFinder->getDrupalRoot(),
+            $this->drupalFinder
         );
 
         return $drupal->boot();
