@@ -11,6 +11,7 @@
 
 namespace Symfony\Bridge\PsrHttpMessage\Tests\Factory;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 /**
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
-class DiactorosFactoryTest extends \PHPUnit_Framework_TestCase
+class DiactorosFactoryTest extends TestCase
 {
     private $factory;
     private $tmpDir;
@@ -68,6 +69,8 @@ class DiactorosFactoryTest extends \PHPUnit_Framework_TestCase
                 'REQUEST_METHOD' => 'POST',
                 'HTTP_HOST' => 'dunglas.fr',
                 'HTTP_X_SYMFONY' => '2.8',
+                'REQUEST_URI' => '/testCreateRequest?foo=1&bar[baz]=42',
+                'QUERY_STRING' => 'foo=1&bar[baz]=42',
             ),
             'Content'
         );
@@ -79,6 +82,9 @@ class DiactorosFactoryTest extends \PHPUnit_Framework_TestCase
         $queryParams = $psrRequest->getQueryParams();
         $this->assertEquals('1', $queryParams['foo']);
         $this->assertEquals('42', $queryParams['bar']['baz']);
+
+        $requestTarget = $psrRequest->getRequestTarget();
+        $this->assertEquals('/testCreateRequest?foo=1&bar[baz]=42', $requestTarget);
 
         $parsedBody = $psrRequest->getParsedBody();
         $this->assertEquals('Kévin Dunglas', $parsedBody['twitter']['@dunglas']);
@@ -143,7 +149,11 @@ class DiactorosFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Response content.', $psrResponse->getBody()->__toString());
         $this->assertEquals(202, $psrResponse->getStatusCode());
         $this->assertEquals(array('2.8'), $psrResponse->getHeader('X-Symfony'));
-        $this->assertEquals(array('city=Lille; expires=Wed, 13-Jan-2021 22:23:01 GMT; path=/; httponly'), $psrResponse->getHeader('Set-Cookie'));
+
+        $cookieHeader = $psrResponse->getHeader('Set-Cookie');
+        $this->assertInternalType('array', $cookieHeader);
+        $this->assertCount(1, $cookieHeader);
+        $this->assertRegExp('{city=Lille; expires=Wed, 13-Jan-2021 22:23:01 GMT;( max-age=\d+;)? path=/; httponly}', $cookieHeader[0]);
     }
 
     public function testCreateResponseFromStreamed()

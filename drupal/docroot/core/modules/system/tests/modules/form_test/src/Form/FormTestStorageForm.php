@@ -13,6 +13,8 @@ use Drupal\Core\Form\FormStateInterface;
  * in the form storage and have to be present during any step. By setting the
  * request parameter "cache" the form can be tested with caching enabled, as
  * it would be the case, if the form would contain some #ajax callbacks.
+ *
+ * @internal
  */
 class FormTestStorageForm extends FormBase {
 
@@ -86,7 +88,7 @@ class FormTestStorageForm extends FormBase {
     //   that issue.
     if ($this->getRequest()->get('immutable')) {
       $form_state->addBuildInfo('immutable', TRUE);
-      if ($this->getRequest()->get('cache') && $this->getRequest()->isMethodSafe()) {
+      if ($this->getRequest()->get('cache') && $this->getRequest()->isMethodCacheable()) {
         $form_state->setRequestMethod('FAKE');
         $form_state->setCached();
       }

@@ -10,7 +10,7 @@ use Drupal\migrate_drupal\Plugin\migrate\source\DrupalSqlBase;
  *
  * @MigrateSource(
  *   id = "d6_upload",
- *   source_provider = "upload"
+ *   source_module = "upload"
  * )
  */
 class Upload extends DrupalSqlBase {
@@ -29,6 +29,7 @@ class Upload extends DrupalSqlBase {
       ->fields('u', ['nid', 'vid']);
     $query->innerJoin('node', 'n', static::JOIN);
     $query->addField('n', 'type');
+    $query->addField('n', 'language');
     return $query;
   }
 
@@ -54,6 +55,7 @@ class Upload extends DrupalSqlBase {
       'nid' => $this->t('The node Id.'),
       'vid' => $this->t('The version Id.'),
       'type' => $this->t('The node type'),
+      'language' => $this->t('The node language.'),
       'description' => $this->t('The file description.'),
       'list' => $this->t('Whether the list should be visible on the node page.'),
       'weight' => $this->t('The file weight.'),

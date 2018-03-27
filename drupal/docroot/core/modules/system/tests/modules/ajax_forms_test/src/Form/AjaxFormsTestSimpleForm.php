@@ -8,6 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Form builder: Builds a form that triggers a simple AJAX callback.
+ *
+ * @internal
  */
 class AjaxFormsTestSimpleForm extends FormBase {
 
@@ -31,7 +33,8 @@ class AjaxFormsTestSimpleForm extends FormBase {
       '#options' => [
         'red' => 'red',
         'green' => 'green',
-        'blue' => 'blue'],
+        'blue' => 'blue',
+      ],
       '#ajax' => [
         'callback' => [$object, 'selectCallback'],
       ],
@@ -107,7 +110,6 @@ class AjaxFormsTestSimpleForm extends FormBase {
       '#group' => 'nested_group',
       '#title' => $this->t('Another AJAX checkbox in a nested group'),
     ];
-
 
     return $form;
   }

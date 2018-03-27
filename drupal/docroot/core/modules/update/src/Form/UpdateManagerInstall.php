@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Configure update settings for this site.
+ *
+ * @internal
  */
 class UpdateManagerInstall extends FormBase {
 
@@ -93,7 +95,7 @@ class UpdateManagerInstall extends FormBase {
     $form['project_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Install from a URL'),
-      '#description' => $this->t('For example: %url', ['%url' => 'http://ftp.drupal.org/files/projects/name.tar.gz']),
+      '#description' => $this->t('For example: %url', ['%url' => 'https://ftp.drupal.org/files/projects/name.tar.gz']),
     ];
 
     $form['information'] = [
@@ -212,7 +214,7 @@ class UpdateManagerInstall extends FormBase {
       return;
     }
 
-    $project_real_location = drupal_realpath($project_location);
+    $project_real_location = \Drupal::service('file_system')->realpath($project_location);
     $arguments = [
       'project' => $project,
       'updater_name' => get_class($updater),

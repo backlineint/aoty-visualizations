@@ -104,6 +104,7 @@ class ContextTest extends UnitTestCase {
     $container = new Container();
     $cache_context_manager = $this->getMockBuilder('Drupal\Core\Cache\CacheContextsManager')
       ->disableOriginalConstructor()
+      ->setMethods(['validateTokens'])
       ->getMock();
     $container->set('cache_contexts_manager', $cache_context_manager);
     $cache_context_manager->expects($this->any())
@@ -168,4 +169,4 @@ class ContextTest extends UnitTestCase {
 /**
  * Test interface used for mocking.
  */
-interface TypedDataCacheableDependencyInterface extends CacheableDependencyInterface, TypedDataInterface { }
+interface TypedDataCacheableDependencyInterface extends CacheableDependencyInterface, TypedDataInterface {}

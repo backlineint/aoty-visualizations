@@ -55,7 +55,7 @@ class NodeRevisionsUiTest extends NodeTestBase {
 
     // Uncheck the create new revision checkbox and save the node.
     $edit = ['revision' => FALSE];
-    $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, t('Save and keep published'));
+    $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, t('Save'));
 
     // Load the node again and check the revision is the same as before.
     $node_storage->resetCache([$node->id()]);
@@ -68,7 +68,7 @@ class NodeRevisionsUiTest extends NodeTestBase {
 
     // Submit the form without changing the checkbox.
     $edit = [];
-    $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, t('Save and keep published'));
+    $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, t('Save'));
 
     // Load the node again and check the revision is different from before.
     $node_storage->resetCache([$node->id()]);
@@ -160,10 +160,17 @@ class NodeRevisionsUiTest extends NodeTestBase {
 
     $this->drupalGet('node/' . $node_id . '/revisions');
 
+    // Verify that the latest affected revision having been a default revision
+    // is displayed as the current one.
+    $this->assertNoLinkByHref('/node/' . $node_id . '/revisions/1/revert');
+    $elements = $this->xpath('//tr[contains(@class, "revision-current")]/td/a[1]');
+    // The site may be installed in a subdirectory, so check if the URL is
+    // contained in the retrieved one.
+    $this->assertContains('/node/1', current($elements)->getAttribute('href'));
+
     // Verify that the default revision can be an older revision than the latest
     // one.
-    // Assert that the revisions with translations changes are shown: 1 and 4.
-    $this->assertLinkByHref('/node/' . $node_id . '/revisions/1/revert');
+    // Assert that the revisions with translations changes are shown.
     $this->assertLinkByHref('/node/' . $node_id . '/revisions/4/revert');
 
     // Assert that the revisions without translations changes are filtered out:

@@ -171,7 +171,7 @@ class PagePreviewTest extends NodeTestBase {
 
     // Upload an image.
     $test_image = current($this->drupalGetTestFiles('image', 39325));
-    $edit['files[field_image_0][]'] = drupal_realpath($test_image->uri);
+    $edit['files[field_image_0][]'] = \Drupal::service('file_system')->realpath($test_image->uri);
     $this->drupalPostForm('node/add/page', $edit, t('Upload'));
 
     // Add an alt tag and preview the node.
@@ -316,11 +316,13 @@ class PagePreviewTest extends NodeTestBase {
     $this->assertUrl($node->toUrl());
     $this->assertResponse(200);
 
+    /** @var \Drupal\Core\File\FileSystemInterface $file_system */
+    $file_system = \Drupal::service('file_system');
     // Assert multiple items can be added and are not lost when previewing.
     $test_image_1 = current($this->drupalGetTestFiles('image', 39325));
-    $edit_image_1['files[field_image_0][]'] = drupal_realpath($test_image_1->uri);
+    $edit_image_1['files[field_image_0][]'] = $file_system->realpath($test_image_1->uri);
     $test_image_2 = current($this->drupalGetTestFiles('image', 39325));
-    $edit_image_2['files[field_image_1][]'] = drupal_realpath($test_image_2->uri);
+    $edit_image_2['files[field_image_1][]'] = $file_system->realpath($test_image_2->uri);
     $edit['field_image[0][alt]'] = 'Alt 1';
 
     $this->drupalPostForm('node/add/page', $edit_image_1, t('Upload'));
@@ -427,14 +429,14 @@ class PagePreviewTest extends NodeTestBase {
     $this->assertFieldByName('revision_log[0][value]', $edit['revision_log[0][value]'], 'Revision log field displayed.');
 
     // Save the node after coming back from the preview page so we can create a
-    // forward revision for it.
+    // pending revision for it.
     $this->drupalPostForm(NULL, [], t('Save'));
     $node = $this->drupalGetNodeByTitle($edit[$title_key]);
 
-    // Check that previewing a forward revision of a node works. This can not be
+    // Check that previewing a pending revision of a node works. This can not be
     // accomplished through the UI so we have to use API calls.
     // @todo Change this test to use the UI when we will be able to create
-    // forward revisions in core.
+    // pending revisions in core.
     // @see https://www.drupal.org/node/2725533
     $node->setNewRevision(TRUE);
     $node->isDefaultRevision(FALSE);

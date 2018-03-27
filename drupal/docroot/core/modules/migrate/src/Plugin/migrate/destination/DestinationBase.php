@@ -12,7 +12,12 @@ use Drupal\migrate\Plugin\RequirementsInterface;
 /**
  * Base class for migrate destination classes.
  *
- * @see \Drupal\migrate\Plugin\MigrateDestinationInterface
+ * Migrate destination plugins perfom the import operation of the migration.
+ * Destination plugins extend this abstract base class. A destination plugin
+ * must implement at least fields(), getIds() and import() methods. Destination
+ * plugins can also support rollback operations. For more
+ * information, refer to \Drupal\migrate\Plugin\MigrateDestinationInterface.
+ *
  * @see \Drupal\migrate\Plugin\MigrateDestinationPluginManager
  * @see \Drupal\migrate\Annotation\MigrateDestination
  * @see plugin_api
@@ -107,6 +112,24 @@ abstract class DestinationBase extends PluginBase implements MigrateDestinationI
     // destination and want to make sure we do not delete it on rollback.
     else {
       $this->rollbackAction = $update_action;
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDestinationModule() {
+    if (!empty($this->configuration['destination_module'])) {
+      return $this->configuration['destination_module'];
+    }
+    if (!empty($this->pluginDefinition['destination_module'])) {
+      return $this->pluginDefinition['destination_module'];
+    }
+    if (is_string($this->migration->provider)) {
+      return $this->migration->provider;
+    }
+    else {
+      return reset($this->migration->provider);
     }
   }
 

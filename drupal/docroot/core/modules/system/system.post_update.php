@@ -65,3 +65,49 @@ function system_post_update_hashes_clear_cache() {
 function system_post_update_timestamp_plugins() {
   // Empty post-update hook.
 }
+
+/**
+ * Clear caches to ensure Classy's message library is always added.
+ */
+function system_post_update_classy_message_library() {
+  // Empty post-update hook.
+}
+
+/**
+ * Force field type plugin definitions to be cleared.
+ *
+ * @see https://www.drupal.org/node/2403703
+ */
+function system_post_update_field_type_plugins() {
+  // Empty post-update hook.
+}
+
+/**
+ * Clear caches due to schema changes in core.entity.schema.yml.
+ */
+function system_post_update_field_formatter_entity_schema() {
+  // Empty post-update hook.
+}
+
+/**
+ * Change plugin IDs of actions.
+ */
+function system_post_update_change_action_plugins() {
+  $old_new_action_id_map = [
+    'comment_publish_action' => 'entity:publish_action:comment',
+    'comment_unpublish_action' => 'entity:unpublish_action:comment',
+    'comment_save_action' => 'entity:save_action:comment',
+    'node_publish_action' => 'entity:publish_action:node',
+    'node_unpublish_action' => 'entity:unpublish_action:node',
+    'node_save_action' => 'entity:save_action:node',
+  ];
+
+  /** @var \Drupal\system\Entity\Action[] $actions */
+  $actions = \Drupal::entityTypeManager()->getStorage('action')->loadMultiple();
+  foreach ($actions as $action) {
+    if (isset($old_new_action_id_map[$action->getPlugin()->getPluginId()])) {
+      $action->setPlugin($old_new_action_id_map[$action->getPlugin()->getPluginId()]);
+      $action->save();
+    }
+  }
+}

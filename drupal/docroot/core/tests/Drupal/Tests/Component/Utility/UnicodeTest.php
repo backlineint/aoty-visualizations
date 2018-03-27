@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\Component\Utility;
 
-use Drupal\Tests\UnitTestCase;
 use Drupal\Component\Utility\Unicode;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test unicode handling features implemented in Unicode component.
@@ -12,7 +12,7 @@ use Drupal\Component\Utility\Unicode;
  *
  * @coversDefaultClass \Drupal\Component\Utility\Unicode
  */
-class UnicodeTest extends UnitTestCase {
+class UnicodeTest extends TestCase {
 
   /**
    * {@inheritdoc}
@@ -33,7 +33,12 @@ class UnicodeTest extends UnitTestCase {
    */
   public function testStatus($value, $expected, $invalid = FALSE) {
     if ($invalid) {
-      $this->setExpectedException('InvalidArgumentException');
+      if (method_exists($this, 'expectException')) {
+        $this->expectException('InvalidArgumentException');
+      }
+      else {
+        $this->setExpectedException('InvalidArgumentException');
+      }
     }
     Unicode::setStatus($value);
     $this->assertEquals($expected, Unicode::getStatus());
@@ -371,7 +376,7 @@ class UnicodeTest extends UnitTestCase {
    *     - (optional) Boolean for the $add_ellipsis flag. Defaults to FALSE.
    */
   public function providerTruncate() {
-    return [
+    $tests = [
       ['frànçAIS is über-åwesome', 24, 'frànçAIS is über-åwesome'],
       ['frànçAIS is über-åwesome', 23, 'frànçAIS is über-åwesom'],
       ['frànçAIS is über-åwesome', 17, 'frànçAIS is über-'],
@@ -417,6 +422,24 @@ class UnicodeTest extends UnitTestCase {
       ['Help! Help! Help!', 3, 'He…', TRUE, TRUE],
       ['Help! Help! Help!', 2, 'H…', TRUE, TRUE],
     ];
+
+    // Test truncate on text with multiple lines.
+    $multi_line = <<<EOF
+This is a text that spans multiple lines.
+Line 2 goes here.
+EOF;
+    $multi_line_wordsafe = <<<EOF
+This is a text that spans multiple lines.
+Line 2
+EOF;
+    $multi_line_non_wordsafe = <<<EOF
+This is a text that spans multiple lines.
+Line 2 go
+EOF;
+    $tests[] = [$multi_line, 51, $multi_line_wordsafe, TRUE];
+    $tests[] = [$multi_line, 51, $multi_line_non_wordsafe, FALSE];
+
+    return $tests;
   }
 
   /**

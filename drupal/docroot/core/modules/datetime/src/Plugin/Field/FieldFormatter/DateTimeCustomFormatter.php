@@ -5,6 +5,7 @@ namespace Drupal\datetime\Plugin\Field\FieldFormatter;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
  * Plugin implementation of the 'Custom' formatter for 'datetime' fields.
@@ -24,7 +25,7 @@ class DateTimeCustomFormatter extends DateTimeFormatterBase {
    */
   public static function defaultSettings() {
     return [
-      'date_format' => DATETIME_DATETIME_STORAGE_FORMAT,
+      'date_format' => DateTimeItemInterface::DATETIME_STORAGE_FORMAT,
     ] + parent::defaultSettings();
   }
 
@@ -32,30 +33,18 @@ class DateTimeCustomFormatter extends DateTimeFormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+    // @todo Evaluate removing this method in
+    // https://www.drupal.org/node/2793143 to determine if the behavior and
+    // markup in the base class implementation can be used instead.
     $elements = [];
 
     foreach ($items as $delta => $item) {
-      $output = '';
       if (!empty($item->date)) {
         /** @var \Drupal\Core\Datetime\DrupalDateTime $date */
         $date = $item->date;
 
-        if ($this->getFieldSetting('datetime_type') == 'date') {
-          // A date without time will pick up the current time, use the default.
-          datetime_date_default_time($date);
-        }
-        $this->setTimeZone($date);
-
-        $output = $this->formatDate($date);
+        $elements[$delta] = $this->buildDate($date);
       }
-      $elements[$delta] = [
-        '#markup' => $output,
-        '#cache' => [
-          'contexts' => [
-            'timezone',
-          ],
-        ],
-      ];
     }
 
     return $elements;

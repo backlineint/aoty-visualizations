@@ -8,8 +8,23 @@ use Drupal\Core\Url;
 
 /**
  * Builds the form to delete Workflow entities.
+ *
+ * @internal
  */
 class WorkflowDeleteForm extends EntityConfirmFormBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    if ($this->entity->getTypePlugin()->workflowHasData($this->entity)) {
+      $form['#title'] = $this->getQuestion();
+      $form['description'] = ['#markup' => $this->t('This workflow is in use. You cannot remove this workflow until you have removed all content using it.')];
+      return $form;
+    }
+
+    return parent::buildForm($form, $form_state);
+  }
 
   /**
    * {@inheritdoc}

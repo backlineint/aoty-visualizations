@@ -17,10 +17,11 @@ use Drupal\Core\Field\FieldItemBase;
  *   description = @Translation("Create and store date values."),
  *   default_widget = "datetime_default",
  *   default_formatter = "datetime_default",
- *   list_class = "\Drupal\datetime\Plugin\Field\FieldType\DateTimeFieldItemList"
+ *   list_class = "\Drupal\datetime\Plugin\Field\FieldType\DateTimeFieldItemList",
+ *   constraints = {"DateTimeFormat" = {}}
  * )
  */
-class DateTimeItem extends FieldItemBase {
+class DateTimeItem extends FieldItemBase implements DateTimeItemInterface {
 
   /**
    * {@inheritdoc}
@@ -108,10 +109,10 @@ class DateTimeItem extends FieldItemBase {
     // type.
     $timestamp = REQUEST_TIME - mt_rand(0, 86400 * 365);
     if ($type == DateTimeItem::DATETIME_TYPE_DATE) {
-      $values['value'] = gmdate(DATETIME_DATE_STORAGE_FORMAT, $timestamp);
+      $values['value'] = gmdate(static::DATE_STORAGE_FORMAT, $timestamp);
     }
     else {
-      $values['value'] = gmdate(DATETIME_DATETIME_STORAGE_FORMAT, $timestamp);
+      $values['value'] = gmdate(static::DATETIME_STORAGE_FORMAT, $timestamp);
     }
     return $values;
   }

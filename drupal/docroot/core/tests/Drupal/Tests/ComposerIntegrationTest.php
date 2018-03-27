@@ -2,12 +2,23 @@
 
 namespace Drupal\Tests;
 
+use Composer\Semver\Semver;
+
 /**
  * Tests Composer integration.
  *
  * @group Composer
  */
 class ComposerIntegrationTest extends UnitTestCase {
+
+  /**
+   * The minimum PHP version supported by Drupal.
+   *
+   * @see https://www.drupal.org/docs/8/system-requirements/web-server
+   *
+   * @todo Remove as part of https://www.drupal.org/node/2908079
+   */
+  const MIN_PHP_VERSION = '5.5.9';
 
   /**
    * Gets human-readable JSON error messages.
@@ -47,6 +58,7 @@ class ComposerIntegrationTest extends UnitTestCase {
       $this->root . '/core/lib/Drupal/Component/Annotation',
       $this->root . '/core/lib/Drupal/Component/Assertion',
       $this->root . '/core/lib/Drupal/Component/Bridge',
+      $this->root . '/core/lib/Drupal/Component/ClassFinder',
       $this->root . '/core/lib/Drupal/Component/Datetime',
       $this->root . '/core/lib/Drupal/Component/DependencyInjection',
       $this->root . '/core/lib/Drupal/Component/Diff',
@@ -89,6 +101,51 @@ class ComposerIntegrationTest extends UnitTestCase {
   }
 
   /**
+   * Tests composer.json versions.
+   *
+   * @param string $path
+   *   Path to a composer.json to test.
+   *
+   * @dataProvider providerTestComposerJson
+   */
+  public function testComposerTilde($path) {
+    $content = json_decode(file_get_contents($path), TRUE);
+    $composer_keys = array_intersect(['require', 'require-dev'], array_keys($content));
+    if (empty($composer_keys)) {
+      $this->markTestSkipped("$path has no keys to test");
+    }
+    foreach ($composer_keys as $composer_key) {
+      foreach ($content[$composer_key] as $dependency => $version) {
+        // We allow tildes if the dependency is a Symfony component.
+        // @see https://www.drupal.org/node/2887000
+        if (strpos($dependency, 'symfony/') === 0) {
+          continue;
+        }
+        $this->assertFalse(strpos($version, '~'), "Dependency $dependency in $path contains a tilde, use a caret.");
+      }
+    }
+  }
+
+  /**
+   * Data provider for all the composer.json provided by Drupal core.
+   *
+   * @return array
+   */
+  public function providerTestComposerJson() {
+    $root = realpath(__DIR__ . '/../../../../');
+    $tests = [[$root . '/composer.json']];
+    $directory = new \RecursiveDirectoryIterator($root . '/core');
+    $iterator = new \RecursiveIteratorIterator($directory);
+    /** @var \SplFileInfo $file */
+    foreach ($iterator as $file) {
+      if ($file->getFilename() === 'composer.json' && strpos($file->getPath(), 'core/modules/system/tests/fixtures/HtaccessTest') === FALSE) {
+        $tests[] = [$file->getRealPath()];
+      }
+    }
+    return $tests;
+  }
+
+  /**
    * Tests core's composer.json replace section.
    *
    * Verify that all core modules are also listed in the 'replace' section of
@@ -122,6 +179,34 @@ class ComposerIntegrationTest extends UnitTestCase {
         $composer_replace_packages,
         'Unable to find ' . $module_name . ' in replace list of composer.json'
       );
+    }
+  }
+
+  /**
+   * Tests package requirements for the minimum supported PHP version by Drupal.
+   *
+   * @todo This can be removed when DrupalCI supports dependency regression
+   *   testing in https://www.drupal.org/node/2874198
+   */
+  public function testMinPHPVersion() {
+    // Check for lockfile in the application root. If the lockfile does not
+    // exist, then skip this test.
+    $lockfile = $this->root . '/composer.lock';
+    if (!file_exists($lockfile)) {
+      $this->markTestSkipped('/composer.lock is not available.');
+    }
+
+    $lock = json_decode(file_get_contents($lockfile), TRUE);
+
+    // Check the PHP version for each installed non-development  package. The
+    // testing infrastructure uses the uses the development packages, and may
+    // update them for particular environment configurations. In particular,
+    // PHP 7.2+ require an updated version of phpunit, which is incompatible
+    // with Drupal's minimum PHP requirement.
+    foreach ($lock['packages'] as $package) {
+      if (isset($package['require']['php'])) {
+        $this->assertTrue(Semver::satisfies(static::MIN_PHP_VERSION, $package['require']['php']), $package['name'] . ' has a PHP dependency requirement of "' . $package['require']['php'] . '"');
+      }
     }
   }
 

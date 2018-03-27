@@ -11,6 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure update settings for this site.
+ *
+ * @internal
  */
 class UpdateManagerUpdate extends FormBase {
 
@@ -69,7 +71,7 @@ class UpdateManagerUpdate extends FormBase {
       '#last' => $this->state->get('update.last_check') ?: 0,
     ];
     $form['last_check'] = [
-      '#markup' => drupal_render($last_markup),
+      '#markup' => \Drupal::service('renderer')->render($last_markup),
     ];
 
     if (!_update_manager_check_backends($form, 'update')) {
@@ -181,10 +183,12 @@ class UpdateManagerUpdate extends FormBase {
       }
 
       // Use the project title for the tableselect checkboxes.
-      $entry['title'] = ['data' => [
-        '#title' => $entry['title'],
-        '#markup' => $entry['title'],
-      ]];
+      $entry['title'] = [
+        'data' => [
+          '#title' => $entry['title'],
+          '#markup' => $entry['title'],
+        ],
+      ];
       $entry['#attributes'] = ['class' => ['update-' . $type]];
 
       // Drupal core needs to be upgraded manually.
@@ -278,7 +282,7 @@ class UpdateManagerUpdate extends FormBase {
 
     if (!empty($projects['manual'])) {
       $prefix = '<h2>' . $this->t('Manual updates required') . '</h2>';
-      $prefix .= '<p>' . $this->t('Updates of Drupal core are not supported at this time.') . '</p>';
+      $prefix .= '<p>' . $this->t('Automatic updates of Drupal core are not supported at this time.') . '</p>';
       $form['manual_updates'] = [
         '#type' => 'table',
         '#header' => $headers,

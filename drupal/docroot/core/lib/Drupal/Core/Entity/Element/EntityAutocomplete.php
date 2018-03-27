@@ -39,7 +39,7 @@ class EntityAutocomplete extends Textfield {
     $info['#validate_reference'] = TRUE;
     // IMPORTANT! This should only be set to FALSE if the #default_value
     // property is processed at another level (e.g. by a Field API widget) and
-    // it's value is properly checked for access.
+    // its value is properly checked for access.
     $info['#process_default_value'] = TRUE;
 
     $info['#element_validate'] = [[$class, 'validateEntityAutocomplete']];
@@ -77,7 +77,7 @@ class EntityAutocomplete extends Textfield {
     // Potentially the #value is set directly, so it contains the 'target_id'
     // array structure instead of a string.
     if ($input !== FALSE && is_array($input)) {
-      $entity_ids = array_map(function(array $item) {
+      $entity_ids = array_map(function (array $item) {
         return $item['target_id'];
       }, $input);
 
@@ -152,10 +152,9 @@ class EntityAutocomplete extends Textfield {
     $value = NULL;
 
     if (!empty($element['#value'])) {
-      $options = [
+      $options = $element['#selection_settings'] + [
         'target_type' => $element['#target_type'],
         'handler' => $element['#selection_handler'],
-        'handler_settings' => $element['#selection_settings'],
       ];
       /** @var /Drupal\Core\Entity\EntityReferenceSelection\SelectionInterface $handler */
       $handler = \Drupal::service('plugin.manager.entity_reference_selection')->getInstance($options);

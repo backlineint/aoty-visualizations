@@ -33,45 +33,48 @@ class NodeHalJsonAnonTest extends NodeResourceTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $patchProtectedFieldNames = [
-    'created',
-    'changed',
-    'promote',
-    'sticky',
-    'revision_timestamp',
-    'revision_uid',
-  ];
-
-  /**
-   * {@inheritdoc}
-   */
   protected function getExpectedNormalizedEntity() {
     $default_normalization = parent::getExpectedNormalizedEntity();
 
     $normalization = $this->applyHalFieldNormalization($default_normalization);
 
     $author = User::load($this->entity->getOwnerId());
-    return  $normalization + [
+    return $normalization + [
       '_links' => [
         'self' => [
-          'href' => $this->baseUrl . '/node/1?_format=hal_json',
+          'href' => $this->baseUrl . '/llama?_format=hal_json',
         ],
         'type' => [
           'href' => $this->baseUrl . '/rest/type/node/camelids',
         ],
+        $this->baseUrl . '/rest/relation/node/camelids/revision_uid' => [
+          [
+            'href' => $this->baseUrl . '/user/' . $author->id() . '?_format=hal_json',
+          ],
+        ],
         $this->baseUrl . '/rest/relation/node/camelids/uid' => [
           [
             'href' => $this->baseUrl . '/user/' . $author->id() . '?_format=hal_json',
             'lang' => 'en',
-          ],
-        ],
-        $this->baseUrl . '/rest/relation/node/camelids/revision_uid' => [
-          [
-            'href' => $this->baseUrl . '/user/' . $author->id() . '?_format=hal_json',
           ],
         ],
       ],
       '_embedded' => [
+        $this->baseUrl . '/rest/relation/node/camelids/revision_uid' => [
+          [
+            '_links' => [
+              'self' => [
+                'href' => $this->baseUrl . '/user/' . $author->id() . '?_format=hal_json',
+              ],
+              'type' => [
+                'href' => $this->baseUrl . '/rest/type/user/user',
+              ],
+            ],
+            'uuid' => [
+              ['value' => $author->uuid()]
+            ],
+          ],
+        ],
         $this->baseUrl . '/rest/relation/node/camelids/uid' => [
           [
             '_links' => [
@@ -86,21 +89,6 @@ class NodeHalJsonAnonTest extends NodeResourceTestBase {
               ['value' => $author->uuid()]
             ],
             'lang' => 'en',
-          ],
-        ],
-        $this->baseUrl . '/rest/relation/node/camelids/revision_uid' => [
-          [
-            '_links' => [
-              'self' => [
-                'href' => $this->baseUrl . '/user/' . $author->id() . '?_format=hal_json',
-              ],
-              'type' => [
-                'href' => $this->baseUrl . '/rest/type/user/user',
-              ],
-            ],
-            'uuid' => [
-              ['value' => $author->uuid()]
-            ],
           ],
         ],
       ],

@@ -58,7 +58,11 @@ class EntityTypeTest extends UnitTestCase {
    */
   public function testGetKeys($entity_keys, $expected) {
     $entity_type = $this->setUpEntityType(['entity_keys' => $entity_keys]);
-    $this->assertSame($expected + ['default_langcode' => 'default_langcode'], $entity_type->getKeys());
+    $expected += [
+      'default_langcode' => 'default_langcode',
+      'revision_translation_affected' => 'revision_translation_affected',
+    ];
+    $this->assertSame($expected, $entity_type->getKeys());
   }
 
   /**
@@ -121,6 +125,18 @@ class EntityTypeTest extends UnitTestCase {
       [['id' => 'id'], ['id' => 'id', 'revision' => '', 'bundle' => '', 'langcode' => '']],
       [['bundle' => 'bundle'], ['bundle' => 'bundle', 'revision' => '', 'langcode' => '']],
     ];
+  }
+
+  /**
+   * Tests the isInternal() method.
+   */
+  public function testIsInternal() {
+    $entity_type = $this->setUpEntityType(['internal' => TRUE]);
+    $this->assertTrue($entity_type->isInternal());
+    $entity_type = $this->setUpEntityType(['internal' => FALSE]);
+    $this->assertFalse($entity_type->isInternal());
+    $entity_type = $this->setUpEntityType([]);
+    $this->assertFalse($entity_type->isInternal());
   }
 
   /**
@@ -386,6 +402,28 @@ class EntityTypeTest extends UnitTestCase {
     $this->assertEquals('1 entity test plural', $entity_type->getCountLabel(1));
     $this->assertEquals('2 entity test plural entities', $entity_type->getCountLabel(2));
     $this->assertEquals('200 entity test plural entities', $entity_type->getCountLabel(200));
+  }
+
+  /**
+   * Tests the ::getBundleLabel() method.
+   *
+   * @covers ::getBundleLabel
+   * @dataProvider providerTestGetBundleLabel
+   */
+  public function testGetBundleLabel($definition, $expected) {
+    $entity_type = $this->setUpEntityType($definition);
+    $entity_type->setStringTranslation($this->getStringTranslationStub());
+    $this->assertEquals($expected, $entity_type->getBundleLabel());
+  }
+
+  /**
+   * Provides test data for ::testGetBundleLabel().
+   */
+  public function providerTestGetBundleLabel() {
+    return [
+      [['label' => 'Entity Label Foo'], 'Entity Label Foo bundle'],
+      [['bundle_label' => 'Bundle Label Bar'], 'Bundle Label Bar'],
+    ];
   }
 
   /**

@@ -7,6 +7,8 @@ namespace Drupal\Core\TypedData;
  */
 class DataDefinition implements DataDefinitionInterface, \ArrayAccess {
 
+  use TypedDataTrait;
+
   /**
    * The array holding values for all definition keys.
    *
@@ -258,7 +260,7 @@ class DataDefinition implements DataDefinitionInterface, \ArrayAccess {
    */
   public function getConstraints() {
     $constraints = isset($this->definition['constraints']) ? $this->definition['constraints'] : [];
-    $constraints += \Drupal::typedDataManager()->getDefaultConstraints($this);
+    $constraints += $this->getTypedDataManager()->getDefaultConstraints($this);
     return $constraints;
   }
 
@@ -338,6 +340,40 @@ class DataDefinition implements DataDefinitionInterface, \ArrayAccess {
    */
   public function toArray() {
     return $this->definition;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __sleep() {
+    // Never serialize the typed data manager.
+    $vars = get_object_vars($this);
+    unset($vars['typedDataManager']);
+    return array_keys($vars);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isInternal() {
+    // Respect the definition, otherwise default to TRUE for computed fields.
+    if (isset($this->definition['internal'])) {
+      return $this->definition['internal'];
+    }
+    return $this->isComputed();
+  }
+
+  /**
+   * Sets the whether the data value should be internal.
+   *
+   * @param bool $internal
+   *   Whether the data value should be internal.
+   *
+   * @return $this
+   */
+  public function setInternal($internal) {
+    $this->definition['internal'] = $internal;
+    return $this;
   }
 
 }

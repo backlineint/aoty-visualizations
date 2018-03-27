@@ -3,7 +3,9 @@
 namespace Drupal\content_moderation\Plugin\Field;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Field\FieldItemList;
+use Drupal\Core\TypedData\ComputedItemListTrait;
 
 /**
  * A computed field that provides a content entity's moderation state.
@@ -12,6 +14,38 @@ use Drupal\Core\Field\FieldItemList;
  * moderation state content entity.
  */
 class ModerationStateFieldItemList extends FieldItemList {
+
+  use ComputedItemListTrait {
+    ensureComputedValue as traitEnsureComputedValue;
+    get as traitGet;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function computeValue() {
+    $moderation_state = $this->getModerationStateId();
+    // Do not store NULL values, in the case where an entity does not have a
+    // moderation workflow associated with it, we do not create list items for
+    // the computed field.
+    if ($moderation_state) {
+      // An entity can only have a single moderation state.
+      $this->list[0] = $this->createItem(0, $moderation_state);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function ensureComputedValue() {
+    // If the moderation state field is set to an empty value, always recompute
+    // the state. Empty is not a valid moderation state value, when none is
+    // present the default state is used.
+    if (!isset($this->list[0]) || $this->list[0]->isEmpty()) {
+      $this->valueComputed = FALSE;
+    }
+    $this->traitEnsureComputedValue();
+  }
 
   /**
    * Gets the moderation state ID linked to a content entity revision.
@@ -38,7 +72,7 @@ class ModerationStateFieldItemList extends FieldItemList {
     // the node type form creates a fake Node entity to get default values.
     // @see \Drupal\node\NodeTypeForm::form()
     $workflow = $moderation_info->getWorkFlowForEntity($entity);
-    return $workflow ? $workflow->getTypePlugin()->getInitialState($workflow, $entity)->id() : NULL;
+    return $workflow ? $workflow->getTypePlugin()->getInitialState($entity)->id() : NULL;
   }
 
   /**
@@ -47,7 +81,7 @@ class ModerationStateFieldItemList extends FieldItemList {
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *   The entity the content moderation state entity will be loaded from.
    *
-   * @return \Drupal\content_moderation\ContentModerationStateInterface|null
+   * @return \Drupal\content_moderation\Entity\ContentModerationStateInterface|null
    *   The content_moderation_state revision or FALSE if none exists.
    */
   protected function loadContentModerationStateRevision(ContentEntityInterface $entity) {
@@ -68,7 +102,7 @@ class ModerationStateFieldItemList extends FieldItemList {
       return NULL;
     }
 
-    /** @var \Drupal\content_moderation\ContentModerationStateInterface $content_moderation_state */
+    /** @var \Drupal\content_moderation\Entity\ContentModerationStateInterface $content_moderation_state */
     $content_moderation_state = $content_moderation_storage->loadRevision(key($revisions));
     if ($entity->getEntityType()->hasKey('langcode')) {
       $langcode = $entity->language()->getId();
@@ -89,30 +123,64 @@ class ModerationStateFieldItemList extends FieldItemList {
     if ($index !== 0) {
       throw new \InvalidArgumentException('An entity can not have multiple moderation states at the same time.');
     }
-    $this->computeModerationFieldItemList();
-    return isset($this->list[$index]) ? $this->list[$index] : NULL;
+    return $this->traitGet($index);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getIterator() {
-    $this->computeModerationFieldItemList();
-    return parent::getIterator();
+  public function onChange($delta) {
+    $this->updateModeratedEntity($this->list[$delta]->value);
+
+    parent::onChange($delta);
   }
 
   /**
-   * Recalculate the moderation field item list.
+   * {@inheritdoc}
    */
-  protected function computeModerationFieldItemList() {
-    // Compute the value of the moderation state.
-    $index = 0;
-    if (!isset($this->list[$index]) || $this->list[$index]->isEmpty()) {
+  public function setValue($values, $notify = TRUE) {
+    parent::setValue($values, $notify);
 
-      $moderation_state = $this->getModerationStateId();
-      // Do not store NULL values in the static cache.
-      if ($moderation_state) {
-        $this->list[$index] = $this->createItem($index, $moderation_state);
+    // If the parent created a field item and if the parent should be notified
+    // about the change (e.g. this is not initialized with the current value),
+    // update the moderated entity.
+    if (isset($this->list[0]) && $notify) {
+      $this->valueComputed = TRUE;
+      $this->updateModeratedEntity($this->list[0]->value);
+    }
+  }
+
+  /**
+   * Updates the default revision flag and the publishing status of the entity.
+   *
+   * @param string $moderation_state_id
+   *   The ID of the new moderation state.
+   */
+  protected function updateModeratedEntity($moderation_state_id) {
+    $entity = $this->getEntity();
+
+    /** @var \Drupal\content_moderation\ModerationInformationInterface $content_moderation_info */
+    $content_moderation_info = \Drupal::service('content_moderation.moderation_information');
+    $workflow = $content_moderation_info->getWorkflowForEntity($entity);
+
+    // Change the entity's default revision flag and the publishing status only
+    // if the new workflow state is a valid one.
+    if ($workflow && $workflow->getTypePlugin()->hasState($moderation_state_id)) {
+      /** @var \Drupal\content_moderation\ContentModerationState $current_state */
+      $current_state = $workflow->getTypePlugin()->getState($moderation_state_id);
+
+      // This entity is default if it is new, the default revision state, or the
+      // default revision is not published.
+      $update_default_revision = $entity->isNew()
+        || $current_state->isDefaultRevisionState()
+        || !$content_moderation_info->isDefaultRevisionPublished($entity);
+
+      $entity->isDefaultRevision($update_default_revision);
+
+      // Update publishing status if it can be updated and if it needs updating.
+      $published_state = $current_state->isPublishedState();
+      if (($entity instanceof EntityPublishedInterface) && $entity->isPublished() !== $published_state) {
+        $published_state ? $entity->setPublished() : $entity->setUnpublished();
       }
     }
   }

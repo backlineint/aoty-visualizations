@@ -3,10 +3,15 @@
 namespace Drupal\Tests\rest\Functional\EntityResource\EntityTest;
 
 use Drupal\entity_test\Entity\EntityTest;
+use Drupal\Tests\rest\Functional\BcTimestampNormalizerUnixTestTrait;
 use Drupal\Tests\rest\Functional\EntityResource\EntityResourceTestBase;
+use Drupal\Tests\Traits\ExpectDeprecationTrait;
 use Drupal\user\Entity\User;
 
 abstract class EntityTestResourceTestBase extends EntityResourceTestBase {
+
+  use BcTimestampNormalizerUnixTestTrait;
+  use ExpectDeprecationTrait;
 
   /**
    * {@inheritdoc}
@@ -50,9 +55,20 @@ abstract class EntityTestResourceTestBase extends EntityResourceTestBase {
    * {@inheritdoc}
    */
   protected function createEntity() {
+    // Set flag so that internal field 'internal_string_field' is created.
+    // @see entity_test_entity_base_field_info()
+    $this->container->get('state')->set('entity_test.internal_field', TRUE);
+    \Drupal::entityDefinitionUpdateManager()->applyUpdates();
+
     $entity_test = EntityTest::create([
       'name' => 'Llama',
       'type' => 'entity_test',
+      // Set a value for the internal field to confirm that it will not be
+      // returned in normalization.
+      // @see entity_test_entity_base_field_info().
+      'internal_string_field' => [
+        'value' => 'This value shall not be internal!',
+      ],
     ]);
     $entity_test->setOwnerId(0);
     $entity_test->save();
@@ -92,9 +108,7 @@ abstract class EntityTestResourceTestBase extends EntityResourceTestBase {
         ]
       ],
       'created' => [
-        [
-          'value' => (int) $this->entity->get('created')->value,
-        ]
+        $this->formatExpectedTimestampItemValues((int) $this->entity->get('created')->value)
       ],
       'user_id' => [
         [
@@ -115,7 +129,11 @@ abstract class EntityTestResourceTestBase extends EntityResourceTestBase {
    */
   protected function getNormalizedPostEntity() {
     return [
-      'type' => 'entity_test',
+      'type' => [
+        [
+          'value' => 'entity_test',
+        ],
+      ],
       'name' => [
         [
           'value' => 'Dramallama',

@@ -6,6 +6,11 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * Form to test input forgery.
+ *
+ * @internal
+ */
 class FormTestInputForgeryForm extends FormBase {
 
   /**
@@ -33,8 +38,27 @@ class FormTestInputForgeryForm extends FormBase {
       '#type' => 'submit',
       '#value' => t('Submit'),
     ];
+    $form['#post_render'][] = [static::class, 'postRender'];
 
     return $form;
+  }
+
+  /**
+   * Alters the rendered form to simulate input forgery.
+   *
+   * It's necessary to alter the rendered form here because Mink does not
+   * support manipulating the DOM tree.
+   *
+   * @param string $rendered_form
+   *   The rendered form.
+   *
+   * @return string
+   *   The modified rendered form.
+   *
+   * @see \Drupal\Tests\system\Functional\Form\FormTest::testInputForgery()
+   */
+  public static function postRender($rendered_form) {
+    return str_replace('value="two"', 'value="FORGERY"', $rendered_form);
   }
 
   /**

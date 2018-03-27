@@ -12,6 +12,7 @@
 namespace Symfony\Component\DependencyInjection\Tests\Compiler;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Compiler\CheckCircularReferencesPass;
 use Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass;
@@ -114,6 +115,32 @@ class CheckCircularReferencesPassTest extends TestCase
         $container->register('b')->addMethodCall('setA', array(new Reference('a')));
 
         $this->process($container);
+
+        $this->addToAssertionCount(1);
+    }
+
+    public function testProcessIgnoresLazyServices()
+    {
+        $container = new ContainerBuilder();
+        $container->register('a')->setLazy(true)->addArgument(new Reference('b'));
+        $container->register('b')->addArgument(new Reference('a'));
+
+        $this->process($container);
+
+        // just make sure that a lazily loaded service does not trigger a CircularReferenceException
+        $this->addToAssertionCount(1);
+    }
+
+    public function testProcessIgnoresIteratorArguments()
+    {
+        $container = new ContainerBuilder();
+        $container->register('a')->addArgument(new Reference('b'));
+        $container->register('b')->addArgument(new IteratorArgument(array(new Reference('a'))));
+
+        $this->process($container);
+
+        // just make sure that an IteratorArgument does not trigger a CircularReferenceException
+        $this->addToAssertionCount(1);
     }
 
     protected function process(ContainerBuilder $container)

@@ -36,7 +36,7 @@ class FileManagedFileElementTest extends FileFieldTestBase {
           // was not saved.
           $last_fid_prior = $this->getLastFileId();
           $edit = [
-            $file_field_name => drupal_realpath($test_file->getFileUri()),
+            $file_field_name => \Drupal::service('file_system')->realpath($test_file->getFileUri()),
             'form_token' => 'invalid token',
           ];
           $this->drupalPostForm($path, $edit, t('Save'));
@@ -46,7 +46,7 @@ class FileManagedFileElementTest extends FileFieldTestBase {
 
           // Submit a new file, without using the Upload button.
           $last_fid_prior = $this->getLastFileId();
-          $edit = [$file_field_name => drupal_realpath($test_file->getFileUri())];
+          $edit = [$file_field_name => \Drupal::service('file_system')->realpath($test_file->getFileUri())];
           $this->drupalPostForm($path, $edit, t('Save'));
           $last_fid = $this->getLastFileId();
           $this->assertTrue($last_fid > $last_fid_prior, 'New file got saved.');
@@ -61,7 +61,7 @@ class FileManagedFileElementTest extends FileFieldTestBase {
             // Upload, then Submit.
             $last_fid_prior = $this->getLastFileId();
             $this->drupalGet($path);
-            $edit = [$file_field_name => drupal_realpath($test_file->getFileUri())];
+            $edit = [$file_field_name => \Drupal::service('file_system')->realpath($test_file->getFileUri())];
             if ($ajax) {
               $this->drupalPostAjaxForm(NULL, $edit, $input_base_name . '_upload_button');
             }
@@ -92,7 +92,7 @@ class FileManagedFileElementTest extends FileFieldTestBase {
 
             // Upload, then Remove, then Submit.
             $this->drupalGet($path);
-            $edit = [$file_field_name => drupal_realpath($test_file->getFileUri())];
+            $edit = [$file_field_name => \Drupal::service('file_system')->realpath($test_file->getFileUri())];
             if ($ajax) {
               $this->drupalPostAjaxForm(NULL, $edit, $input_base_name . '_upload_button');
             }
@@ -120,7 +120,7 @@ class FileManagedFileElementTest extends FileFieldTestBase {
 
     // The multiple file upload has additional conditions that need checking.
     $path = 'file/test/1/1/1';
-    $edit = ['files[nested_file][]' => drupal_realpath($test_file->getFileUri())];
+    $edit = ['files[nested_file][]' => \Drupal::service('file_system')->realpath($test_file->getFileUri())];
     $fid_list = [];
 
     $this->drupalGet($path);
@@ -158,7 +158,7 @@ class FileManagedFileElementTest extends FileFieldTestBase {
     $test_file = $this->getTestFile('text');
     $file_field_name = 'files[nested_file][]';
 
-    $edit = [$file_field_name => drupal_realpath($test_file->getFileUri())];
+    $edit = [$file_field_name => \Drupal::service('file_system')->realpath($test_file->getFileUri())];
     $this->drupalPostForm(NULL, $edit, t('Upload'));
 
     $fid = $this->getLastFileId();
@@ -179,7 +179,7 @@ class FileManagedFileElementTest extends FileFieldTestBase {
     $test_file = $this->getTestFile('text');
     $file_field_name = 'files[nested_file][]';
 
-    $edit = [$file_field_name => drupal_realpath($test_file->getFileUri())];
+    $edit = [$file_field_name => \Drupal::service('file_system')->realpath($test_file->getFileUri())];
     $this->drupalPostForm(NULL, $edit, t('Upload'));
     $this->drupalPostForm(NULL, [], t('Save'));
 
@@ -192,6 +192,57 @@ class FileManagedFileElementTest extends FileFieldTestBase {
     $file->save();
     $this->assertTrue($file->isPermanent());
     $file->delete();
+  }
+
+  /**
+   * Verify that unused permanent files can be used.
+   */
+  public function testUnusedPermanentFileValidation() {
+
+    // Create a permanent file without usages.
+    $file = $this->getTestFile('image');
+    $file->setPermanent();
+    $file->save();
+
+    // By default, unused files are no longer marked temporary, and it must be
+    // allowed to reference an unused file.
+    $this->drupalGet('file/test/1/0/1/' . $file->id());
+    $this->drupalPostForm(NULL, [], 'Save');
+    $this->assertNoText('The file used in the Managed file &amp; butter field may not be referenced.');
+    $this->assertText('The file ids are ' . $file->id());
+
+    // Enable marking unused files as tempory, unused permanent files must not
+    // be referenced now.
+    $this->config('file.settings')
+      ->set('make_unused_managed_files_temporary', TRUE)
+      ->save();
+    $this->drupalGet('file/test/1/0/1/' . $file->id());
+    $this->drupalPostForm(NULL, [], 'Save');
+    $this->assertText('The file used in the Managed file &amp; butter field may not be referenced.');
+    $this->assertNoText('The file ids are ' . $file->id());
+
+    // Make the file temporary, now using it is allowed.
+    $file->setTemporary();
+    $file->save();
+
+    $this->drupalGet('file/test/1/0/1/' . $file->id());
+    $this->drupalPostForm(NULL, [], 'Save');
+    $this->assertNoText('The file used in the Managed file &amp; butter field may not be referenced.');
+    $this->assertText('The file ids are ' . $file->id());
+
+    // Make the file permanent again and add a usage from itself, referencing is
+    // still allowed.
+    $file->setPermanent();
+    $file->save();
+
+    /** @var \Drupal\file\FileUsage\FileUsageInterface $file_usage */
+    $file_usage = \Drupal::service('file.usage');
+    $file_usage->add($file, 'file', 'file', $file->id());
+
+    $this->drupalGet('file/test/1/0/1/' . $file->id());
+    $this->drupalPostForm(NULL, [], 'Save');
+    $this->assertNoText('The file used in the Managed file &amp; butter field may not be referenced.');
+    $this->assertText('The file ids are ' . $file->id());
   }
 
 }

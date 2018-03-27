@@ -6,6 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\TypedData\TypedDataInternalPropertiesHelper;
 use Drupal\hal\LinkManager\LinkManagerInterface;
 use Drupal\serialization\Normalizer\FieldableEntityNormalizerTrait;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
@@ -72,17 +73,12 @@ class ContentEntityNormalizer extends NormalizerBase {
       ],
     ];
 
+    $field_items = TypedDataInternalPropertiesHelper::getNonInternalProperties($entity->getTypedData());
     // If the fields to use were specified, only output those field values.
     if (isset($context['included_fields'])) {
-      $fields = [];
-      foreach ($context['included_fields'] as $field_name) {
-        $fields[] = $entity->get($field_name);
-      }
+      $field_items = array_intersect_key($field_items, array_flip($context['included_fields']));
     }
-    else {
-      $fields = $entity->getFields();
-    }
-    foreach ($fields as $field) {
+    foreach ($field_items as $field) {
       // Continue if the current user does not have access to view this field.
       if (!$field->access('view', $context['account'])) {
         continue;

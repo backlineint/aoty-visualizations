@@ -3,13 +3,13 @@
 namespace Drupal\Tests\Component\Plugin\Discovery;
 
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
-use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group Plugin
  * @coversDefaultClass \Drupal\Component\Plugin\Discovery\DiscoveryTrait
  */
-class DiscoveryTraitTest extends UnitTestCase {
+class DiscoveryTraitTest extends TestCase {
 
   /**
    * Data provider for testDoGetDefinition().
@@ -69,7 +69,12 @@ class DiscoveryTraitTest extends UnitTestCase {
     $method_ref = new \ReflectionMethod($trait, 'doGetDefinition');
     $method_ref->setAccessible(TRUE);
     // Call doGetDefinition, with $exception_on_invalid always TRUE.
-    $this->setExpectedException(PluginNotFoundException::class);
+    if (method_exists($this, 'expectException')) {
+      $this->expectException(PluginNotFoundException::class);
+    }
+    else {
+      $this->setExpectedException(PluginNotFoundException::class);
+    }
     $method_ref->invoke($trait, $definitions, $plugin_id, TRUE);
   }
 
@@ -106,7 +111,12 @@ class DiscoveryTraitTest extends UnitTestCase {
       ->method('getDefinitions')
       ->willReturn($definitions);
     // Call getDefinition(), with $exception_on_invalid always TRUE.
-    $this->setExpectedException(PluginNotFoundException::class);
+    if (method_exists($this, 'expectException')) {
+      $this->expectException(PluginNotFoundException::class);
+    }
+    else {
+      $this->setExpectedException(PluginNotFoundException::class);
+    }
     $trait->getDefinition($plugin_id, TRUE);
   }
 

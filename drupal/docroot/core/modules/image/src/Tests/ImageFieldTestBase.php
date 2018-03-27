@@ -69,7 +69,7 @@ abstract class ImageFieldTestBase extends WebTestBase {
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
     ];
-    $edit['files[' . $field_name . '_0]'] = drupal_realpath($image->uri);
+    $edit['files[' . $field_name . '_0]'] = \Drupal::service('file_system')->realpath($image->uri);
     $this->drupalPostForm('node/add/' . $type, $edit, t('Preview'));
   }
 
@@ -89,11 +89,11 @@ abstract class ImageFieldTestBase extends WebTestBase {
     $edit = [
       'title[0][value]' => $this->randomMachineName(),
     ];
-    $edit['files[' . $field_name . '_0]'] = drupal_realpath($image->uri);
-    $this->drupalPostForm('node/add/' . $type, $edit, t('Save and publish'));
+    $edit['files[' . $field_name . '_0]'] = \Drupal::service('file_system')->realpath($image->uri);
+    $this->drupalPostForm('node/add/' . $type, $edit, t('Save'));
     if ($alt) {
       // Add alt text.
-      $this->drupalPostForm(NULL, [$field_name . '[0][alt]' => $alt], t('Save and publish'));
+      $this->drupalPostForm(NULL, [$field_name . '[0][alt]' => $alt], t('Save'));
     }
 
     // Retrieve ID of the newly created node from the current URL.

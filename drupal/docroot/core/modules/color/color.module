@@ -5,6 +5,7 @@
  * Allows users to change the color scheme of themes.
  */
 
+use Drupal\Component\Utility\Color;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Asset\CssOptimizer;
 use Drupal\Component\Utility\Bytes;
@@ -28,7 +29,7 @@ function color_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<dl>';
       $output .= '<dt>' . t('Changing colors') . '</dt>';
       $output .= '<dd><p>' . t('To change the color settings, select the <em>Settings</em> link for your theme on the <a href=":appearance">Appearance</a> page. If the color picker does not appear then the theme is not compatible with the Color module.', [':appearance' => \Drupal::url('system.themes_page')]) . '</p>';
-      $output .= '<p>' . t('The Color module saves a modified copy of the theme\'s specified stylesheets in the files directory. If you make any manual changes to your theme\'s stylesheet, <em>you must save your color settings again, even if you haven\'t changed the colors</em>. This step is required because the module stylesheets in the files directory need to be recreated to reflect your changes.') . '</p></dd>';
+      $output .= '<p>' . t("The Color module saves a modified copy of the theme's specified stylesheets in the files directory. If you make any manual changes to your theme's stylesheet, <em>you must save your color settings again, even if you haven't changed the colors</em>. This step is required because the module stylesheets in the files directory need to be recreated to reflect your changes.") . '</p></dd>';
       $output .= '</dl>';
       return $output;
   }
@@ -80,7 +81,7 @@ function color_library_info_alter(&$libraries, $extension) {
         if (isset($libraries[$name]['css'])) {
           // Override stylesheets.
           foreach ($libraries[$name]['css'] as $category => $css_assets) {
-            foreach ($css_assets as $path  => $metadata) {
+            foreach ($css_assets as $path => $metadata) {
               // Loop over the path array with recolored CSS files to find matching
               // paths which could replace the non-recolored paths.
               foreach ($color_paths as $color_path) {
@@ -513,7 +514,8 @@ function _color_rewrite_stylesheet($theme, &$info, &$paths, $palette, $style) {
   // Prepare color conversion table.
   $conversion = $palette;
   foreach ($conversion as $k => $v) {
-    $conversion[$k] = Unicode::strtolower($v);
+    $v = Unicode::strtolower($v);
+    $conversion[$k] = Color::normalizeHexLength($v);
   }
   $default = color_get_palette($theme, TRUE);
 
@@ -533,6 +535,7 @@ function _color_rewrite_stylesheet($theme, &$info, &$paths, $palette, $style) {
   foreach ($style as $chunk) {
     if ($is_color) {
       $chunk = Unicode::strtolower($chunk);
+      $chunk = Color::normalizeHexLength($chunk);
       // Check if this is one of the colors in the default palette.
       if ($key = array_search($chunk, $default)) {
         $chunk = $conversion[$key];
@@ -635,7 +638,7 @@ function _color_render_images($theme, &$info, &$paths, $palette) {
   foreach ($info['slices'] as $file => $coord) {
     list($x, $y, $width, $height) = $coord;
     $base = drupal_basename($file);
-    $image = drupal_realpath($paths['target'] . $base);
+    $image = \Drupal::service('file_system')->realpath($paths['target'] . $base);
 
     // Cut out slice.
     if ($file == 'screenshot.png') {
@@ -796,9 +799,15 @@ function _color_hsl2rgb($hsl) {
  */
 function _color_hue2rgb($m1, $m2, $h) {
   $h = ($h < 0) ? $h + 1 : (($h > 1) ? $h - 1 : $h);
-  if ($h * 6 < 1) return $m1 + ($m2 - $m1) * $h * 6;
-  if ($h * 2 < 1) return $m2;
-  if ($h * 3 < 2) return $m1 + ($m2 - $m1) * (0.66666 - $h) * 6;
+  if ($h * 6 < 1) {
+    return $m1 + ($m2 - $m1) * $h * 6;
+  }
+  if ($h * 2 < 1) {
+    return $m2;
+  }
+  if ($h * 3 < 2) {
+    return $m1 + ($m2 - $m1) * (0.66666 - $h) * 6;
+  }
 
   return $m1;
 }
@@ -822,9 +831,15 @@ function _color_rgb2hsl($rgb) {
 
   $h = 0;
   if ($delta > 0) {
-    if ($max == $r && $max != $g) $h += ($g - $b) / $delta;
-    if ($max == $g && $max != $b) $h += (2 + ($b - $r) / $delta);
-    if ($max == $b && $max != $r) $h += (4 + ($r - $g) / $delta);
+    if ($max == $r && $max != $g) {
+      $h += ($g - $b) / $delta;
+    }
+    if ($max == $g && $max != $b) {
+      $h += (2 + ($b - $r) / $delta);
+    }
+    if ($max == $b && $max != $r) {
+      $h += (4 + ($r - $g) / $delta);
+    }
     $h /= 6;
   }
 

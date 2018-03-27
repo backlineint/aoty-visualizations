@@ -2,13 +2,13 @@
 
 namespace Drupal\Tests\Component\Plugin\Discovery;
 
-use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group Plugin
  * @coversDefaultClass \Drupal\Component\Plugin\Discovery\StaticDiscoveryDecorator
  */
-class StaticDiscoveryDecoratorTest extends UnitTestCase {
+class StaticDiscoveryDecoratorTest extends TestCase {
 
   /**
    * Helper method to provide a mocked callback object with expectations.
@@ -100,7 +100,12 @@ class StaticDiscoveryDecoratorTest extends UnitTestCase {
     $ref_decorated->setValue($mock_decorator, $mock_decorated);
 
     if ($exception_on_invalid) {
-      $this->setExpectedException('Drupal\Component\Plugin\Exception\PluginNotFoundException');
+      if (method_exists($this, 'expectException')) {
+        $this->expectException('Drupal\Component\Plugin\Exception\PluginNotFoundException');
+      }
+      else {
+        $this->setExpectedException('Drupal\Component\Plugin\Exception\PluginNotFoundException');
+      }
     }
 
     // Exercise getDefinition(). It calls parent::getDefinition().
@@ -171,7 +176,7 @@ class StaticDiscoveryDecoratorTest extends UnitTestCase {
 
     // Exercise getDefinitions(). It calls parent::getDefinitions() but in this
     // case there will be no side-effects.
-    $this->assertArrayEquals(
+    $this->assertEquals(
       $definitions,
       $mock_decorator->getDefinitions()
     );
@@ -220,7 +225,7 @@ class StaticDiscoveryDecoratorTest extends UnitTestCase {
     $ref_decorated->setValue($mock_decorator, $mock_decorated);
 
     // Exercise __call.
-    $this->assertArrayEquals(
+    $this->assertEquals(
       $args,
       \call_user_func_array([$mock_decorated, $method], $args)
     );

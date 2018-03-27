@@ -240,8 +240,7 @@ function drupal_find_theme_templates($cache, $extension, $path) {
     // Match templates based on the 'template' filename.
     foreach ($cache as $hook => $info) {
       if (isset($info['template'])) {
-        $template_candidates = [$info['template'], str_replace($info['theme path'] . '/templates/', '', $info['template'])];
-        if (in_array($template, $template_candidates)) {
+        if ($template === $info['template']) {
           $implementations[$hook] = [
             'template' => $template,
             'path' => dirname($file->uri),
@@ -462,7 +461,7 @@ function theme_render_and_autoescape($arg) {
  *
  * @param array $theme_settings
  *   An array of theme settings from system setting form or a Drupal 7 variable.
- * @param Config $config
+ * @param \Drupal\Core\Config\Config $config
  *   The configuration object to update.
  *
  * @return
@@ -1191,10 +1190,9 @@ function template_preprocess_maintenance_task_list(&$variables) {
 /**
  * Adds a default set of helper variables for preprocessors and templates.
  *
- * This function is called for theme hooks implemented as templates only, not
- * for theme hooks implemented as functions. This preprocess function is the
- * first in the sequence of preprocessing functions that are called when
- * preparing variables for a template.
+ * This function is called for every theme hook. It is the first in the
+ * sequence of preprocessing functions called when preparing variables for a
+ * template.
  *
  * See the @link themeable Default theme implementations topic @endlink for
  * details.

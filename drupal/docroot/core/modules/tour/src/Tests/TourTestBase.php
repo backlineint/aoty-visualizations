@@ -4,8 +4,13 @@ namespace Drupal\tour\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
+@trigger_error('\Drupal\tour\Tests\TourTestBase is deprecated in 8.4.0 and will be removed before Drupal 9.0.0. Instead, use \Drupal\Tests\tour\Functional\TourTestBase.', E_USER_DEPRECATED);
+
 /**
  * Base class for testing Tour functionality.
+ *
+ * @deprecated in Drupal 8.4.0 and will be removed before Drupal 9.0.0.
+ *   Use \Drupal\Tests\tour\Functional\TourTestBase instead.
  */
 abstract class TourTestBase extends WebTestBase {
 
@@ -50,11 +55,11 @@ abstract class TourTestBase extends WebTestBase {
       $modals = 0;
       foreach ($tips as $tip) {
         if (!empty($tip['data-id'])) {
-          $elements = \PHPUnit_Util_XML::cssSelect('#' . $tip['data-id'], TRUE, $this->content, TRUE);
+          $elements = $this->xpath('//*[@id="' . $tip['data-id'] . '"]');
           $this->assertTrue(!empty($elements) && count($elements) === 1, format_string('Found corresponding page element for tour tip with id #%data-id', ['%data-id' => $tip['data-id']]));
         }
         elseif (!empty($tip['data-class'])) {
-          $elements = \PHPUnit_Util_XML::cssSelect('.' . $tip['data-class'], TRUE, $this->content, TRUE);
+          $elements = $this->xpath('//*[contain(@class, "' . $tip['data-id'] . '")]');
           $this->assertFalse(empty($elements), format_string('Found corresponding page element for tour tip with class .%data-class', ['%data-class' => $tip['data-class']]));
         }
         else {

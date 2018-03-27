@@ -49,10 +49,11 @@ body.maintenance-page {
 .maintenance-page .site-branding-text a:focus {
   color: #777;
 }
-.maintenance-page  .page-title {
+.maintenance-page .page-title {
   line-height: 1em;
   margin-top: 0;
 }
+
 @media all and (min-width: 800px) {
   .maintenance-page #page-wrapper {
     width: 800px;
@@ -62,6 +63,7 @@ body.maintenance-page {
     width: 700px;
   }
 }
+
 @media all and (min-width: 600px) { /* @TODO find the proper breakpoint */
   .maintenance-page #page {
     margin: 20px 40px 40px;

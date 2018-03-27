@@ -30,6 +30,11 @@ class FileListingTest extends FileFieldTestBase {
   protected function setUp() {
     parent::setUp();
 
+    // This test expects unused managed files to be marked as a temporary file.
+    $this->config('file.settings')
+      ->set('make_unused_managed_files_temporary', TRUE)
+      ->save();
+
     $this->adminUser = $this->drupalCreateUser(['access files overview', 'bypass node access']);
     $this->baseUser = $this->drupalCreateUser();
     $this->createFileField('file', 'node', 'article', [], ['file_extensions' => 'txt png']);
@@ -91,7 +96,7 @@ class FileListingTest extends FileFieldTestBase {
       $file = $this->getTestFile('image');
 
       $edit = [
-        'files[file_0]' => drupal_realpath($file->getFileUri()),
+        'files[file_0]' => \Drupal::service('file_system')->realpath($file->getFileUri()),
       ];
       $this->drupalPostForm(NULL, $edit, t('Save'));
       $node = Node::load($node->id());

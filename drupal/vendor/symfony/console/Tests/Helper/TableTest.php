@@ -34,7 +34,7 @@ class TableTest extends TestCase
     }
 
     /**
-     * @dataProvider testRenderProvider
+     * @dataProvider renderProvider
      */
     public function testRender($headers, $rows, $style, $expected, $decorated = false)
     {
@@ -50,7 +50,7 @@ class TableTest extends TestCase
     }
 
     /**
-     * @dataProvider testRenderProvider
+     * @dataProvider renderProvider
      */
     public function testRenderAddRows($headers, $rows, $style, $expected, $decorated = false)
     {
@@ -66,7 +66,7 @@ class TableTest extends TestCase
     }
 
     /**
-     * @dataProvider testRenderProvider
+     * @dataProvider renderProvider
      */
     public function testRenderAddRowsOneByOne($headers, $rows, $style, $expected, $decorated = false)
     {
@@ -83,7 +83,7 @@ class TableTest extends TestCase
         $this->assertEquals($expected, $this->getOutputContent($output));
     }
 
-    public function testRenderProvider()
+    public function renderProvider()
     {
         $books = array(
             array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
@@ -515,6 +515,35 @@ TABLE
             ,
                 true,
             ),
+            'Row with formatted cells containing a newline' => array(
+                array(),
+                array(
+                    array(
+                        new TableCell('<error>Dont break'."\n".'here</error>', array('colspan' => 2)),
+                    ),
+                    new TableSeparator(),
+                    array(
+                        'foo',
+                         new TableCell('<error>Dont break'."\n".'here</error>', array('rowspan' => 2)),
+                    ),
+                    array(
+                        'bar',
+                    ),
+                ),
+                'default',
+                <<<'TABLE'
++-------+------------+
+[39;49m| [39;49m[37;41mDont break[39;49m[39;49m         |[39;49m
+[39;49m| [39;49m[37;41mhere[39;49m               |
++-------+------------+
+[39;49m| foo   | [39;49m[37;41mDont break[39;49m[39;49m |[39;49m
+[39;49m| bar   | [39;49m[37;41mhere[39;49m       |
++-------+------------+
+
+TABLE
+            ,
+                true,
+            ),
         );
     }
 
@@ -691,6 +720,85 @@ TABLE;
 | 99921-58-10-7 | Divine Comedy        | Dante Alighieri |   9.95 |
 | 9971-5-0210-0 | A Tale of Two Cities | Charles Dickens | 139.25 |
 +---------------+----------------------+-----------------+--------+
+
+TABLE;
+
+        $this->assertEquals($expected, $this->getOutputContent($output));
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @expectedExceptionMessage A cell must be a TableCell, a scalar or an object implementing __toString, array given.
+     */
+    public function testThrowsWhenTheCellInAnArray()
+    {
+        $table = new Table($output = $this->getOutputStream());
+        $table
+            ->setHeaders(array('ISBN', 'Title', 'Author', 'Price'))
+            ->setRows(array(
+                array('99921-58-10-7', array(), 'Dante Alighieri', '9.95'),
+            ));
+
+        $table->render();
+    }
+
+    public function testColumnWith()
+    {
+        $table = new Table($output = $this->getOutputStream());
+        $table
+            ->setHeaders(array('ISBN', 'Title', 'Author', 'Price'))
+            ->setRows(array(
+                array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri', '9.95'),
+                array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens', '139.25'),
+            ))
+            ->setColumnWidth(0, 15)
+            ->setColumnWidth(3, 10);
+
+        $style = new TableStyle();
+        $style->setPadType(STR_PAD_LEFT);
+        $table->setColumnStyle(3, $style);
+
+        $table->render();
+
+        $expected =
+            <<<TABLE
++-----------------+----------------------+-----------------+------------+
+| ISBN            | Title                | Author          |      Price |
++-----------------+----------------------+-----------------+------------+
+| 99921-58-10-7   | Divine Comedy        | Dante Alighieri |       9.95 |
+| 9971-5-0210-0   | A Tale of Two Cities | Charles Dickens |     139.25 |
++-----------------+----------------------+-----------------+------------+
+
+TABLE;
+
+        $this->assertEquals($expected, $this->getOutputContent($output));
+    }
+
+    public function testColumnWiths()
+    {
+        $table = new Table($output = $this->getOutputStream());
+        $table
+            ->setHeaders(array('ISBN', 'Title', 'Author', 'Price'))
+            ->setRows(array(
+                array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri', '9.95'),
+                array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens', '139.25'),
+            ))
+            ->setColumnWidths(array(15, 0, -1, 10));
+
+        $style = new TableStyle();
+        $style->setPadType(STR_PAD_LEFT);
+        $table->setColumnStyle(3, $style);
+
+        $table->render();
+
+        $expected =
+            <<<TABLE
++-----------------+----------------------+-----------------+------------+
+| ISBN            | Title                | Author          |      Price |
++-----------------+----------------------+-----------------+------------+
+| 99921-58-10-7   | Divine Comedy        | Dante Alighieri |       9.95 |
+| 9971-5-0210-0   | A Tale of Two Cities | Charles Dickens |     139.25 |
++-----------------+----------------------+-----------------+------------+
 
 TABLE;
 

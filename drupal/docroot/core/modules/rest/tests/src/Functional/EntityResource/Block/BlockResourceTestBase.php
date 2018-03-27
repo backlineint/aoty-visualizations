@@ -122,9 +122,7 @@ abstract class BlockResourceTestBase extends EntityResourceTestBase {
   protected function getExpectedCacheTags() {
     // Because the 'user.permissions' cache context is missing, the cache tag
     // for the anonymous user role is never added automatically.
-    return array_values(array_filter(parent::getExpectedCacheTags(), function ($tag) {
-      return $tag !== 'config:user.role.anonymous';
-    }));
+    return array_values(array_diff(parent::getExpectedCacheTags(), ['config:user.role.anonymous']));
   }
 
   /**
@@ -141,6 +139,21 @@ abstract class BlockResourceTestBase extends EntityResourceTestBase {
       default:
         return parent::getExpectedUnauthorizedAccessMessage($method);
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getExpectedUnauthorizedAccessCacheability() {
+    // @see \Drupal\block\BlockAccessControlHandler::checkAccess()
+    return parent::getExpectedUnauthorizedAccessCacheability()
+      ->setCacheTags([
+        '4xx-response',
+        'config:block.block.llama',
+        'http_response',
+        static::$auth ? 'user:2' : 'user:0',
+      ])
+      ->setCacheContexts(['user.roles']);
   }
 
 }

@@ -15,7 +15,7 @@ use Drupal\KernelTests\KernelTestBase;
  */
 class FieldWidgetConstraintValidatorTest extends KernelTestBase {
 
-  public static $modules = ['entity_test', 'field', 'user', 'system'];
+  public static $modules = ['entity_test', 'field', 'field_test', 'user', 'system'];
 
   /**
    * {@inheritdoc}
@@ -54,7 +54,8 @@ class FieldWidgetConstraintValidatorTest extends KernelTestBase {
     $display->validateFormValues($entity, $form, $form_state);
 
     $errors = $form_state->getErrors();
-    $this->assertEqual($errors['name'], 'Widget constraint has failed.', 'Constraint violation is generated correctly');
+    $this->assertEqual($errors['name'], 'Widget constraint has failed.', 'Constraint violation at the field items list level is generated correctly');
+    $this->assertEqual($errors['test_field'], 'Widget constraint has failed.', 'Constraint violation at the field items list level is generated correctly for an advanced widget');
   }
 
   /**
@@ -149,6 +150,10 @@ class FieldWidgetConstraintValidatorTest extends KernelTestBase {
 
     $errors = $this->getErrorsForEntity($entity);
     $this->assertEqual($errors[''], 'Entity level validation');
+
+    $entity->name->value = 'entity-level-violation-with-path';
+    $errors = $this->getErrorsForEntity($entity);
+    $this->assertEqual($errors['test][form][element'], 'Entity level validation');
   }
 
 }

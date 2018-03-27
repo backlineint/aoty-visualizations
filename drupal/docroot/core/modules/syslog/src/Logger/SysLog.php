@@ -77,11 +77,24 @@ class SysLog implements LoggerInterface {
       '!ip' => $context['ip'],
       '!request_uri' => $context['request_uri'],
       '!referer' => $context['referer'],
+      '!severity' => $level,
       '!uid' => $context['uid'],
       '!link' => strip_tags($context['link']),
       '!message' => strip_tags($message),
     ]);
 
+    $this->syslogWrapper($level, $entry);
+  }
+
+  /**
+   * A syslog wrapper to make syslog functionality testable.
+   *
+   * @param int $level
+   *   The syslog priority.
+   * @param string $entry
+   *   The message to send to syslog function.
+   */
+  protected function syslogWrapper($level, $entry) {
     syslog($level, $entry);
   }
 

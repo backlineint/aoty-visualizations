@@ -2,6 +2,8 @@
 
 namespace Drupal\text\Plugin\migrate\cckfield;
 
+@trigger_error('TextField is deprecated in Drupal 8.3.x and will be removed before Drupal 9.0.x. Use \Drupal\text\Plugin\migrate\field\d6\TextField or \Drupal\text\Plugin\migrate\field\d7\TextField instead.', E_USER_DEPRECATED);
+
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
 use Drupal\migrate_drupal\Plugin\migrate\cckfield\CckFieldPluginBase;
@@ -14,8 +16,16 @@ use Drupal\migrate_drupal\Plugin\migrate\cckfield\CckFieldPluginBase;
  *     "text_long" = "text_long",
  *     "text_with_summary" = "text_with_summary"
  *   },
- *   core = {6,7}
+ *   core = {6,7},
+ *   source_module = "text",
+ *   destination_module = "text",
  * )
+ *
+ * @deprecated in Drupal 8.3.x, to be removed before Drupal 9.0.x. Use
+ * \Drupal\text\Plugin\migrate\field\d6\TextField or
+ * \Drupal\text\Plugin\migrate\field\d7\TextField instead.
+ *
+ * @see https://www.drupal.org/node/2751897
  */
 class TextField extends CckFieldPluginBase {
 
@@ -43,7 +53,9 @@ class TextField extends CckFieldPluginBase {
    * {@inheritdoc}
    */
   public function processCckFieldValues(MigrationInterface $migration, $field_name, $field_info) {
-    if ($field_info['widget_type'] == 'optionwidgets_onoff') {
+    $widget_type = isset($field_info['widget_type']) ? $field_info['widget_type'] : $field_info['widget']['type'];
+
+    if ($widget_type == 'optionwidgets_onoff') {
       $process = [
         'value' => [
           'plugin' => 'static_map',
@@ -88,7 +100,7 @@ class TextField extends CckFieldPluginBase {
     }
 
     $process = [
-      'plugin' => 'iterator',
+      'plugin' => 'sub_process',
       'source' => $field_name,
       'process' => $process,
     ];

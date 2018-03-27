@@ -9,6 +9,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Builds the form to delete transitions from Workflow entities.
+ *
+ * @internal
  */
 class WorkflowTransitionDeleteForm extends ConfirmFormBase {
 
@@ -78,7 +80,7 @@ class WorkflowTransitionDeleteForm extends ConfirmFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, WorkflowInterface $workflow = NULL, $workflow_transition = NULL) {
     try {
-      $this->transition = $workflow->getTransition($workflow_transition);
+      $this->transition = $workflow->getTypePlugin()->getTransition($workflow_transition);
     }
     catch (\InvalidArgumentException $e) {
       throw new NotFoundHttpException();
@@ -92,8 +94,9 @@ class WorkflowTransitionDeleteForm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->workflow
-      ->deleteTransition($this->transition->id())
-      ->save();
+      ->getTypePlugin()
+      ->deleteTransition($this->transition->id());
+    $this->workflow->save();
 
     drupal_set_message($this->t('%transition transition deleted.', ['%transition' => $this->transition->label()]));
     $form_state->setRedirectUrl($this->getCancelUrl());

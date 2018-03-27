@@ -2,9 +2,6 @@
 
 namespace Drupal\Tests\migrate\Unit\process;
 
-@trigger_error('The ' . __NAMESPACE__ . '\MigrationTest is deprecated in
-Drupal 8.4.0 and will be removed before Drupal 9.0.0. Instead, use ' . __NAMESPACE__ . '\MigrationLookupTest', E_USER_DEPRECATED);
-
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\migrate\MigrateSkipProcessException;
 use Drupal\migrate\Plugin\MigrationInterface;
@@ -17,11 +14,9 @@ use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 use Prophecy\Argument;
 
 /**
- * @deprecated in Drupal 8.4.x, to be removed before Drupal 9.0.x. Use
- *   \Drupal\Tests\migrate\Unit\process\MigrationLookupTest instead.
- *
  * @coversDefaultClass \Drupal\migrate\Plugin\migrate\process\Migration
  * @group migrate
+ * @group legacy
  */
 class MigrationTest extends MigrateProcessTestCase {
 
@@ -129,6 +124,8 @@ class MigrationTest extends MigrateProcessTestCase {
       'migration' => 'foobaz',
     ];
     $this->migration_plugin->id()->willReturn(uniqid());
+    $this->migration_plugin_manager->createInstances(['foobaz'])
+      ->willReturn(['foobaz' => $this->migration_plugin->reveal()]);
     $migration = new Migration($configuration, 'migration', [], $this->migration_plugin->reveal(), $this->migration_plugin_manager->reveal(), $this->process_plugin_manager->reveal());
     $this->setExpectedException(MigrateSkipProcessException::class);
     $migration->transform(0, $this->migrateExecutable, $this->row, 'foo');

@@ -2,6 +2,7 @@
 
 namespace Drupal\views\Plugin\views\filter;
 
+use Drupal\Core\Database\Query\Condition;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -26,8 +27,31 @@ class StringFilter extends FilterPluginBase {
     $options = parent::defineOptions();
 
     $options['expose']['contains']['required'] = ['default' => FALSE];
+    $options['expose']['contains']['placeholder'] = ['default' => ''];
 
     return $options;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultExposeOptions() {
+    parent::defaultExposeOptions();
+    $this->options['expose']['placeholder'] = NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildExposeForm(&$form, FormStateInterface $form_state) {
+    parent::buildExposeForm($form, $form_state);
+    $form['expose']['placeholder'] = [
+      '#type' => 'textfield',
+      '#default_value' => $this->options['expose']['placeholder'],
+      '#title' => $this->t('Placeholder'),
+      '#size' => 40,
+      '#description' => $this->t('Hint text that appears inside the field when empty.'),
+    ];
   }
 
   /**
@@ -210,6 +234,9 @@ class StringFilter extends FilterPluginBase {
         '#size' => 30,
         '#default_value' => $this->value,
       ];
+      if (!empty($this->options['expose']['placeholder'])) {
+        $form['value']['#attributes']['placeholder'] = $this->options['expose']['placeholder'];
+      }
       $user_input = $form_state->getUserInput();
       if ($exposed && !isset($user_input[$identifier])) {
         $user_input[$identifier] = $this->value;
@@ -265,7 +292,7 @@ class StringFilter extends FilterPluginBase {
   }
 
   protected function opContainsWord($field) {
-    $where = $this->operator == 'word' ? db_or() : db_and();
+    $where = $this->operator == 'word' ? new Condition('OR') : new Condition('AND');
 
     // Don't filter on empty strings.
     if (empty($this->value)) {

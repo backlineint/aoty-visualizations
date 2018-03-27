@@ -195,34 +195,36 @@ class DiffEngine {
       }
 
       $x1 = $xoff + (int)(($numer + ($xlim - $xoff) * $chunk) / $nchunks);
-      for ( ; $x < $x1; $x++) {
+      for (; $x < $x1; $x++) {
         $line = $flip ? $this->yv[$x] : $this->xv[$x];
         if (empty($ymatches[$line])) {
           continue;
         }
         $matches = $ymatches[$line];
-        reset($matches);
-        while (list ($junk, $y) = each($matches)) {
-          if (empty($this->in_seq[$y])) {
-            $k = $this->_lcs_pos($y);
-            $this::USE_ASSERTS && assert($k > 0);
-            $ymids[$k] = $ymids[$k - 1];
-            break;
+        $found_empty = FALSE;
+        foreach ($matches as $y) {
+          if (!$found_empty) {
+            if (empty($this->in_seq[$y])) {
+              $k = $this->_lcs_pos($y);
+              $this::USE_ASSERTS && assert($k > 0);
+              $ymids[$k] = $ymids[$k - 1];
+              $found_empty = TRUE;
+            }
           }
-        }
-        while (list ($junk, $y) = each($matches)) {
-          if ($y > $this->seq[$k - 1]) {
-            $this::USE_ASSERTS && assert($y < $this->seq[$k]);
-            // Optimization: this is a common case:
-            // next match is just replacing previous match.
-            $this->in_seq[$this->seq[$k]] = FALSE;
-            $this->seq[$k] = $y;
-            $this->in_seq[$y] = 1;
-          }
-          elseif (empty($this->in_seq[$y])) {
-            $k = $this->_lcs_pos($y);
-            $this::USE_ASSERTS && assert($k > 0);
-            $ymids[$k] = $ymids[$k - 1];
+          else {
+            if ($y > $this->seq[$k - 1]) {
+              $this::USE_ASSERTS && assert($y < $this->seq[$k]);
+              // Optimization: this is a common case:
+              // next match is just replacing previous match.
+              $this->in_seq[$this->seq[$k]] = FALSE;
+              $this->seq[$k] = $y;
+              $this->in_seq[$y] = 1;
+            }
+            elseif (empty($this->in_seq[$y])) {
+              $k = $this->_lcs_pos($y);
+              $this::USE_ASSERTS && assert($k > 0);
+              $ymids[$k] = $ymids[$k - 1];
+            }
           }
         }
       }
@@ -302,8 +304,7 @@ class DiffEngine {
       //$nchunks = sqrt(min($xlim - $xoff, $ylim - $yoff) / 2.5);
       //$nchunks = max(2, min(8, (int)$nchunks));
       $nchunks = min(7, $xlim - $xoff, $ylim - $yoff) + 1;
-      list($lcs, $seps)
-      = $this->_diag($xoff, $xlim, $yoff, $ylim, $nchunks);
+      list($lcs, $seps) = $this->_diag($xoff, $xlim, $yoff, $ylim, $nchunks);
     }
 
     if ($lcs == 0) {
@@ -344,7 +345,7 @@ class DiffEngine {
     $i = 0;
     $j = 0;
 
-    $this::USE_ASSERTS && assert('sizeof($lines) == sizeof($changed)');
+    $this::USE_ASSERTS && assert(sizeof($lines) == sizeof($changed));
     $len = sizeof($lines);
     $other_len = sizeof($other_changed);
 
@@ -364,7 +365,7 @@ class DiffEngine {
         $j++;
       }
       while ($i < $len && !$changed[$i]) {
-        $this::USE_ASSERTS && assert('$j < $other_len && ! $other_changed[$j]');
+        $this::USE_ASSERTS && assert($j < $other_len && ! $other_changed[$j]);
         $i++;
         $j++;
         while ($j < $other_len && $other_changed[$j]) {
@@ -400,11 +401,11 @@ class DiffEngine {
           while ($start > 0 && $changed[$start - 1]) {
             $start--;
           }
-          $this::USE_ASSERTS && assert('$j > 0');
+          $this::USE_ASSERTS && assert($j > 0);
           while ($other_changed[--$j]) {
             continue;
           }
-          $this::USE_ASSERTS && assert('$j >= 0 && !$other_changed[$j]');
+          $this::USE_ASSERTS && assert($j >= 0 && !$other_changed[$j]);
         }
 
         /*
@@ -427,7 +428,7 @@ class DiffEngine {
           while ($i < $len && $changed[$i]) {
             $i++;
           }
-          $this::USE_ASSERTS && assert('$j < $other_len && ! $other_changed[$j]');
+          $this::USE_ASSERTS && assert($j < $other_len && ! $other_changed[$j]);
           $j++;
           if ($j < $other_len && $other_changed[$j]) {
             $corresponding = $i;
@@ -445,11 +446,11 @@ class DiffEngine {
       while ($corresponding < $i) {
         $changed[--$start] = 1;
         $changed[--$i] = 0;
-        $this::USE_ASSERTS && assert('$j > 0');
+        $this::USE_ASSERTS && assert($j > 0);
         while ($other_changed[--$j]) {
           continue;
         }
-        $this::USE_ASSERTS && assert('$j >= 0 && !$other_changed[$j]');
+        $this::USE_ASSERTS && assert($j >= 0 && !$other_changed[$j]);
       }
     }
   }

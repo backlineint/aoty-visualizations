@@ -166,7 +166,7 @@ class UrlMatcherTest extends TestCase
     {
         $collection = new RouteCollection();
         $chars = '!"$%éà &\'()*+,./:;<=>@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[]^_`abcdefghijklmnopqrstuvwxyz{|}~-';
-        $collection->add('foo', new Route('/{foo}/bar', array(), array('foo' => '['.preg_quote($chars).']+')));
+        $collection->add('foo', new Route('/{foo}/bar', array(), array('foo' => '['.preg_quote($chars).']+'), array('utf8' => true)));
 
         $matcher = new UrlMatcher($collection, new RequestContext());
         $this->assertEquals(array('_route' => 'foo', 'foo' => $chars), $matcher->match('/'.rawurlencode($chars).'/bar'));
@@ -337,6 +337,16 @@ class UrlMatcherTest extends TestCase
         $matcher->match('/foo');
     }
 
+    public function testRequestCondition()
+    {
+        $coll = new RouteCollection();
+        $route = new Route('/foo/{bar}');
+        $route->setCondition('request.getBaseUrl() == "/sub/front.php" and request.getPathInfo() == "/foo/bar"');
+        $coll->add('foo', $route);
+        $matcher = new UrlMatcher($coll, new RequestContext('/sub/front.php'));
+        $this->assertEquals(array('bar' => 'bar', '_route' => 'foo'), $matcher->match('/foo/bar'));
+    }
+
     public function testDecodeOnce()
     {
         $coll = new RouteCollection();
@@ -416,5 +426,16 @@ class UrlMatcherTest extends TestCase
 
         $matcher = new UrlMatcher($coll, new RequestContext('', 'GET', 'en.example.com'));
         $this->assertEquals(array('_route' => 'foo', 'locale' => 'en'), $matcher->match('/'));
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Routing\Exception\NoConfigurationException
+     */
+    public function testNoConfiguration()
+    {
+        $coll = new RouteCollection();
+
+        $matcher = new UrlMatcher($coll, new RequestContext());
+        $matcher->match('/');
     }
 }

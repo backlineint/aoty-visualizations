@@ -51,7 +51,10 @@ content:
     type: entity_reference_autocomplete_tags
     weight: 3
     region: content
-    settings: {  }
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   path:
     type: path
@@ -64,6 +67,13 @@ content:
     settings:
       display_label: true
     weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
     region: content
     third_party_settings: {  }
   sticky:

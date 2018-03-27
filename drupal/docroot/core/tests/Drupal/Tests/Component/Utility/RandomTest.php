@@ -3,7 +3,7 @@
 namespace Drupal\Tests\Component\Utility;
 
 use Drupal\Component\Utility\Random;
-use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests random data generation.
@@ -12,7 +12,7 @@ use Drupal\Tests\UnitTestCase;
  *
  * @coversDefaultClass \Drupal\Component\Utility\Random
  */
-class RandomTest extends UnitTestCase {
+class RandomTest extends TestCase {
 
   /**
    * The first random string passed to the test callback.
@@ -62,7 +62,12 @@ class RandomTest extends UnitTestCase {
     // There are fewer than 100 possibilities so an exception should occur to
     // prevent infinite loops.
     $random = new Random();
-    $this->setExpectedException(\RuntimeException::class);
+    if (method_exists($this, 'expectException')) {
+      $this->expectException(\RuntimeException::class);
+    }
+    else {
+      $this->setExpectedException(\RuntimeException::class);
+    }
     for ($i = 0; $i <= 100; $i++) {
       $str = $random->name(1, TRUE);
       $names[$str] = TRUE;
@@ -78,7 +83,12 @@ class RandomTest extends UnitTestCase {
     // There are fewer than 100 possibilities so an exception should occur to
     // prevent infinite loops.
     $random = new Random();
-    $this->setExpectedException(\RuntimeException::class);
+    if (method_exists($this, 'expectException')) {
+      $this->expectException(\RuntimeException::class);
+    }
+    else {
+      $this->setExpectedException(\RuntimeException::class);
+    }
     for ($i = 0; $i <= 100; $i++) {
       $str = $random->string(1, TRUE);
       $names[$str] = TRUE;

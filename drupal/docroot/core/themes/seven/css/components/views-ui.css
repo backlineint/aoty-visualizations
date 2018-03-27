@@ -74,7 +74,6 @@ details.fieldset-no-legend {
   margin-right: 1.5em;
 }
 
-
 .views-admin-dependent .form-item .form-item,
 .views-admin-dependent .form-type-checkboxes,
 .views-admin-dependent .form-type-radios,
@@ -158,7 +157,7 @@ details.fieldset-no-legend {
 /* @group Attachment details */
 
 #edit-display-settings-title {
-  color: #008BCB;
+  color: #008bcb;
 }
 
 /* @end */
@@ -169,7 +168,7 @@ details.fieldset-no-legend {
  */
 
 .views-displays .secondary {
- text-align: left; /* LTR */
+  text-align: left; /* LTR */
 }
 [dir="rtl"] .views-displays .secondary {
   text-align: right;
@@ -190,17 +189,17 @@ details.fieldset-no-legend {
 .views-displays .secondary .open > a:hover,
 .views-displays .secondary .open > a:focus {
   background-color: #f1f1f1;
-  color: #008BCB;
+  color: #008bcb;
 }
 
-.views-displays .secondary .action-list  li:first-child {
+.views-displays .secondary .action-list li:first-child {
   border-radius: 0 7px 0 0; /* LTR */
 }
-[dir="rtl"] .views-displays .secondary .action-list  li:first-child {
+[dir="rtl"] .views-displays .secondary .action-list li:first-child {
   border-radius: 7px 0 0 0;
 }
 
-.views-displays .secondary .action-list  li:last-child {
+.views-displays .secondary .action-list li:last-child {
   border-radius: 0 0 7px 7px;
 }
 
@@ -267,11 +266,11 @@ details.fieldset-no-legend {
 }
 
 .views-ui-rearrange-filter-form tr.drag td {
-  background-color: #FFEE77 !important;
+  background-color: #fe7 !important;
 }
 
 .views-ui-rearrange-filter-form tr.drag-previous td {
-  background-color: #FFFFBB !important;
+  background-color: #ffb !important;
 }
 
 /* @end */

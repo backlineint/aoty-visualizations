@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\image\Kernel;
 
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -10,6 +11,7 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\Tests\field\Kernel\FieldKernelTestBase;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\file\Entity\File;
+use Drupal\user\Entity\Role;
 
 /**
  * Tests using entity fields of the image field type.
@@ -39,6 +41,14 @@ class ImageItemTest extends FieldKernelTestBase {
 
   protected function setUp() {
     parent::setUp();
+
+    $this->installEntitySchema('user');
+    $this->installConfig(['user']);
+    // Give anonymous users permission to access content, so that we can view
+    // and download public file.
+    $anonymous_role = Role::load(Role::ANONYMOUS_ID);
+    $anonymous_role->grantPermission('access content');
+    $anonymous_role->save();
 
     $this->installEntitySchema('file');
     $this->installSchema('file', ['file_usage']);
@@ -127,6 +137,28 @@ class ImageItemTest extends FieldKernelTestBase {
     $entity->image_test->generateSampleItems();
     $this->entityValidateAndSave($entity);
     $this->assertEqual($entity->image_test->entity->get('filemime')->value, 'image/jpeg');
+  }
+
+  /**
+   * Tests a malformed image.
+   */
+  public function testImageItemMalformed() {
+    // Validate entity is an image and don't gather dimensions if it is not.
+    $entity = EntityTest::create();
+    $entity->image_test = NULL;
+    $entity->image_test->target_id = 9999;
+    // PHPUnit re-throws E_USER_WARNING as an exception.
+    try {
+      $entity->save();
+      $this->fail('Exception did not fail');
+    }
+    catch (EntityStorageException $exception) {
+      $this->assertInstanceOf(\PHPUnit_Framework_Error_Warning::class, $exception->getPrevious());
+      $this->assertEquals($exception->getMessage(), 'Missing file with ID 9999.');
+      $this->assertEmpty($entity->image_test->width);
+      $this->assertEmpty($entity->image_test->height);
+    }
+
   }
 
 }

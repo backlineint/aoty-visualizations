@@ -29,6 +29,9 @@ class ImageOnTranslatedEntityTest extends ImageFieldTestBase {
   protected function setUp() {
     parent::setUp();
 
+    // This test expects unused managed files to be marked as a temporary file.
+    $this->config('file.settings')->set('make_unused_managed_files_temporary', TRUE)->save();
+
     // Create the "Basic page" node type.
     // @todo Remove the disabling of new revision creation in
     //   https://www.drupal.org/node/1239558.
@@ -92,7 +95,7 @@ class ImageOnTranslatedEntityTest extends ImageFieldTestBase {
     // Edit the node to upload a file.
     $edit = [];
     $name = 'files[' . $this->fieldName . '_0]';
-    $edit[$name] = drupal_realpath($this->drupalGetTestFiles('image')[0]->uri);
+    $edit[$name] = \Drupal::service('file_system')->realpath($this->drupalGetTestFiles('image')[0]->uri);
     $this->drupalPostForm('node/' . $default_language_node->id() . '/edit', $edit, t('Save'));
     $edit = [$this->fieldName . '[0][alt]' => 'Lost in translation image', $this->fieldName . '[0][title]' => 'Lost in translation image title'];
     $this->drupalPostForm(NULL, $edit, t('Save'));
@@ -105,7 +108,7 @@ class ImageOnTranslatedEntityTest extends ImageFieldTestBase {
     $edit = [];
     $edit['title[0][value]'] = 'Scarlett Johansson';
     $name = 'files[' . $this->fieldName . '_0]';
-    $edit[$name] = drupal_realpath($this->drupalGetTestFiles('image')[1]->uri);
+    $edit[$name] = \Drupal::service('file_system')->realpath($this->drupalGetTestFiles('image')[1]->uri);
     $this->drupalPostForm(NULL, $edit, t('Save (this translation)'));
     $edit = [$this->fieldName . '[0][alt]' => 'Scarlett Johansson image', $this->fieldName . '[0][title]' => 'Scarlett Johansson image title'];
     $this->drupalPostForm(NULL, $edit, t('Save (this translation)'));
@@ -137,7 +140,7 @@ class ImageOnTranslatedEntityTest extends ImageFieldTestBase {
     $edit = [];
     $edit['title[0][value]'] = 'Akiko Takeshita';
     $name = 'files[' . $this->fieldName . '_0]';
-    $edit[$name] = drupal_realpath($this->drupalGetTestFiles('image')[2]->uri);
+    $edit[$name] = \Drupal::service('file_system')->realpath($this->drupalGetTestFiles('image')[2]->uri);
     $this->drupalPostForm(NULL, $edit, t('Save (this translation)'));
     $edit = [$this->fieldName . '[0][alt]' => 'Akiko Takeshita image', $this->fieldName . '[0][title]' => 'Akiko Takeshita image title'];
     $this->drupalPostForm(NULL, $edit, t('Save (this translation)'));
@@ -172,7 +175,7 @@ class ImageOnTranslatedEntityTest extends ImageFieldTestBase {
     $edit = [];
     $edit['title[0][value]'] = 'Giovanni Ribisi';
     $name = 'files[' . $this->fieldName . '_0]';
-    $edit[$name] = drupal_realpath($this->drupalGetTestFiles('image')[3]->uri);
+    $edit[$name] = \Drupal::service('file_system')->realpath($this->drupalGetTestFiles('image')[3]->uri);
     $this->drupalPostForm(NULL, $edit, t('Save (this translation)'));
     $name = $this->fieldName . '[0][alt]';
 

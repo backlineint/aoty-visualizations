@@ -11,6 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a user password reset form.
+ *
+ * @internal
  */
 class UserPasswordForm extends FormBase {
 
@@ -60,9 +62,6 @@ class UserPasswordForm extends FormBase {
 
   /**
    * {@inheritdoc}
-   *
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The request object.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['name'] = [

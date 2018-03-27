@@ -117,8 +117,8 @@ small .admin-link:after {
   text-transform: none;
 }
 .system-modules td details a {
-  color: #5C5C5B;
-  border: 0px;
+  color: #5c5c5b;
+  border: 0;
 }
 .system-modules td details {
   border: 0;
@@ -211,7 +211,7 @@ small .admin-link:after {
   background-color: transparent;
 }
 [dir="rtl"] .system-status-report__status-title {
-    padding: 10px 40px 10px 6px;
+  padding: 10px 40px 10px 6px;
 }
 .system-status-report__status-icon:before {
   content: "";
@@ -223,7 +223,7 @@ small .admin-link:after {
   left: 12px; /* LTR */
   top: 12px;
 }
-[dir="rtl"] .system-status-report__status-icon:before  {
+[dir="rtl"] .system-status-report__status-icon:before {
   left: auto;
   right: 12px;
 }
@@ -234,7 +234,7 @@ small .admin-link:after {
   background-image: url(../../../misc/icons/e29700/warning.svg);
 }
 .system-status-report__entry__value {
-  padding: 1em .5em;
+  padding: 1em 0.5em;
 }
 
 /**
@@ -393,4 +393,9 @@ small .admin-link:after {
 }
 .cron-description__run-cron {
   display: block;
+}
+
+.system-cron-settings__link {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }

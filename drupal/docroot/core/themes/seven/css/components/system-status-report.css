@@ -22,7 +22,7 @@
 .system-status-report__entry--warning {
   background-color: transparent;
 }
-  /* Account for native and poly-filled details element */
+/* Account for native and poly-filled details element */
 .system-status-report__status-title {
   position: relative;
   padding: 1em 1em 1em 3em; /* LTR */
@@ -33,9 +33,6 @@
 .system-status-report__status-title .details-title {
   color: inherit;
   text-transform: none;
-}
-html:not(.details) .system-status-report__status-title {
-  padding-left: 0;
 }
 .system-status-report__status-title .details-title {
   padding-left: 3em; /* LTR */
@@ -132,7 +129,7 @@ html:not(.details) .system-status-report__status-title {
   [dir="rtl"] .system-status-report__status-title {
     float: right;
   }
-  .system-status-report__status-title::-webkit-details-marker {
+  html.js .system-status-report__status-title::-webkit-details-marker {
     display: none;
   }
   .collapse-processed > .system-status-report__status-title:before {

@@ -2,6 +2,9 @@
 
 namespace Drupal\serialization\Normalizer;
 
+use Drupal\Core\TypedData\ComplexDataInterface;
+use Drupal\Core\TypedData\TypedDataInternalPropertiesHelper;
+
 /**
  * Converts the Drupal entity object structures to a normalized array.
  *
@@ -26,9 +29,16 @@ class ComplexDataNormalizer extends NormalizerBase {
    */
   public function normalize($object, $format = NULL, array $context = []) {
     $attributes = [];
-    /** @var \Drupal\Core\TypedData\TypedDataInterface $field */
-    foreach ($object as $name => $field) {
-      $attributes[$name] = $this->serializer->normalize($field, $format, $context);
+    // $object will not always match $supportedInterfaceOrClass.
+    // @see \Drupal\serialization\Normalizer\EntityNormalizer
+    // Other normalizers that extend this class may only provide $object that
+    // implements \Traversable.
+    if ($object instanceof ComplexDataInterface) {
+      $object = TypedDataInternalPropertiesHelper::getNonInternalProperties($object);
+    }
+    /** @var \Drupal\Core\TypedData\TypedDataInterface $property */
+    foreach ($object as $name => $property) {
+      $attributes[$name] = $this->serializer->normalize($property, $format, $context);
     }
     return $attributes;
   }

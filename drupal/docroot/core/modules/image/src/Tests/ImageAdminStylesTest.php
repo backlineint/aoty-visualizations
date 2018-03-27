@@ -203,6 +203,10 @@ class ImageAdminStylesTest extends ImageFieldTestBase {
     $this->assertTitle(t('Edit style @name | Drupal', ['@name' => $style_label]));
     $this->assertResponse(200, format_string('Image style %original renamed to %new', ['%original' => $style->id(), '%new' => $style_name]));
 
+    // Check that the available image effects are properly sorted.
+    $option = $this->xpath('//select[@id=:id]//option', [':id' => 'edit-new--2']);
+    $this->assertTrue($option[1] == 'Ajax test', '"Ajax test" is the first selectable effect.');
+
     // Check that the image was flushed after updating the style.
     // This is especially important when renaming the style. Make sure that
     // the old image directory has been deleted.
@@ -418,9 +422,20 @@ class ImageAdminStylesTest extends ImageFieldTestBase {
     // Edit the scale effect that was just added.
     $this->clickLink(t('Edit'));
     $this->drupalPostForm(NULL, ['data[width]' => '24', 'data[height]' => '19'], t('Update effect'));
-    $this->drupalPostForm(NULL, ['new' => 'image_scale'], t('Add'));
 
-    // Add another scale effect and make sure both exist.
+    // Add another scale effect and make sure both exist. Click through from
+    // the overview to make sure that it is possible to add new effect then.
+    $this->drupalGet('admin/config/media/image-styles');
+    $rows = $this->xpath('//table/tbody/tr');
+    $i = 0;
+    foreach ($rows as $row) {
+      if (((string) $row->td[0]) === 'Test style scale edit scale') {
+        $this->clickLink('Edit', $i);
+        break;
+      }
+      $i++;
+    }
+    $this->drupalPostForm(NULL, ['new' => 'image_scale'], t('Add'));
     $this->drupalPostForm(NULL, ['data[width]' => '12', 'data[height]' => '19'], t('Add effect'));
     $this->assertText(t('Scale 24×19'));
     $this->assertText(t('Scale 12×19'));

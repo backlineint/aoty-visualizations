@@ -5,10 +5,16 @@ namespace Drupal\workflows\Form;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Form\SubformState;
+use Drupal\Core\Plugin\PluginFormFactoryInterface;
 use Drupal\Core\Url;
+use Drupal\workflows\StateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class WorkflowStateEditForm.
+ *
+ * @internal
  */
 class WorkflowStateEditForm extends EntityForm {
 
@@ -18,6 +24,32 @@ class WorkflowStateEditForm extends EntityForm {
    * @var string
    */
   protected $stateId;
+
+  /**
+   * The plugin form factory.
+   *
+   * @var \Drupal\Core\Plugin\PluginFormFactoryInterface
+   */
+  protected $pluginFormFactory;
+
+  /**
+   * Creates an instance of WorkflowStateEditForm.
+   *
+   * @param \Drupal\Core\Plugin\PluginFormFactoryInterface $pluginFormFactory
+   *   The plugin form factory.
+   */
+  public function __construct(PluginFormFactoryInterface $pluginFormFactory) {
+    $this->pluginFormFactory = $pluginFormFactory;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('plugin_form.factory')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -42,13 +74,14 @@ class WorkflowStateEditForm extends EntityForm {
 
     /* @var \Drupal\workflows\WorkflowInterface $workflow */
     $workflow = $this->getEntity();
-    $state = $workflow->getState($this->stateId);
+    $workflow_type = $workflow->getTypePlugin();
+    $state = $workflow->getTypePlugin()->getState($this->stateId);
+
     $form['label'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Label'),
+      '#title' => $this->t('State label'),
       '#maxlength' => 255,
       '#default_value' => $state->label(),
-      '#description' => $this->t('Label for the state.'),
       '#required' => TRUE,
     ];
 
@@ -62,10 +95,16 @@ class WorkflowStateEditForm extends EntityForm {
     ];
 
     // Add additional form fields from the workflow type plugin.
-    $form['type_settings'] = [
-      $workflow->get('type') => $workflow->getTypePlugin()->buildStateConfigurationForm($form_state, $workflow, $state),
-      '#tree' => TRUE,
-    ];
+    if ($workflow_type->hasFormClass(StateInterface::PLUGIN_FORM_KEY)) {
+      $form['type_settings'] = [
+        '#tree' => TRUE,
+      ];
+      $subform_state = SubformState::createForSubform($form['type_settings'], $form, $form_state);
+      $subform_state->set('state', $state);
+      $form['type_settings'] += $this->pluginFormFactory
+        ->createInstance($workflow_type, StateInterface::PLUGIN_FORM_KEY)
+        ->buildConfigurationForm($form['type_settings'], $subform_state);
+    }
 
     $header = [
       'label' => $this->t('Transition'),
@@ -124,11 +163,24 @@ class WorkflowStateEditForm extends EntityForm {
   protected function copyFormValuesToEntity(EntityInterface $entity, array $form, FormStateInterface $form_state) {
     /** @var \Drupal\workflows\WorkflowInterface $entity */
     $values = $form_state->getValues();
-    $entity->setStateLabel($values['id'], $values['label']);
-    if (isset($values['type_settings'])) {
-      $configuration = $entity->getTypePlugin()->getConfiguration();
-      $configuration['states'][$values['id']] = $values['type_settings'][$entity->getTypePlugin()->getPluginId()];
-      $entity->set('type_settings', $configuration);
+    $entity->getTypePlugin()->setStateLabel($values['id'], $values['label']);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
+    /** @var \Drupal\workflows\WorkflowTypeInterface $workflow_type */
+    $workflow = $this->entity;
+    $workflow_type = $workflow->getTypePlugin();
+
+    if ($workflow_type->hasFormClass(StateInterface::PLUGIN_FORM_KEY)) {
+      $subform_state = SubformState::createForSubform($form['type_settings'], $form, $form_state);
+      $subform_state->set('state', $workflow_type->getState($this->stateId));
+      $this->pluginFormFactory
+        ->createInstance($workflow_type, StateInterface::PLUGIN_FORM_KEY)
+        ->validateConfigurationForm($form['type_settings'], $subform_state);
     }
   }
 
@@ -138,9 +190,19 @@ class WorkflowStateEditForm extends EntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     /** @var \Drupal\workflows\WorkflowInterface $workflow */
     $workflow = $this->entity;
+    $workflow_type = $workflow->getTypePlugin();
+
+    if ($workflow_type->hasFormClass(StateInterface::PLUGIN_FORM_KEY)) {
+      $subform_state = SubformState::createForSubform($form['type_settings'], $form, $form_state);
+      $subform_state->set('state', $workflow_type->getState($this->stateId));
+      $this->pluginFormFactory
+        ->createInstance($workflow_type, StateInterface::PLUGIN_FORM_KEY)
+        ->submitConfigurationForm($form['type_settings'], $subform_state);
+    }
+
     $workflow->save();
     drupal_set_message($this->t('Saved %label state.', [
-      '%label' => $workflow->getState($this->stateId)->label(),
+      '%label' => $workflow->getTypePlugin()->getState($this->stateId)->label(),
     ]));
     $form_state->setRedirectUrl($workflow->toUrl('edit-form'));
   }

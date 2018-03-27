@@ -125,7 +125,7 @@ class ConfigFileContentTest extends KernelTestBase {
     $this->assertIdentical($config->get('null'), NULL);
 
     // Read false that had been nested in an array value.
-    $this->assertSame($config->get($casting_array_false_value_key), FALSE, "Nested boolean FALSE value returned FALSE.");
+    $this->assertSame(FALSE, $config->get($casting_array_false_value_key), "Nested boolean FALSE value returned FALSE.");
 
     // Unset a top level value.
     $config->clear($key);
@@ -210,22 +210,22 @@ class ConfigFileContentTest extends KernelTestBase {
     $config_parsed = $filestorage->read($name);
 
     $key = 'numeric keys';
-    $this->assertIdentical($config_data[$key], $config_parsed[$key]);
+    $this->assertSame($config_data[$key], $config_parsed[$key]);
 
     $key = 'nested keys';
-    $this->assertIdentical($config_data[$key], $config_parsed[$key]);
+    $this->assertSame($config_data[$key], $config_parsed[$key]);
 
     $key = 'HTML';
-    $this->assertIdentical($config_data['nested keys'][$key], $config_parsed['nested keys'][$key]);
+    $this->assertSame($config_data['nested keys'][$key], $config_parsed['nested keys'][$key]);
 
     $key = 'UTF-8';
-    $this->assertIdentical($config_data['nested keys'][$key], $config_parsed['nested keys'][$key]);
+    $this->assertSame($config_data['nested keys'][$key], $config_parsed['nested keys'][$key]);
 
     $key = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΣὨ';
-    $this->assertIdentical($config_data['nested keys'][$key], $config_parsed['nested keys'][$key]);
+    $this->assertSame($config_data['nested keys'][$key], $config_parsed['nested keys'][$key]);
 
     $key = 'invalid xml';
-    $this->assertIdentical($config_data[$key], $config_parsed[$key]);
+    $this->assertSame($config_data[$key], $config_parsed[$key]);
   }
 
 }

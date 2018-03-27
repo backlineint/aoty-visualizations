@@ -351,11 +351,16 @@ class LanguageManager implements LanguageManagerInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Sets the configuration override language.
    *
    * This function is a noop since the configuration cannot be overridden by
    * language unless the Language module is enabled. That replaces the default
    * language manager with a configurable language manager.
+   *
+   * @param \Drupal\Core\Language\LanguageInterface $language
+   *   The language to override configuration with.
+   *
+   * @return $this
    *
    * @see \Drupal\language\ConfigurableLanguageManager::setConfigOverrideLanguage()
    */
@@ -376,7 +381,7 @@ class LanguageManager implements LanguageManagerInterface {
    * The locked languages are removed by default.
    *
    * @param \Drupal\Core\Language\LanguageInterface[] $languages
-   *    Array with languages to be filtered.
+   *   Array with languages to be filtered.
    * @param int $flags
    *   (optional) Specifies the state of the languages that have to be returned.
    *   It can be: LanguageInterface::STATE_CONFIGURABLE,

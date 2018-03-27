@@ -38,12 +38,15 @@ class ModerationRevisionRevertTest extends BrowserTestBase {
     $workflow->getTypePlugin()->addEntityTypeAndBundle('node', 'moderated_bundle');
     $workflow->save();
 
+    /** @var \Drupal\Core\Routing\RouteBuilderInterface $router_builder */
+    $router_builder = $this->container->get('router.builder');
+    $router_builder->rebuildIfNeeded();
+
     $admin = $this->drupalCreateUser([
       'access content overview',
       'administer nodes',
       'bypass node access',
       'view all revisions',
-      'view content moderation',
       'use editorial transition create_new_draft',
       'use editorial transition publish',
     ]);
@@ -55,10 +58,16 @@ class ModerationRevisionRevertTest extends BrowserTestBase {
    */
   public function testEditingAfterRevertRevision() {
     // Create a draft.
-    $this->drupalPostForm('node/add/moderated_bundle', ['title[0][value]' => 'First draft node'], t('Save and Create New Draft'));
+    $this->drupalPostForm('node/add/moderated_bundle', [
+      'title[0][value]' => 'First draft node',
+      'moderation_state[0][state]' => 'draft',
+    ], t('Save'));
 
     // Now make it published.
-    $this->drupalPostForm('node/1/edit', ['title[0][value]' => 'Published node'], t('Save and Publish'));
+    $this->drupalPostForm('node/1/edit', [
+      'title[0][value]' => 'Published node',
+      'moderation_state[0][state]' => 'published',
+    ], t('Save'));
 
     // Check the editing form that show the published title.
     $this->drupalGet('node/1/edit');
@@ -76,7 +85,9 @@ class ModerationRevisionRevertTest extends BrowserTestBase {
     $this->assertSession()
       ->pageTextContains('First draft node');
     // Try to save the node.
-    $this->click('.moderation-state-draft > input');
+    $this->drupalPostForm('node/1/edit', [
+      'moderation_state[0][state]' => 'draft',
+    ], t('Save'));
 
     // Check if the submission passed the EntityChangedConstraintValidator.
     $this->assertSession()

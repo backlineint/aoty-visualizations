@@ -24,7 +24,12 @@ class LinkFieldTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['entity_test', 'link', 'node'];
+  public static $modules = [
+    'entity_test',
+    'link',
+    'node',
+    'link_test_base_field',
+  ];
 
   /**
    * A field to use in this test class.
@@ -282,7 +287,7 @@ class LinkFieldTest extends BrowserTestBase {
             "{$field_name}[0][uri]" => 'http://www.example.com',
           ];
           $this->drupalPostForm(NULL, $edit, t('Save'));
-          $this->assertText(t('@name field is required.', ['@name' => t('Link text')]));
+          $this->assertText(t('@title field is required if there is @uri input.', ['@title' => t('Link text'), '@uri' => t('URL')]));
 
           // Verify that the link text is not required, if the URL is empty.
           $edit = [
@@ -604,6 +609,49 @@ class LinkFieldTest extends BrowserTestBase {
         }
       }
     }
+  }
+
+  /**
+   * Test '#link_type' property exists on 'link_default' widget.
+   *
+   * Make sure the 'link_default' widget exposes a '#link_type' property on
+   * its element. Modules can use it to understand if a text form element is
+   * a link and also which LinkItemInterface::LINK_* is (EXTERNAL, GENERIC,
+   * INTERNAL).
+   */
+  public function testLinkTypeOnLinkWidget() {
+
+    $link_type = LinkItemInterface::LINK_EXTERNAL;
+    $field_name = Unicode::strtolower($this->randomMachineName());
+
+    // Create a field with settings to validate.
+    $this->fieldStorage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'entity_test',
+      'type' => 'link',
+      'cardinality' => 1,
+    ]);
+    $this->fieldStorage->save();
+    FieldConfig::create([
+      'field_storage' => $this->fieldStorage,
+      'label' => 'Read more about this entity',
+      'bundle' => 'entity_test',
+      'settings' => [
+        'title' => DRUPAL_OPTIONAL,
+        'link_type' => $link_type,
+      ],
+    ])->save();
+
+    $this->container->get('entity.manager')
+      ->getStorage('entity_form_display')
+      ->load('entity_test.entity_test.default')
+      ->setComponent($field_name, [
+        'type' => 'link_default',
+      ])
+      ->save();
+
+    $form = \Drupal::service('entity.form_builder')->getForm(EntityTest::create());
+    $this->assertEqual($form[$field_name]['widget'][0]['uri']['#link_type'], $link_type);
   }
 
 

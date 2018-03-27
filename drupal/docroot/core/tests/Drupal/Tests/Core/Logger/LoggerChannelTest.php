@@ -102,25 +102,25 @@ class LoggerChannelTest extends UnitTestCase {
    */
   public function providerTestLog() {
     $account_mock = $this->getMock('Drupal\Core\Session\AccountInterface');
-    $account_mock->expects($this->exactly(2))
+    $account_mock->expects($this->any())
       ->method('id')
       ->will($this->returnValue(1));
 
-    $request_mock = $this->getMock('Symfony\Component\HttpFoundation\Request');
-    $request_mock->expects($this->exactly(2))
+    $request_mock = $this->getMock('Symfony\Component\HttpFoundation\Request', ['getClientIp']);
+    $request_mock->expects($this->any())
       ->method('getClientIp')
       ->will($this->returnValue('127.0.0.1'));
     $request_mock->headers = $this->getMock('Symfony\Component\HttpFoundation\ParameterBag');
 
     // No request or account.
-    $cases [] = [
+    $cases[] = [
       function ($context) {
         return $context['channel'] == 'test' && empty($context['uid']) && empty($context['ip']);
       },
     ];
     // With account but not request. Since the request is not available the
     // current user should not be used.
-    $cases [] = [
+    $cases[] = [
       function ($context) {
         return $context['uid'] === 0 && empty($context['ip']);
       },
@@ -128,14 +128,14 @@ class LoggerChannelTest extends UnitTestCase {
       $account_mock,
     ];
     // With request but not account.
-    $cases [] = [
+    $cases[] = [
       function ($context) {
         return $context['ip'] === '127.0.0.1' && empty($context['uid']);
       },
       $request_mock,
     ];
     // Both request and account.
-    $cases [] = [
+    $cases[] = [
       function ($context) {
         return $context['ip'] === '127.0.0.1' && $context['uid'] === 1;
       },

@@ -9,7 +9,7 @@
 .js .dropbutton .dropbutton-action > input,
 .js .dropbutton .dropbutton-action > a,
 .js .dropbutton .dropbutton-action > button {
-  color: #333333;
+  color: #333;
   text-decoration: none;
   padding: 0;
   margin: 0;
@@ -169,18 +169,18 @@
 .dropbutton-single .dropbutton-action a {
   padding: 4px 1.5em;
   border: 1px solid #a6a6a6;
-  border-radius: 20em!important;
+  border-radius: 20em !important;
   background-color: #f2f1eb;
   background-image: -webkit-linear-gradient(top, #f6f6f3, #e7e7df);
   background-image: linear-gradient(to bottom, #f6f6f3, #e7e7df);
-  color: #333333;
+  color: #333;
   text-decoration: none;
   text-shadow: 0 1px hsla(0, 0%, 100%, 0.6);
   font-weight: 600;
   -webkit-transition: all 0.1s;
   transition: all 0.1s;
   -webkit-font-smoothing: antialiased;
-  width: auto!important;
+  width: auto !important;
 }
 .dropbutton-single .dropbutton-action a:hover,
 .dropbutton-single .dropbutton-action a:focus {
@@ -202,6 +202,22 @@
   box-shadow: inset 0 1px 3px hsla(0, 0%, 0%, 0.2);
   -webkit-transition: none;
   transition: none;
+}
+.dropbutton .dropbutton-action .ajax-progress {
+  position: absolute;
+  z-index: 2;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0 0 0 0.1em;
+}
+.dropbutton-multiple .dropbutton-action .ajax-progress {
+  right: 2.2em;
+  top: 0.15em;
+  margin-right: 0;
+}
+.dropbutton-multiple .secondary-action .ajax-progress {
+  top: auto;
+  bottom: 0.3em;
 }
 
 /**

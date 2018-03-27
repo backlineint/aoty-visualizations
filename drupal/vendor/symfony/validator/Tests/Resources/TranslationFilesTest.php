@@ -25,6 +25,8 @@ class TranslationFilesTest extends TestCase
         } else {
             \PHPUnit\Util\XML::loadfile($filePath, false, false, true);
         }
+
+        $this->addToAssertionCount(1);
     }
 
     public function provideTranslationFiles()
@@ -32,6 +34,15 @@ class TranslationFilesTest extends TestCase
         return array_map(
             function ($filePath) { return (array) $filePath; },
             glob(dirname(dirname(__DIR__)).'/Resources/translations/*.xlf')
+        );
+    }
+
+    public function testNorwegianAlias()
+    {
+        $this->assertFileEquals(
+            dirname(dirname(__DIR__)).'/Resources/translations/validators.nb.xlf',
+            dirname(dirname(__DIR__)).'/Resources/translations/validators.no.xlf',
+            'The NO locale should be an alias for the NB variant of the Norwegian language.'
         );
     }
 }

@@ -3,13 +3,13 @@
 namespace Drupal\Tests\Component\Plugin\Context;
 
 use Drupal\Component\Plugin\Context\Context;
-use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \Drupal\Component\Plugin\Context\Context
  * @group Plugin
  */
-class ContextTest extends UnitTestCase {
+class ContextTest extends TestCase {
 
   /**
    * Data provider for testGetContextValue.
@@ -71,10 +71,16 @@ class ContextTest extends UnitTestCase {
 
       // Set expectation for exception.
       if ($is_required) {
-        $this->setExpectedException(
-          'Drupal\Component\Plugin\Exception\ContextException',
-          sprintf("The %s context is required and not present.", $data_type)
-        );
+        if (method_exists($this, 'expectException')) {
+          $this->expectException('Drupal\Component\Plugin\Exception\ContextException');
+          $this->expectExceptionMessage(sprintf("The %s context is required and not present.", $data_type));
+        }
+        else {
+          $this->setExpectedException(
+            'Drupal\Component\Plugin\Exception\ContextException',
+            sprintf("The %s context is required and not present.", $data_type)
+          );
+        }
       }
 
       // Exercise getContextValue().

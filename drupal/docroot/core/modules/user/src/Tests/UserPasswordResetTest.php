@@ -118,7 +118,7 @@ class UserPasswordResetTest extends PageCacheTagsTestBase {
     // invalidate the reset token.
     $image = current($this->drupalGetTestFiles('image'));
     $edit = [
-      'files[user_picture_0]' => drupal_realpath($image->uri),
+      'files[user_picture_0]' => \Drupal::service('file_system')->realpath($image->uri),
     ];
     $this->drupalPostAjaxForm(NULL, $edit, 'user_picture_0_upload_button');
 
@@ -130,7 +130,7 @@ class UserPasswordResetTest extends PageCacheTagsTestBase {
 
     // Verify that the password reset session has been destroyed.
     $this->drupalPostForm(NULL, $edit, t('Save'));
-    $this->assertText(t('Your current password is missing or incorrect; it\'s required to change the Password.'), 'Password needed to make profile changes.');
+    $this->assertText(t("Your current password is missing or incorrect; it's required to change the Password."), 'Password needed to make profile changes.');
 
     // Log out, and try to log in again using the same one-time link.
     $this->drupalLogout();
@@ -144,7 +144,7 @@ class UserPasswordResetTest extends PageCacheTagsTestBase {
     $before = count($this->drupalGetMails(['id' => 'user_password_reset']));
     $edit = ['name' => $this->account->getEmail()];
     $this->drupalPostForm(NULL, $edit, t('Submit'));
-    $this->assertTrue( count($this->drupalGetMails(['id' => 'user_password_reset'])) === $before + 1, 'Email sent when requesting password reset using email address.');
+    $this->assertTrue(count($this->drupalGetMails(['id' => 'user_password_reset'])) === $before + 1, 'Email sent when requesting password reset using email address.');
 
     // Visit the user edit page without pass-reset-token and make sure it does
     // not cause an error.

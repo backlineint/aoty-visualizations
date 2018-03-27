@@ -10,11 +10,6 @@ use Drupal\Core\Plugin\Definition\DependentPluginDefinitionTrait;
 
 /**
  * Provides an implementation of a layout definition and its metadata.
- *
- * @internal
- *   The layout system is currently experimental and should only be leveraged by
- *   experimental modules and development releases of contributed modules.
- *   See https://www.drupal.org/core/experimental for more information.
  */
 class LayoutDefinition extends PluginDefinition implements PluginDefinitionInterface, DerivablePluginDefinitionInterface, DependentPluginDefinitionInterface {
 
@@ -89,6 +84,15 @@ class LayoutDefinition extends PluginDefinition implements PluginDefinitionInter
    * @var string
    */
   protected $icon;
+
+  /**
+   * An array defining the regions of a layout.
+   *
+   * @var string[][]|null
+   *
+   * @see \Drupal\Core\Layout\Icon\IconBuilderInterface::build()
+   */
+  protected $icon_map;
 
   /**
    * An associative array of regions in this layout.
@@ -377,15 +381,93 @@ class LayoutDefinition extends PluginDefinition implements PluginDefinitionInter
   }
 
   /**
+   * Gets the icon map for this layout definition.
+   *
+   * This should not be used if an icon path is specified. See ::getIcon().
+   *
+   * @return string[][]|null
+   *   The icon map, if it exists.
+   */
+  public function getIconMap() {
+    return $this->icon_map;
+  }
+
+  /**
+   * Sets the icon map for this layout definition.
+   *
+   * @param string[][]|null $icon_map
+   *   The icon map.
+   *
+   * @return $this
+   */
+  public function setIconMap($icon_map) {
+    $this->icon_map = $icon_map;
+    return $this;
+  }
+
+  /**
+   * Builds a render array for an icon representing the layout.
+   *
+   * @param int $width
+   *   (optional) The width of the icon. Defaults to 125.
+   * @param int $height
+   *   (optional) The height of the icon. Defaults to 150.
+   * @param int $stroke_width
+   *   (optional) If an icon map is used, the width of region borders.
+   * @param int $padding
+   *   (optional) If an icon map is used, the padding between regions. Any
+   *   value above 0 is valid.
+   *
+   * @return array
+   *   A render array for the icon.
+   */
+  public function getIcon($width = 125, $height = 150, $stroke_width = NULL, $padding = NULL) {
+    $icon = [];
+    if ($icon_path = $this->getIconPath()) {
+      $icon = [
+        '#theme' => 'image',
+        '#uri' => $icon_path,
+        '#width' => $width,
+        '#height' => $height,
+        '#alt' => $this->getLabel(),
+      ];
+    }
+    elseif ($icon_map = $this->getIconMap()) {
+      $icon_builder = $this->getIconBuilder()
+        ->setId($this->id())
+        ->setLabel($this->getLabel())
+        ->setWidth($width)
+        ->setHeight($height);
+      if ($padding) {
+        $icon_builder->setPadding($padding);
+      }
+      if ($stroke_width) {
+        $icon_builder->setStrokeWidth($stroke_width);
+      }
+      $icon = $icon_builder->build($icon_map);
+    }
+    return $icon;
+  }
+
+  /**
+   * Wraps the icon builder.
+   *
+   * @return \Drupal\Core\Layout\Icon\IconBuilderInterface
+   *   The icon builder.
+   */
+  protected function getIconBuilder() {
+    return \Drupal::service('layout.icon_builder');
+  }
+
+  /**
    * Gets the regions for this layout definition.
    *
    * @return array[]
-   *    The layout regions. The keys of the array are the machine names of the
-   *    regions, and the values are an associative array with the following
-   *    keys:
-   *     - label: (string) The human-readable name of the region.
-   *    Any remaining keys may have special meaning for the given layout plugin,
-   *    but are undefined here.
+   *   The layout regions. The keys of the array are the machine names of the
+   *   regions, and the values are an associative array with the following keys:
+   *   - label: (string) The human-readable name of the region.
+   *   Any remaining keys may have special meaning for the given layout plugin,
+   *   but are undefined here.
    */
   public function getRegions() {
     return $this->regions;

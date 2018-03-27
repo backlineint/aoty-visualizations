@@ -24,7 +24,11 @@ class EntityTypeConstraintsTest extends EntityKernelTestBase {
     // Test reading the annotation. There should be two constraints, the defined
     // constraint and the automatically added EntityChanged constraint.
     $entity_type = $this->entityManager->getDefinition('entity_test_constraints');
-    $default_constraints = ['NotNull' => [], 'EntityChanged' => NULL];
+    $default_constraints = [
+      'NotNull' => [],
+      'EntityChanged' => NULL,
+      'EntityUntranslatableFields' => NULL,
+    ];
     $this->assertEqual($default_constraints, $entity_type->getConstraints());
 
     // Enable our test module and test extending constraints.
@@ -41,7 +45,7 @@ class EntityTypeConstraintsTest extends EntityKernelTestBase {
     $this->assertEqual($default_constraints + $extra_constraints, $entity_type->getConstraints());
 
     // Test altering constraints.
-    $altered_constraints = ['Test' => [ 'some_setting' => TRUE]];
+    $altered_constraints = ['Test' => ['some_setting' => TRUE]];
     $this->state->set('entity_test_constraints.alter', $altered_constraints);
     // Clear the cache in state instance in the Drupal container, so it can pick
     // up the modified value.

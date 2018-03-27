@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a form for administering a single book's hierarchy.
+ *
+ * @internal
  */
 class BookAdminEditForm extends FormBase {
 
@@ -220,7 +222,7 @@ class BookAdminEditForm extends FormBase {
       }
 
       $form[$id]['title'] = [
-        '#prefix' => !empty($indentation) ? drupal_render($indentation) : '',
+        '#prefix' => !empty($indentation) ? \Drupal::service('renderer')->render($indentation) : '',
         '#type' => 'textfield',
         '#default_value' => $data['link']['title'],
         '#maxlength' => 255,

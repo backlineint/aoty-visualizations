@@ -13,11 +13,11 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\views\Plugin\Derivative\ViewsLocalTask;
+use Drupal\views\ViewEntityInterface;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Entity\View;
 use Drupal\views\Render\ViewsRenderPipelineMarkup;
 use Drupal\views\Views;
-use Drupal\field\FieldConfigInterface;
 
 /**
  * Implements hook_help().
@@ -117,8 +117,12 @@ function views_theme($existing, $type, $theme, $path) {
     'row' => ['view' => NULL, 'options' => NULL, 'row' => NULL, 'field_alias' => NULL],
     'exposed_form' => ['view' => NULL, 'options' => NULL],
     'pager' => [
-      'view' => NULL, 'options' => NULL,
-      'tags' => [], 'quantity' => 9, 'element' => 0, 'parameters' => []
+      'view' => NULL,
+      'options' => NULL,
+      'tags' => [],
+      'quantity' => 9,
+      'element' => 0,
+      'parameters' => [],
     ],
   ];
 
@@ -437,21 +441,42 @@ function views_add_contextual_links(&$render_element, $location, $display_id, ar
 /**
  * Implements hook_ENTITY_TYPE_insert() for 'field_config'.
  */
-function views_field_config_insert(FieldConfigInterface $field) {
+function views_field_config_insert(EntityInterface $field) {
   Views::viewsData()->clear();
 }
 
 /**
  * Implements hook_ENTITY_TYPE_update() for 'field_config'.
  */
-function views_field_config_update(FieldConfigInterface $field) {
+function views_field_config_update(EntityInterface $entity) {
   Views::viewsData()->clear();
 }
 
 /**
  * Implements hook_ENTITY_TYPE_delete() for 'field_config'.
  */
-function views_field_config_delete(FieldConfigInterface $field) {
+function views_field_config_delete(EntityInterface $entity) {
+  Views::viewsData()->clear();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function views_base_field_override_insert(EntityInterface $entity) {
+  Views::viewsData()->clear();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function views_base_field_override_update(EntityInterface $entity) {
+  Views::viewsData()->clear();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function views_base_field_override_delete(EntityInterface $entity) {
   Views::viewsData()->clear();
 }
 
@@ -614,7 +639,7 @@ function views_pre_render_views_form_views_form($element) {
     $row_id = $substitution['row_id'];
 
     $search[] = $substitution['placeholder'];
-    $replace[] = isset($element[$field_name][$row_id]) ? drupal_render($element[$field_name][$row_id]) : '';
+    $replace[] = isset($element[$field_name][$row_id]) ? \Drupal::service('renderer')->render($element[$field_name][$row_id]) : '';
   }
   // Add in substitutions from hook_views_form_substitutions().
   $substitutions = \Drupal::moduleHandler()->invokeAll('views_form_substitutions');
@@ -628,7 +653,7 @@ function views_pre_render_views_form_views_form($element) {
   }
 
   // Apply substitutions to the rendered output.
-  $output = str_replace($search, $replace, drupal_render($element['output']));
+  $output = str_replace($search, $replace, \Drupal::service('renderer')->render($element['output']));
   $element['output'] = ['#markup' => ViewsRenderPipelineMarkup::create($output)];
 
   return $element;
@@ -835,5 +860,42 @@ function views_view_delete(EntityInterface $entity) {
       \Drupal::service('router.builder')->setRebuildNeeded();
       break;
     }
+  }
+}
+
+/**
+ * Implements hook_view_presave().
+ *
+ * Provides a BC layer for modules providing old configurations.
+ */
+function views_view_presave(ViewEntityInterface $view) {
+  $displays = $view->get('display');
+  $changed = FALSE;
+  foreach ($displays as $display_name => &$display) {
+    if (isset($display['display_options']['fields'])) {
+      foreach ($display['display_options']['fields'] as $field_name => &$field) {
+        if (isset($field['plugin_id']) && $field['plugin_id'] === 'entity_link') {
+          // Add any missing settings for entity_link.
+          if (!isset($field['output_url_as_text'])) {
+            $field['output_url_as_text'] = FALSE;
+            $changed = TRUE;
+          }
+          if (!isset($field['absolute'])) {
+            $field['absolute'] = FALSE;
+            $changed = TRUE;
+          }
+        }
+        elseif (isset($field['plugin_id']) && $field['plugin_id'] === 'node_path') {
+          // Convert the use of node_path to entity_link.
+          $field['plugin_id'] = 'entity_link';
+          $field['field'] = 'view_node';
+          $field['output_url_as_text'] = TRUE;
+          $changed = TRUE;
+        }
+      }
+    }
+  }
+  if ($changed) {
+    $view->set('display', $displays);
   }
 }

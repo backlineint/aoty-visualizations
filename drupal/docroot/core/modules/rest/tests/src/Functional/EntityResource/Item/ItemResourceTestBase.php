@@ -4,12 +4,15 @@ namespace Drupal\Tests\rest\Functional\EntityResource\Item;
 
 use Drupal\aggregator\Entity\Feed;
 use Drupal\aggregator\Entity\Item;
+use Drupal\Tests\rest\Functional\BcTimestampNormalizerUnixTestTrait;
 use Drupal\Tests\rest\Functional\EntityResource\EntityResourceTestBase;
 
 /**
  * ResourceTestBase for Item entity.
  */
 abstract class ItemResourceTestBase extends EntityResourceTestBase {
+
+  use BcTimestampNormalizerUnixTestTrait;
 
   /**
    * {@inheritdoc}
@@ -78,6 +81,20 @@ abstract class ItemResourceTestBase extends EntityResourceTestBase {
   /**
    * {@inheritdoc}
    */
+  protected function createAnotherEntity() {
+    $entity = $this->entity->createDuplicate();
+    $entity->setLink('https://www.example.org/');
+    $label_key = $entity->getEntityType()->getKey('label');
+    if ($label_key) {
+      $entity->set($label_key, $entity->label() . '_dupe');
+    }
+    $entity->save();
+    return $entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function getExpectedNormalizedEntity() {
     $feed = Feed::load($this->entity->getFeedId());
 
@@ -113,9 +130,7 @@ abstract class ItemResourceTestBase extends EntityResourceTestBase {
       'author' => [],
       'description' => [],
       'timestamp' => [
-        [
-          'value' => 123456789,
-        ],
+        $this->formatExpectedTimestampItemValues(123456789),
       ],
       'guid' => [],
     ];

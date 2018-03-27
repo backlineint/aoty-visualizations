@@ -109,7 +109,7 @@ class BigPipeStrategy implements PlaceholderStrategyInterface {
     $request = $this->requestStack->getCurrentRequest();
 
     // @todo remove this check when https://www.drupal.org/node/2367555 lands.
-    if (!$request->isMethodSafe()) {
+    if (!$request->isMethodCacheable()) {
       return [];
     }
 
@@ -180,7 +180,7 @@ class BigPipeStrategy implements PlaceholderStrategyInterface {
    *   a placeholder for a HTML attribute value or a subset of it).
    */
   protected static function placeholderIsAttributeSafe($placeholder) {
-    assert('is_string($placeholder)');
+    assert(is_string($placeholder));
     return $placeholder[0] !== '<' || $placeholder !== Html::normalize($placeholder);
   }
 

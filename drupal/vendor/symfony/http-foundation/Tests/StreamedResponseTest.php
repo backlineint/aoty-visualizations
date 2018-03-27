@@ -51,10 +51,12 @@ class StreamedResponseTest extends TestCase
 
     public function testPrepareWithHeadRequest()
     {
-        $response = new StreamedResponse(function () { echo 'foo'; });
+        $response = new StreamedResponse(function () { echo 'foo'; }, 200, array('Content-Length' => '123'));
         $request = Request::create('/', 'HEAD');
 
         $response->prepare($request);
+
+        $this->assertSame('123', $response->headers->get('Content-Length'));
     }
 
     public function testPrepareWithCacheHeaders()
@@ -91,15 +93,6 @@ class StreamedResponseTest extends TestCase
     /**
      * @expectedException \LogicException
      */
-    public function testSetCallbackNonCallable()
-    {
-        $response = new StreamedResponse(null);
-        $response->setCallback(null);
-    }
-
-    /**
-     * @expectedException \LogicException
-     */
     public function testSetContent()
     {
         $response = new StreamedResponse(function () { echo 'foo'; });
@@ -118,5 +111,16 @@ class StreamedResponseTest extends TestCase
 
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
         $this->assertEquals(204, $response->getStatusCode());
+    }
+
+    public function testReturnThis()
+    {
+        $response = new StreamedResponse(function () {});
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response->sendContent());
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response->sendContent());
+
+        $response = new StreamedResponse(function () {});
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response->sendHeaders());
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response->sendHeaders());
     }
 }

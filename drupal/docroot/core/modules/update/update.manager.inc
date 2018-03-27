@@ -53,7 +53,7 @@ function update_manager_download_batch_finished($success, $results) {
       '#title' => t('Downloading updates failed:'),
       '#items' => $results['errors'],
     ];
-    drupal_set_message(drupal_render($item_list), 'error');
+    drupal_set_message(\Drupal::service('renderer')->render($item_list), 'error');
   }
   elseif ($success) {
     drupal_set_message(t('Updates downloaded successfully.'));
@@ -208,7 +208,7 @@ function update_manager_file_get($url) {
   $remote_schemes = ['http', 'https', 'ftp', 'ftps', 'smb', 'nfs'];
   if (!isset($parsed_url['scheme']) || !in_array($parsed_url['scheme'], $remote_schemes)) {
     // This is a local file, just return the path.
-    return drupal_realpath($url);
+    return \Drupal::service('file_system')->realpath($url);
   }
 
   // Check the cache and download the file if needed.
