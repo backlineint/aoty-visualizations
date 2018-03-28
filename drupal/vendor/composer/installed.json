@@ -4768,18 +4768,136 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "drupal/core",
-        "version": "8.5.0",
-        "version_normalized": "8.5.0.0",
+        "name": "acquia/reservoir",
+        "version": "1.0.0-alpha4",
+        "version_normalized": "1.0.0.0-alpha4",
         "source": {
             "type": "git",
-            "url": "https://github.com/drupal/core.git",
-            "reference": "0b9070370e272da441b4be52561c559c05f4553d"
+            "url": "https://github.com/acquia/reservoir.git",
+            "reference": "2ba506d711a6b4f782aba965a26fcc99bc85e0eb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drupal/core/zipball/0b9070370e272da441b4be52561c559c05f4553d",
-            "reference": "0b9070370e272da441b4be52561c559c05f4553d",
+            "url": "https://api.github.com/repos/acquia/reservoir/zipball/2ba506d711a6b4f782aba965a26fcc99bc85e0eb",
+            "reference": "2ba506d711a6b4f782aba965a26fcc99bc85e0eb",
+            "shasum": ""
+        },
+        "require": {
+            "cweagans/composer-patches": "^1.5.0",
+            "drupal-composer/drupal-scaffold": "^2.0.0",
+            "drupal/core": "^8.4.0",
+            "drupal/jsonapi": "1.0.0",
+            "drupal/openapi": "1.0.0-alpha1",
+            "drupal/simple_oauth": "2.0-rc2",
+            "webflo/drupal-core-strict": "^8.4.0"
+        },
+        "require-dev": {
+            "behat/mink": "~1.7",
+            "behat/mink-goutte-driver": "~1.2",
+            "drush/drush": "~8.0",
+            "jcalderonzumba/gastonjs": "~1.0.2",
+            "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
+            "mikey179/vfsstream": "~1.2",
+            "phpunit/phpunit": ">=4.8.28 <5",
+            "symfony/css-selector": "~2.8"
+        },
+        "time": "2018-03-15 13:38:33",
+        "type": "drupal-profile",
+        "extra": {
+            "patches": {
+                "drupal/core": {
+                    "Fix toolbar active link handling": "https://www.drupal.org/files/issues/2885755-13.patch"
+                },
+                "drupal/simple_oauth": {
+                    "simple_oauth cannot be installed in an install profile without also installing simple_oauth_extras": "https://www.drupal.org/files/issues/2883862-11.patch"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "A backend for your frontend. Powered by Drupal."
+    },
+    {
+        "name": "symfony/config",
+        "version": "v3.4.6",
+        "version_normalized": "3.4.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/config.git",
+            "reference": "05e10567b529476a006b00746c5f538f1636810e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/config/zipball/05e10567b529476a006b00746c5f538f1636810e",
+            "reference": "05e10567b529476a006b00746c5f538f1636810e",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9|>=7.0.8",
+            "symfony/filesystem": "~2.8|~3.0|~4.0"
+        },
+        "conflict": {
+            "symfony/dependency-injection": "<3.3",
+            "symfony/finder": "<3.3"
+        },
+        "require-dev": {
+            "symfony/dependency-injection": "~3.3|~4.0",
+            "symfony/event-dispatcher": "~3.3|~4.0",
+            "symfony/finder": "~3.3|~4.0",
+            "symfony/yaml": "~3.0|~4.0"
+        },
+        "suggest": {
+            "symfony/yaml": "To use the yaml reference dumper"
+        },
+        "time": "2018-02-14 10:03:57",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Config\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Config Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "drupal/core",
+        "version": "8.5.1",
+        "version_normalized": "8.5.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/drupal/core.git",
+            "reference": "2aeca7dfa2661296602ac16bf9fd6085f0a121be"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/drupal/core/zipball/2aeca7dfa2661296602ac16bf9fd6085f0a121be",
+            "reference": "2aeca7dfa2661296602ac16bf9fd6085f0a121be",
             "shasum": ""
         },
         "require": {
@@ -4948,7 +5066,7 @@
             "symfony/debug": "^3.4.0",
             "symfony/phpunit-bridge": "^3.4.3"
         },
-        "time": "2018-03-07 21:10:20",
+        "time": "2018-03-27 09:58:42",
         "type": "drupal-core",
         "extra": {
             "merge-plugin": {
@@ -5009,17 +5127,17 @@
     },
     {
         "name": "webflo/drupal-core-strict",
-        "version": "8.5.0",
-        "version_normalized": "8.5.0.0",
+        "version": "8.5.1",
+        "version_normalized": "8.5.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/webflo/drupal-core-strict.git",
-            "reference": "75aa7f11c667ae28a59a70322475a5f35925781e"
+            "reference": "1aef7d924d920e72206e399635e042e0320a976f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/webflo/drupal-core-strict/zipball/75aa7f11c667ae28a59a70322475a5f35925781e",
-            "reference": "75aa7f11c667ae28a59a70322475a5f35925781e",
+            "url": "https://api.github.com/repos/webflo/drupal-core-strict/zipball/1aef7d924d920e72206e399635e042e0320a976f",
+            "reference": "1aef7d924d920e72206e399635e042e0320a976f",
             "shasum": ""
         },
         "require": {
@@ -5103,130 +5221,12 @@
             "symfony/dom-crawler": "v3.4.4",
             "symfony/phpunit-bridge": "v3.4.4"
         },
-        "time": "2018-03-07 21:30:40",
+        "time": "2018-03-28 19:26:40",
         "type": "metapackage",
         "notification-url": "https://packagist.org/downloads/",
         "license": [
             "GPL-2.0-or-later"
         ],
         "description": "Locked core dependencies"
-    },
-    {
-        "name": "acquia/reservoir",
-        "version": "1.0.0-alpha4",
-        "version_normalized": "1.0.0.0-alpha4",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/acquia/reservoir.git",
-            "reference": "2ba506d711a6b4f782aba965a26fcc99bc85e0eb"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/acquia/reservoir/zipball/2ba506d711a6b4f782aba965a26fcc99bc85e0eb",
-            "reference": "2ba506d711a6b4f782aba965a26fcc99bc85e0eb",
-            "shasum": ""
-        },
-        "require": {
-            "cweagans/composer-patches": "^1.5.0",
-            "drupal-composer/drupal-scaffold": "^2.0.0",
-            "drupal/core": "^8.4.0",
-            "drupal/jsonapi": "1.0.0",
-            "drupal/openapi": "1.0.0-alpha1",
-            "drupal/simple_oauth": "2.0-rc2",
-            "webflo/drupal-core-strict": "^8.4.0"
-        },
-        "require-dev": {
-            "behat/mink": "~1.7",
-            "behat/mink-goutte-driver": "~1.2",
-            "drush/drush": "~8.0",
-            "jcalderonzumba/gastonjs": "~1.0.2",
-            "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
-            "mikey179/vfsstream": "~1.2",
-            "phpunit/phpunit": ">=4.8.28 <5",
-            "symfony/css-selector": "~2.8"
-        },
-        "time": "2018-03-15 13:38:33",
-        "type": "drupal-profile",
-        "extra": {
-            "patches": {
-                "drupal/core": {
-                    "Fix toolbar active link handling": "https://www.drupal.org/files/issues/2885755-13.patch"
-                },
-                "drupal/simple_oauth": {
-                    "simple_oauth cannot be installed in an install profile without also installing simple_oauth_extras": "https://www.drupal.org/files/issues/2883862-11.patch"
-                }
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "A backend for your frontend. Powered by Drupal."
-    },
-    {
-        "name": "symfony/config",
-        "version": "v3.4.6",
-        "version_normalized": "3.4.6.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/config.git",
-            "reference": "05e10567b529476a006b00746c5f538f1636810e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/config/zipball/05e10567b529476a006b00746c5f538f1636810e",
-            "reference": "05e10567b529476a006b00746c5f538f1636810e",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.5.9|>=7.0.8",
-            "symfony/filesystem": "~2.8|~3.0|~4.0"
-        },
-        "conflict": {
-            "symfony/dependency-injection": "<3.3",
-            "symfony/finder": "<3.3"
-        },
-        "require-dev": {
-            "symfony/dependency-injection": "~3.3|~4.0",
-            "symfony/event-dispatcher": "~3.3|~4.0",
-            "symfony/finder": "~3.3|~4.0",
-            "symfony/yaml": "~3.0|~4.0"
-        },
-        "suggest": {
-            "symfony/yaml": "To use the yaml reference dumper"
-        },
-        "time": "2018-02-14 10:03:57",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Config\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Config Component",
-        "homepage": "https://symfony.com"
     }
 ]
