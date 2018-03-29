@@ -50,6 +50,7 @@ const images = {
   react: require('./assets/react.jpg'),
   d8: require('./assets/d8.png'),
   reactIcon: require('./assets/react_icon.png'),
+  ddos: require('./assets/ddos.png'),
   flowChart: require('./assets/flowchart-full.jpg'),
   flowChartTop: require('./assets/flowchart-top.jpg'),
   flowChartMiddle: require('./assets/flowchart-middle.jpg'),
@@ -381,7 +382,7 @@ export default class Presentation extends React.Component {
         <Slide
           transition={['slide']}
           bgImage={images.driesnote}
-          bgDarken={0.75}
+          bgDarken={0.5}
           notes="Meanwhile in the Drupal communtity I'm hearing decoupled, decoupled,
           decoupled and had been looking for a good way to learn more"
         >
@@ -471,6 +472,45 @@ export default class Presentation extends React.Component {
             </Fill>
           </Layout>
           <Heading textColor="primary">Let's Jam (them all together)</Heading>
+        </Slide>
+
+        <Slide
+          notes="Client-side Javascript (specifically not universal or isomorphic
+          reusable APIs
+          prebuilt markup"
+        >
+          <Heading textSize="100px" textColor="secondary">
+            Hey, isn't this
+          </Heading>
+          <Heading textSize="100px" textColor="secondary">
+            The <S type="bold" textColor="tertiary">JAM</S> Stack?
+          </Heading>
+          <Appear><CapHeading>JavaScript</CapHeading></Appear>
+          <Appear><CapHeading>APIs</CapHeading></Appear>
+          <Appear><CapHeading>Markup</CapHeading></Appear>
+        </Slide>
+
+        <Slide>
+          <Heading>The Promise of the JAM Stack</Heading>
+          <BigList>
+            <Appear><ListItem>Improved performance</ListItem></Appear>
+            <Appear><ListItem>Cheaper, easier scaling</ListItem></Appear>
+            <Appear><ListItem>Better developer experience</ListItem></Appear>
+            <Appear><ListItem>Higher security</ListItem></Appear>
+            <Appear><ListItem>Free pony rides?</ListItem></Appear>
+          </BigList>
+        </Slide>
+
+        <Slide>
+          <MarginHeading fit>The security part sounds pretty good...</MarginHeading>
+          <Image src={images.ddos} />
+          <CoverLayout>
+            <BlockQuote>
+              <Quote textColor="secondary">Come for the code, stay for the</Quote>
+              <Quote textColor="secondary">community driven DDoS attacks.</Quote>
+              <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">- All of us - 3/28/18</Text>
+            </BlockQuote>
+          </CoverLayout>
         </Slide>
 
         <Slide
@@ -1031,15 +1071,6 @@ export default class Presentation extends React.Component {
           </CoverLayout>
         </Slide>
 
-        <Slide
-          notes="Specifically not universal and not isomorphic."
-        >
-          <Heading>JAM Stack</Heading>
-          <Appear><CapHeading>JavaScript</CapHeading></Appear>
-          <Appear><CapHeading>APIs</CapHeading></Appear>
-          <Appear><CapHeading>Markup</CapHeading></Appear>
-        </Slide>
-
         <Slide>
           <Heading>Our Hot JAMS(tack)</Heading>
           <BigList>
@@ -1104,10 +1135,10 @@ export default class Presentation extends React.Component {
 
         <Slide
           notes="spotify playlist with all songs referenced in slides, and then some of my other favorites from 2017
-          Try to remmeber sprint plug.
+          Try to remeber sprint plug.
           And nashville."
         >
-          <MarginHeading fit>Questions / Feedback?</MarginHeading>
+          <MarginHeading fit>Questions?</MarginHeading>
           <Heading textColor="secondary">(Thanks!)</Heading>
         </Slide>
 
