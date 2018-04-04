@@ -72,6 +72,8 @@ const images = {
   state3: require('./assets/state3.png'),
   colin: require('./assets/colin.jpg'),
   concerns: require('./assets/concerns.png'),
+  spinner: require('./assets/spinner.gif'),
+  sprint: require('./assets/sprint.png'),
 };
 
 const albums = {
@@ -256,7 +258,7 @@ export default class Presentation extends React.Component {
         >
           <Heading fit>HOT JAMS(tack)</Heading>
           <Heading fit caps textColor="primary">Building a Music Discovery App with Drupal and React</Heading>
-          <Link href="https://github.com/backlineint/aoty-visualizations" target="_blank"><S type="underline"><Text margin="2rem 0 0 0">https://github.com/backlineint/aoty-visualizations</Text></S></Link>
+          <Link href="http://bit.ly/hot-jams" target="_blank"><S type="underline"><Text textSize="50px" margin="3rem 0 0 0">http://bit.ly/hot-jams</Text></S></Link>
         </Slide>
 
         <Slide
@@ -589,7 +591,7 @@ export default class Presentation extends React.Component {
           bgColor="secondary"
           notes="."
         >
-          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Your Options</Heading>
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">My Options</Heading>
           <Layout>
             <Fill>
               <Heading caps>Reservoir</Heading>
@@ -709,7 +711,7 @@ export default class Presentation extends React.Component {
               <BigList lightBackground>
                 <ListItem>Had very simple needs</ListItem>
                 <ListItem>Worked with no config (may have been a little early on Contenta)</ListItem>
-                <ListItem>But I've used Contenta since</ListItem>
+                <ListItem>But I've used Contenta since (and it has momentum in the community)</ListItem>
               </BigList>
             </Fill>
           </Layout>
@@ -808,11 +810,11 @@ export default class Presentation extends React.Component {
             { loc: [0, 4], title: "migrate_plus.migration.album2017.yml", note: "Lives in aoty_migrate/config/install" },
             { loc: [0, 6], title: "migrate_plus.migration.album2017.yml", note: "Custom source plugin - we'll look at that in a bit" },
             { loc: [0, 8], title: "migrate_plus.migration.album2017.yml", note: "Fetch http and parse json" },
-            { loc: [0, 19], title: "migrate_plus.migration.album2017.yml", note: "Our big ugly google sheets json url" },
-            { loc: [0, 21], title: "migrate_plus.migration.album2017.yml", note: "Traverse to feed/entry to find all items to import" },
+            { loc: [4, 19], title: "migrate_plus.migration.album2017.yml", note: "Our big ugly google sheets json url" },
+            { loc: [18, 21], title: "migrate_plus.migration.album2017.yml", note: "Traverse to feed/entry to find all items to import" },
             { loc: [20, 70], note: "Define fields and select them using Google's ugly field names" },
             { loc: [174, 180], note: "Save these as album content types" },
-            { loc: [174, 197], note: "Map source fields to album node fields" },
+            { loc: [176, 197], note: "Map source fields to album node fields" },
           ]}
           notes=""
         />
@@ -826,10 +828,10 @@ export default class Presentation extends React.Component {
           ranges={[
             { loc: [0, 3], title: "AlbumSourcePlugin.php", note: "Our custom source plugin - mainly exists to interact with the Spotify API during import" },
             { loc: [0, 7], title: "AlbumSourcePlugin.php", note: "Spotify Web API PHP - https://github.com/jwilsson/spotify-web-api-php" },
-            { loc: [0, 22], title: "AlbumSourcePlugin.php", note: "Extend URL source plugin and implement prepareRow()" },
-            { loc: [17, 34], title: "AlbumSourcePlugin.php", note: "Create an instance of Spotify Web API and get token.  Room for improvement here - could persist session, store API data in config and so on." },
+            { loc: [8, 22], title: "AlbumSourcePlugin.php", note: "Extend URL source plugin and implement prepareRow()" },
+            { loc: [21, 34], title: "AlbumSourcePlugin.php", note: "Create an instance of Spotify Web API and get token.  Room for improvement here - could persist session, store API data in config and so on." },
             { loc: [35, 42], title: "AlbumSourcePlugin.php", note: "Search based on album column in spreadsheet to get Spotify album" },
-            { loc: [35, 53], title: "AlbumSourcePlugin.php", note: "Queue up Spotify album data for Drupal. Spotify Album ID is especially useful" },
+            { loc: [41, 53], title: "AlbumSourcePlugin.php", note: "Queue up Spotify album data for Drupal. Spotify Album ID is especially useful" },
             { loc: [89, 93], title: "AlbumSourcePlugin.php", note: "Return the modified row" },
           ]}
           notes=""
@@ -923,7 +925,8 @@ export default class Presentation extends React.Component {
           It takes a number of props which are passed to the component. These could be static values, could be vraiables, and could be even be 
           functions. I can go ahead and change this to my favorite album of the year for example.
           This also shows that if the props for a compnent change, it is re-rendered
-          http://lucybain.com/blog/2017/react-js-when-to-rerender/"
+          http://lucybain.com/blog/2017/react-js-when-to-rerender/
+          Props can't be changed inside the component."
         >
           <MarginHeading>Album Component</MarginHeading>
           <ComponentPlayground
@@ -944,7 +947,6 @@ export default class Presentation extends React.Component {
             { loc: [0, 7], title: "Defining Our Album Component", note: "Render method returns JSX" },
             { loc: [4, 27], note: "Have some logic here to return different version of component if cover image exists" },
             { loc: [7, 12], note: "Think of <AlbumRow> as another custom component - we'll take a closer look in a bit " },
-            { loc: [27, 42], note: "Render the version of the album without an image" },
             { loc: [45, 55], note: "Validating our props and exporting the component" },
           ]}
           notes="Let's look a little more closely about how this album component came to be"
@@ -955,7 +957,8 @@ export default class Presentation extends React.Component {
           within the component.
           Control panel as an example of state.  Not sure if this should be a code slide, 
           or a simplified component playground.  Maybe simplfied component playground.
-          Note about passing function into component."
+          Note about passing function into component.
+          State can change inside the component."
         >
           <MarginHeading>Component State</MarginHeading>
           <ComponentPlayground
@@ -981,6 +984,21 @@ export default class Presentation extends React.Component {
         <Slide>
           <Image src={images.state3} />
         </Slide>
+
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/app.example")}
+          ranges={[
+            { loc: [0, 10], title: "Passing Props Down", note: "App component defines albums as state and passes it as a prop to visualization component" },
+            { loc: [9, 34], title: "...and down", note: "Visualization component passes albums as props to each visualization tab" },
+            { loc: [33, 54], title: "...and down", note: "Cover view component takes the album prop and renders album components" },
+          ]}
+          notes="Probably a case for Redux
+          or the context API in react 16.3"
+        />
 
         <Slide
           transition={['slide']}
@@ -1022,7 +1040,7 @@ export default class Presentation extends React.Component {
           notes="Why the hell would you do that, I asked."
         >
           <MarginHeading fit>But All The Cool Kids Are Writing CSS in JS</MarginHeading>
-          <Appear><Image src={images.colin} height="80vh"/></Appear>
+          <Image src={images.colin} height="80vh"/>
         </Slide>
 
         <CodeSlide
@@ -1083,8 +1101,14 @@ export default class Presentation extends React.Component {
         <Slide>
           <Heading>Static Markup</Heading>
           <Heading textColor="secondary">The secret sauce of the JAM Stack</Heading>
-          <CustomText>(think static site generators like Gatsby)</CustomText>
-          <Appear><CustomText>Could more of this app be static?</CustomText></Appear>
+          <CustomText margin="4rem 0 0 0">Think static site generators:</CustomText>
+          <CustomText>Gatsby.js</CustomText>
+          <CustomText>static-site-generator-webpack-plugin</CustomText>
+        </Slide>
+
+        <Slide>
+          <CustomText>Could more of this app be static?</CustomText>
+          <Image src={images.spinner} />
         </Slide>
 
         <Slide
@@ -1134,12 +1158,21 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
+          bgImage={images.sprint}
+          notes="I used to do comedy, but like many comedians I secretly wanted to be in a band.
+          This is me performing my solo musical show Briami Sound Machine which even though
+          it often led to walkouts, I secretly wanted to be the greatest frontman of all time.
+          One of the comedians I collaborated with in Boston was a friend named Chris Duffy..."
+        ></Slide>
+
+        <Slide
+          bgColor="secondary"
           notes="spotify playlist with all songs referenced in slides, and then some of my other favorites from 2017
           Try to remeber sprint plug.
           And nashville."
         >
-          <MarginHeading fit>Questions?</MarginHeading>
-          <Heading textColor="secondary">(Thanks!)</Heading>
+          <MarginHeading textColor="tertiary" fit>Questions?</MarginHeading>
+          <Heading textColor="primary">(Thanks!)</Heading>
         </Slide>
 
       </Deck>

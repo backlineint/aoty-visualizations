@@ -1,0 +1,56 @@
+// From App.js render()
+
+<Visualizations
+  albums={this.state.activeAlbums}
+  rows={this.state.rows}
+  controlPanelExpanded={this.state.controlPanelExpanded}
+  selectedAlbum={this.state.selectedAlbum}
+  selectAlbum={this.selectAlbum}
+/>
+
+// From Visualizations.js render()
+
+<VisualizationTabs
+  id="Tabs"
+  renderActiveTabPanelOnly="true"
+  controlPanelExpanded={this.props.controlPanelExpanded}
+/>
+  <Tab2
+    id="cv"
+    title="Covers"
+    panel={<CoverView albums={this.props.albums} rows={this.props.rows} selectedAlbum={this.props.selectedAlbum} selectAlbum={this.props.selectAlbum} />}
+  />
+  <Tab2
+    id="lv"
+    title="Lists"
+    panel={<ListView albums={this.props.albums} rows={this.props.rows} controlPanelExpanded={this.props.controlPanelExpanded} />}
+  />
+  <Tab2
+    id="tv"
+    title="Table"
+    panel={<AlbumTable albums={this.props.albums} rows={this.props.rows} />}
+  />
+</VisualizationTabs>
+
+// From CoverView.js render()
+
+<AlbumList>
+  {Object.keys(this.props.albums).slice(0, this.props.rows).map(key =>
+    <Album
+      key={key}
+      artist={this.props.albums[key].attributes.field_artist}
+      title={this.props.albums[key].attributes.field_album}
+      albumId={this.props.albums[key].attributes.field_spotify_album_id}
+      coverImage={this.props.albums[key].attributes.field_cover_image}
+      selectAlbum={this.props.selectAlbum}
+      selectedAlbum={key}
+      activeAlbum={this.props.selectedAlbum === key}
+    />
+  )}
+</AlbumList>
+<AlbumDetail
+  album={this.props.albums[this.props.selectedAlbum].attributes}
+/>
+
+
+

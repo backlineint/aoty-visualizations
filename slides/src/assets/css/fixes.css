@@ -3,6 +3,10 @@
   border: 10px solid #03A9FC !important;
 }
 
+.code-slide code {
+  font-size: 1.25em;
+}
+
 /* Styles from Blueprint Card Components */
 .pt-card {
   border-radius: 3px;
