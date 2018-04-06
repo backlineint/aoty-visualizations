@@ -495,10 +495,10 @@ export default class Presentation extends React.Component {
         <Slide>
           <Heading>The Promise of the JAM Stack</Heading>
           <BigList>
-            <Appear><ListItem>Improved performance</ListItem></Appear>
-            <Appear><ListItem>Cheaper, easier scaling</ListItem></Appear>
-            <Appear><ListItem>Better developer experience</ListItem></Appear>
-            <Appear><ListItem>Higher security</ListItem></Appear>
+            <ListItem>Improved performance</ListItem>
+            <ListItem>Cheaper, easier scaling</ListItem>
+            <ListItem>Better developer experience</ListItem>
+            <ListItem>Higher security</ListItem>
             <Appear><ListItem>Free pony rides?</ListItem></Appear>
           </BigList>
         </Slide>
@@ -635,64 +635,20 @@ export default class Presentation extends React.Component {
 
         <Slide
           bgColor="secondary"
-          notes="We also need to evaluate these things based on their slogans..."
+          notes="."
         >
           <Layout>
             <Fill>
-              <Heading>Reservoir</Heading>
-              <Text>"A back end for your front end"</Text>
+              <Heading caps>Reservoir</Heading>
               <Image src={images.reservoirLogo} />
             </Fill>
             <Fill>
-              <CustomText lightBackground>You might reach for Resevoir if...</CustomText>
-              <BigList lightBackground>
-                <ListItem>You want the quickest path to a Drupal based API</ListItem>
-                <ListItem>Nodes and node types alone can meet your needs</ListItem>
-                <ListItem>You won't miss your Drupalisms</ListItem>
-              </BigList>
-            </Fill>
-          </Layout>
-        </Slide>
-
-        <Slide
-          bgColor="secondary"
-        >
-          <Layout>
-            <Fill>
-              <Heading>Contenta</Heading>
-              <Text>"Contenta makes your content happy"</Text>
+              <Heading caps>Contenta</Heading>
               <Image src={images.contentaLogo} />
             </Fill>
             <Fill>
-            <CustomText lightBackground>You might reach for Contenta if...</CustomText>
-              <BigList lightBackground>
-                <ListItem>You want to use vocabularies, comments, media</ListItem>
-                <ListItem>You want a more Drupal like approach to extending and customizing</ListItem>
-                <ListItem>You want example content and consumers to experiment with</ListItem>
-              </BigList>
-            </Fill>
-          </Layout>
-        </Slide>
-
-        <Slide
-          bgColor="secondary"
-        >
-          <Layout>
-            <Fill>
-              <Heading>Roll Your Own</Heading>
-              <Text>"For the DYI-ers"</Text>
+              <Heading caps>Drupal</Heading>
               <Image src={images.d8} />
-            </Fill>
-            <Fill>
-            <CustomText lightBackground>Sure, you could just build it yourself...</CustomText>
-              <BigList lightBackground>
-                <ListItem>JSON API</ListItem>
-                <ListItem>Open API and ReDoc</ListItem>
-                <ListItem>Simple OAuth</ListItem>
-                <ListItem>Many other odds and ends</ListItem>
-              </BigList>
-              <Text>But really, why would you?</Text>
-              <Text>Pray a little harder / work a little smarter...</Text>
             </Fill>
           </Layout>
         </Slide>
@@ -1137,7 +1093,7 @@ export default class Presentation extends React.Component {
         <Slide
           bgColor="secondary"
         >
-          <Heading caps fit>Did we need Drupal</Heading>
+          <Heading caps fit>Did I need Drupal</Heading>
           <Heading caps fit>For This Project?</Heading>
         </Slide>
 
