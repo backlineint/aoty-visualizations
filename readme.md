@@ -6,10 +6,11 @@ Visualizations based on data from http://robmitchum.github.io/aotysheets.html
 
 App available here: http://brianperryinteractive.com/aoty-visualizations/
 
-Slides available here: http://brianperryinteractive.com/aoty-slides/
+Full slides available here: http://brianperryinteractive.com/aoty-slides/
+(or [PDF version](https://www.dropbox.com/s/ccl8n6f6kxbjcgw/hot-jam-stack.pdf?dl=0) - doesn't contain all dynamic content)
 
 The talk 'Hot JAMS(tack): Building a Music Discovery App with Drupal and React' has been presented at:
-* MidCamp Chicago - March 10, 2018
+* [MidCamp Chicago](https://www.midcamp.org/topic/hot-jamstack-lessons-building-music-discovery-app-drupal-and-react) - March 10, 2018. [Video](https://www.youtube.com/watch?v=Sj_nE2IukOs).  
 
 To be presented at:
 * DrupalCon Nashville - April, 2018
