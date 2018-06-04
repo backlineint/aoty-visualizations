@@ -11,9 +11,8 @@ Full slides available here: http://brianperryinteractive.com/aoty-slides/
 
 The talk 'Hot JAMS(tack): Building a Music Discovery App with Drupal and React' has been presented at:
 * [MidCamp Chicago](https://www.midcamp.org/topic/hot-jamstack-lessons-building-music-discovery-app-drupal-and-react) - March 10, 2018. [Video](https://www.youtube.com/watch?v=Sj_nE2IukOs).  
-
-To be presented at:
-* [DrupalCon Nashville](https://events.drupal.org/nashville2018/sessions/hot-jamstack-building-music-discovery-app-drupal-and-react) - April 11, 2018 - Provide session feedback [here](https://events.drupal.org/nashville2018/sessions/hot-jamstack-building-music-discovery-app-drupal-and-react)
+* [DrupalCon Nashville](https://events.drupal.org/nashville2018/sessions/hot-jamstack-building-music-discovery-app-drupal-and-react) - April 11, 2018 - [Video](https://www.youtube.com/watch?v=d0HOsc5nQtM).
+* [Texas Camp](https://2018.texascamp.org/sessions/hot-jamstack-building-a-music-discovery-app-with-drupal-and-react) - June 1, 2018 - [Video](https://www.youtube.com/watch?v=ZzDs3hGx3zY).
 
 Todo:
 * Hope to provide additional instructions for running local instances of this project.  In the meantime changing to the react-app directory and running `npm install` followed by `npm start` will give you an instance of the react app that you can experiment with on your local host.
