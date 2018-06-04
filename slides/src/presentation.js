@@ -1114,14 +1114,6 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
-          bgImage={images.sprint}
-          notes="I used to do comedy, but like many comedians I secretly wanted to be in a band.
-          This is me performing my solo musical show Briami Sound Machine which even though
-          it often led to walkouts, I secretly wanted to be the greatest frontman of all time.
-          One of the comedians I collaborated with in Boston was a friend named Chris Duffy..."
-        ></Slide>
-
-        <Slide
           bgColor="secondary"
           notes="spotify playlist with all songs referenced in slides, and then some of my other favorites from 2017
           Try to remeber sprint plug.
