@@ -7,8 +7,6 @@ import { withKnobs, text, object } from '@storybook/addon-knobs';
 
 import RowControl from './RowControl';
 
-import '@blueprintjs/core/dist/blueprint.css';
-
 // Is there some way to just get import rowControl as defined in app.js? I suppose
 // I could export/import from a config or variables file.
 const rowControl = {

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Album from './Album';
 import AlbumDetail from './AlbumDetail';
 
-const AlbumList = styled.ol`
+export const AlbumList = styled.ol`
  width: 60%;
  float: left;
  overflow: scroll;

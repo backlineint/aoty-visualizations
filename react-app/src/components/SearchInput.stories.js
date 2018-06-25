@@ -6,8 +6,6 @@ import { withKnobs, text } from '@storybook/addon-knobs';
 
 import SearchInput from './SearchInput';
 
-import '@blueprintjs/core/dist/blueprint.css';
-
 storiesOf('Search Input', module)
   .addDecorator(withKnobs)
   .add('Search Input', () => {

@@ -6,8 +6,6 @@ import { withKnobs, text, object } from '@storybook/addon-knobs';
 
 import SortControl from './SortControl';
 
-import '@blueprintjs/core/dist/blueprint.css';
-
 const sortControl = {
   options: {
     title: {field: 'title', label: 'Album', defaultSort: 'asc'},

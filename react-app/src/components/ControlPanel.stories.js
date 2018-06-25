@@ -6,8 +6,6 @@ import { withKnobs, text, object } from '@storybook/addon-knobs';
 
 import ControlPanel from './ControlPanel';
 
-import '@blueprintjs/core/dist/blueprint.css';
-
 const rowControl = {
   5: {
     rows: 5,
