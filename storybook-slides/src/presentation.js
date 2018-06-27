@@ -358,9 +358,9 @@ export default class Presentation extends React.Component {
           // eslint-disable-next-line import/no-webpack-loader-syntax
           code={require("raw-loader!./assets/code/actions.example")}
           ranges={[
-            { loc: [0, 3], title: "Album.stories.js", note: "Import actions addon" },
-            { loc: [16 , 20], title: "Album.stories.js", note: "Mock your function using actions." },
-            { loc: [21, 25], title: "Album.stories.js", note: "Could explictly call action in a prop, or use object spread." }
+            { loc: [0, 3], title: "Addon: Actions", note: "Import actions addon" },
+            { loc: [16 , 20], title: "Addon: Actions", note: "Mock your function using actions." },
+            { loc: [21, 25], title: "Addon: Actions", note: "Could explictly call action in a prop, or use object spread." }
           ]}
           notes=""
         />
@@ -382,16 +382,65 @@ export default class Presentation extends React.Component {
         <Slide
           notes="Lets take a deeper look at the app so we can tackle a composite component."
         >
-          <MarginHeading>Spoiler Alert:</MarginHeading>
+          <MarginHeading>Album of the Year App</MarginHeading>
           <Link href="http://brianperryinteractive.com/aoty-visualizations/" target="_blank">
             <Image src={images.aotyApp} height="80vh" />
           </Link>
         </Slide>
 
-        <Slide>
-          Composite story - album list. Or maybe visualization panel?
-          Used to think this wasn't a thing, but it is.
-        </Slide>
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/composite.example")}
+          ranges={[
+            { loc: [0, 6], title: "Composite Story: Cover View", note: "Similar biolerplate for imports" },
+            { loc: [7, 8], title: "Composite Story: Cover View", note: "Mocking data can be the hard part. Having a re-usable album data set helps here" },
+            { loc: [9, 20], title: "Composite Story: Cover View", note: "Export data that can be re-used for other visualization types" },
+            { loc: [21, 23], title: "Composite Story: Cover View", note: "Create your story" },
+            { loc: [21, 24], title: "Composite Story: Cover View", note: "Spread data and actions as props" },
+            { loc: [21, 27], title: "Composite Story: Cover View", note: "Override with knobs" },
+          ]}
+          notes=""
+        />
+
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/list.example")}
+          ranges={[
+            { loc: [0, 8], title: "List View", note: "Re-use data from cover view" },
+            { loc: [10, 24], title: "List View", note: "All that remains is to write stories" },
+          ]}
+          notes=""
+        />
+
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/table.example")}
+          ranges={[
+            { loc: [0, 17], title: "Album Table", note: "Mostly just boilerplate at this point" }
+          ]}
+          notes=""
+        />
+
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/app.example")}
+          ranges={[
+            { loc: [0, 7], title: "App.stories.js", note: "Can even go as far as a story for entire app. Works well for live decoupled app." }
+          ]}
+          notes=""
+        />
 
         <Slide>
           Testing - Storyshots, Specs, maybe visual regression testing.
@@ -399,6 +448,10 @@ export default class Presentation extends React.Component {
 
         <Slide>
           Deploying your storybook
+        </Slide>
+
+        <Slide>
+          Hints - start functional and build out. Test.
         </Slide>
 
         <Slide>
