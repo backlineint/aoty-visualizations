@@ -7,7 +7,7 @@ import AlbumTable from './AlbumTable';
 
 import { visualizationData } from './CoverView.stories';
 
-storiesOf('AlbumTable', module)
+storiesOf('AlbumTableDemo', module)
   .addDecorator(withKnobs)
   .add('default', () => <AlbumTable {...visualizationData}
     rows={number('rows', 10)}

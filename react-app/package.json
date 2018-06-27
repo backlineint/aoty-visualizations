@@ -30,10 +30,11 @@
   },
   "devDependencies": {
     "@storybook/addon-knobs": "^3.2.12",
+    "@storybook/addon-storyshots": "^3.4.8",
     "@storybook/react": "^3.2.12",
     "autoprefixer-stylus": "^0.14.0",
     "concurrently": "^3.5.0",
-    "storybook-addon-jsx": "^5.3.0",
+    "react-test-renderer": "15.6.2",
     "stylus": "^0.54.5"
   }
 }

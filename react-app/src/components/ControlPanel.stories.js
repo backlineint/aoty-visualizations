@@ -41,6 +41,8 @@ storiesOf('Control Panel', module)
         rowControl={object('rowControl', rowControl)}
         handleRowChange={action('Handle Row Change')}
         setRows={action('Set Rows')}
+        expandControlPanel={action('expandControlPanel')}
+        collapseControlPanel={action('collapseControlPanel')}
       />
     );
   });

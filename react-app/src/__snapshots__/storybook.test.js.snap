@@ -1,0 +1,1220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Album active 1`] = `
+<ol
+  className="sc-ifAKCX jnrxsp"
+>
+  <div
+    className="pt-card pt-interactive sc-bdVaJa cxhSTa"
+    onClick={[Function]}
+  >
+    <li
+      className="sc-bwzfXH fGvGM"
+    >
+      <div
+        className="sc-htpNat eFcTDh"
+      >
+        <img
+          alt="DAMN."
+          src="https://i.scdn.co/image/f2e751ee3dbfec80737094585f59a76806a51797"
+        />
+      </div>
+      <div
+        className="sc-htpNat eFcTDh"
+      >
+        <div
+          className="pt-ui-text-large"
+        >
+          Kendrick Lamar
+        </div>
+        <h4>
+          DAMN.
+        </h4>
+      </div>
+    </li>
+  </div>
+</ol>
+`;
+
+exports[`Storyshots Album default 1`] = `
+<ol
+  className="sc-ifAKCX jnrxsp"
+>
+  <div
+    className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+    onClick={[Function]}
+  >
+    <li
+      className="sc-bwzfXH fGvGM"
+    >
+      <div
+        className="sc-htpNat eFcTDh"
+      >
+        <img
+          alt="Damn."
+          src="https://i.scdn.co/image/f2e751ee3dbfec80737094585f59a76806a51797"
+        />
+      </div>
+      <div
+        className="sc-htpNat eFcTDh"
+      >
+        <div
+          className="pt-ui-text-large"
+        >
+          Kendrick Lamar
+        </div>
+        <h4>
+          Damn.
+        </h4>
+      </div>
+    </li>
+  </div>
+</ol>
+`;
+
+exports[`Storyshots Control Panel Control Panel 1`] = `
+<div
+  className="control-panel"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  <span
+    className="pt-icon-standard pt-icon-cog sc-bZQynM cclyqY"
+  />
+  <h2>
+    Best of Best of 2016
+  </h2>
+  <div
+    className="sc-gzVnrw kKuciX"
+  >
+    <p>
+      Number of Results:
+    </p>
+    <div
+      className="pt-button-group pt-large pt-fill"
+    >
+      <button
+        className="pt-button"
+        disabled={undefined}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        type="button"
+      >
+        <span>
+          5
+        </span>
+      </button>
+      <button
+        className="pt-button"
+        disabled={undefined}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        type="button"
+      >
+        <span>
+          10
+        </span>
+      </button>
+      <button
+        className="pt-button"
+        disabled={undefined}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        type="button"
+      >
+        <span>
+          25
+        </span>
+      </button>
+      <button
+        className="pt-button pt-active"
+        disabled={undefined}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        type="button"
+      >
+        <span>
+          50
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    className="pt-input-group pt-large pt-minimal sc-htoDjs ghXqmU"
+  >
+    <span
+      className="pt-icon pt-icon-search"
+    />
+    <input
+      className="pt-input"
+      dir="auto"
+      onChange={[Function]}
+      placeholder="Filter by Album, Artist or Genre"
+      type="search"
+    />
+  </div>
+  <label
+    className="pt-label"
+  >
+    Sort by:
+    <div
+      className="pt-select pt-minimal pt-large"
+    >
+      <select
+        onChange={[Function]}
+        value="field_cons_score"
+      >
+        <option
+          value="none"
+        >
+          None
+        </option>
+        <option
+          value="field_artist"
+        >
+          Artist
+        </option>
+        <option
+          value="field_album"
+        >
+          Album
+        </option>
+        <option
+          value="field_genre"
+        >
+          Genre
+        </option>
+        <option
+          value="field_avg"
+        >
+          Average
+        </option>
+        <option
+          value="field_cons_score"
+        >
+          Consensus Score
+        </option>
+        <option
+          value="field_lists"
+        >
+          Lists
+        </option>
+        <option
+          value="field_top_10s"
+        >
+          Top Ten
+        </option>
+        <option
+          value="field_wt_avg"
+        >
+          Weighted Average
+        </option>
+      </select>
+    </div>
+  </label>
+  <label
+    className="pt-label"
+  >
+    View List:
+    <div
+      className="pt-select pt-minimal pt-large"
+    >
+      <select
+        onChange={[Function]}
+        value="none"
+      >
+        <option
+          value="none"
+        >
+          None
+        </option>
+        <option
+          value="rtrade_list"
+        >
+          Rough Trade
+        </option>
+        <option
+          value="q_list"
+        >
+          Q
+        </option>
+        <option
+          value="rstone_list"
+        >
+          Rolling Stone
+        </option>
+        <option
+          value="paste_list"
+        >
+          Paste
+        </option>
+        <option
+          value="nme_list"
+        >
+          NME
+        </option>
+        <option
+          value="mojo_list"
+        >
+          Mojo
+        </option>
+        <option
+          value="drwnd_list"
+        >
+          Drowned in Sound
+        </option>
+        <option
+          value="cos_list"
+        >
+          Consequence of Sound
+        </option>
+        <option
+          value="uncut_list"
+        >
+          Uncut
+        </option>
+        <option
+          value="skinny_list"
+        >
+          The Skinny
+        </option>
+        <option
+          value="cmplx_list"
+        >
+          Complex
+        </option>
+        <option
+          value="crack_list"
+        >
+          Crack Magazine
+        </option>
+        <option
+          value="gvsb_list"
+        >
+          Gorilla vs Bear
+        </option>
+        <option
+          value="noisey_list"
+        >
+          Noisey
+        </option>
+        <option
+          value="quietus_list"
+        >
+          The Quietus
+        </option>
+        <option
+          value="strgum_list"
+        >
+          Stereogum
+        </option>
+        <option
+          value="uproxx_list"
+        >
+          Uproxx
+        </option>
+        <option
+          value="vnlfct_list"
+        >
+          The Vinyl Factory
+        </option>
+        <option
+          value="wire_list"
+        >
+          Wire
+        </option>
+        <option
+          value="popmat_list"
+        >
+          Pop Matters
+        </option>
+        <option
+          value="pfork_list"
+        >
+          Pitchfork
+        </option>
+        <option
+          value="npr_list"
+        >
+          NPR
+        </option>
+        <option
+          value="spin_list"
+        >
+          Spin
+        </option>
+        <option
+          value="line_list"
+        >
+          Line
+        </option>
+        <option
+          value="tmt_list"
+        >
+          Tiny Mix Tapes
+        </option>
+        <option
+          value="altern_list"
+        >
+          The Alternative
+        </option>
+        <option
+          value="fact_list"
+        >
+          Fact
+        </option>
+      </select>
+    </div>
+  </label>
+  <p>
+    Data: 
+    <a
+      href="http://robmitchum.github.io/aotysheets.html"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      Album of the Year List Project
+    </a>
+  </p>
+</div>
+`;
+
+exports[`Storyshots CoverView default 1`] = `
+<div>
+  <ol
+    className="sc-ifAKCX jnrxsp"
+  >
+    <div
+      className="pt-card pt-interactive sc-bdVaJa cxhSTa"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="DAMN."
+            src="https://i.scdn.co/image/f2e751ee3dbfec80737094585f59a76806a51797"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            Kendrick Lamar
+          </div>
+          <h4>
+            DAMN.
+          </h4>
+        </div>
+      </li>
+    </div>
+    <div
+      className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="CTRL"
+            src="https://i.scdn.co/image/160e5177a2c4a63d04f94f848fe88f0f3dbe871c"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            SZA
+          </div>
+          <h4>
+            CTRL
+          </h4>
+        </div>
+      </li>
+    </div>
+    <div
+      className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="Melodrama"
+            src="https://i.scdn.co/image/d914d9a0960fbed81ccd3e1b536ff11f2176f0e1"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            Lorde
+          </div>
+          <h4>
+            Melodrama
+          </h4>
+        </div>
+      </li>
+    </div>
+    <div
+      className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="Process"
+            src="https://i.scdn.co/image/4a9c0b8106f9fb9b39293f35b301955bce4a8c06"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            Sampha
+          </div>
+          <h4>
+            Process
+          </h4>
+        </div>
+      </li>
+    </div>
+    <div
+      className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="MASSEDUCTION"
+            src="https://i.scdn.co/image/e51b1689395ac23c7b98b10fe46a82cef68675d5"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            St. Vincent
+          </div>
+          <h4>
+            MASSEDUCTION
+          </h4>
+        </div>
+      </li>
+    </div>
+    <div
+      className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="American Dream"
+            src="https://i.scdn.co/image/ac3c4c03b97b8dd5a10d603130e663d64ec31ee0"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            LCD Soundsystem
+          </div>
+          <h4>
+            American Dream
+          </h4>
+        </div>
+      </li>
+    </div>
+    <div
+      className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="Take Me Apart"
+            src="https://i.scdn.co/image/b9625f8ef5e05ee960e1988ca3e50ba03544ec91"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            Kelela
+          </div>
+          <h4>
+            Take Me Apart
+          </h4>
+        </div>
+      </li>
+    </div>
+    <div
+      className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="Big Fish Theory"
+            src="https://i.scdn.co/image/58e5c66938a3fe31b9a9932b1e075f7ba1ce4364"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            Vince Staples
+          </div>
+          <h4>
+            Big Fish Theory
+          </h4>
+        </div>
+      </li>
+    </div>
+    <div
+      className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="Black Origami"
+            src="https://i.scdn.co/image/4534e8fce078bbf980eb77d5a8b8ce11a05b460b"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            Jlin
+          </div>
+          <h4>
+            Black Origami
+          </h4>
+        </div>
+      </li>
+    </div>
+    <div
+      className="pt-card pt-interactive sc-bdVaJa lmLMRZ"
+      onClick={[Function]}
+    >
+      <li
+        className="sc-bwzfXH fGvGM"
+      >
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <img
+            alt="No Shape"
+            src="https://i.scdn.co/image/674707b2363da5fa50367c49521c681f4f3ba29e"
+          />
+        </div>
+        <div
+          className="sc-htpNat eFcTDh"
+        >
+          <div
+            className="pt-ui-text-large"
+          >
+            Perfume Genius
+          </div>
+          <h4>
+            No Shape
+          </h4>
+        </div>
+      </li>
+    </div>
+  </ol>
+  <div
+    className="sc-bxivhb gZpisI"
+  >
+    <div
+      className="pt-callout pt-intent-primary"
+    >
+      <h4>
+        Kendrick Lamar
+      </h4>
+      <h2>
+        DAMN.
+      </h2>
+      <img
+        alt="kendrick lamar - damn."
+        src="https://i.scdn.co/image/70429aaeceb7f8f6c087133382728223e0004b29"
+      />
+      <p
+        className="pt-ui-text-large"
+      >
+        <a
+          href="https://open.spotify.com/album/4eLPsYPBmXABThSJ821sqY"
+          target="_blank"
+        >
+          Play on Spotify
+        </a>
+      </p>
+      <div>
+        <a
+          href="https://roughtrade.com/us/albums-of-the-year"
+          target="_blank"
+        >
+          Rough Trade
+        </a>
+        : 
+        45
+      </div>
+      <div>
+        <a
+          href="https://www.qthemusic.com/articles/when-liam-met-ed-the-new-issue-out-on-tuesday"
+          target="_blank"
+        >
+          Q
+        </a>
+        : 
+        1
+      </div>
+      <div>
+        <a
+          href="http://www.rollingstone.com/music/lists/50-best-albums-of-2017-w511763"
+          target="_blank"
+        >
+          Rolling Stone
+        </a>
+        : 
+        1
+      </div>
+      <div>
+        <a
+          href="https://www.pastemagazine.com/articles/2017/11/the-50-best-albums-of-2017.html"
+          target="_blank"
+        >
+          Paste
+        </a>
+        : 
+        2
+      </div>
+      <div>
+        <a
+          href="http://www.nme.com/list/nmes-albums-of-the-year-2017-2161481"
+          target="_blank"
+        >
+          NME
+        </a>
+        : 
+        3
+      </div>
+      <div>
+        <a
+          href="https://www.mojo4music.com/articles/mojo-290-january-2018"
+          target="_blank"
+        >
+          Mojo
+        </a>
+        : 
+        7
+      </div>
+      <div>
+        <a
+          href="http://drownedinsound.com/in_depth/4151506-drowned-in-sounds-favourite-albums-of-2017"
+          target="_blank"
+        >
+          Drowned In Sound
+        </a>
+        : 
+        18
+      </div>
+      <div>
+        <a
+          href="https://consequenceofsound.net/2017/11/top-50-albums-of-2017/"
+          target="_blank"
+        >
+          Consequence of Sound
+        </a>
+        : 
+        2
+      </div>
+      <div>
+        <a
+          href="http://www.uncut.co.uk/publication/uncut/january-2018"
+          target="_blank"
+        >
+          Uncut
+        </a>
+        : 
+        3
+      </div>
+      <div>
+        <a
+          href="http://www.theskinny.co.uk/music/opinion/albums-of-the-year/the-skinny-top-50-albums-of-2017"
+          target="_blank"
+        >
+          The Skinny
+        </a>
+        : 
+        1
+      </div>
+      <div>
+        <a
+          href="http://www.complex.com/music/best-albums-2017/"
+          target="_blank"
+        >
+          Complex
+        </a>
+        : 
+        1
+      </div>
+      <div>
+        <a
+          href="https://crackmagazine.net/article/feature-lists/albums-2017-100-51/"
+          target="_blank"
+        >
+          Crack Magazine
+        </a>
+        : 
+        6
+      </div>
+      <div>
+        <a
+          href="http://www.gorillavsbear.net/gorilla-vs-bears-albums-of-2017/"
+          target="_blank"
+        >
+          Gorilla vs Bear
+        </a>
+        : 
+        35
+      </div>
+      <div>
+        <a
+          href="https://noisey.vice.com/en_us/article/pazbwn/noisey-100-best-albums-of-2017"
+          target="_blank"
+        >
+          Noisey
+        </a>
+        : 
+        2
+      </div>
+      <div>
+        <a
+          href="https://www.stereogum.com/featured/the-50-best-albums-of-2017/"
+          target="_blank"
+        >
+          Stereogum
+        </a>
+        : 
+        2
+      </div>
+      <div>
+        <a
+          href="http://uproxx.com/music/best-albums-of-2017-ranked-list/"
+          target="_blank"
+        >
+          Uproxx
+        </a>
+        : 
+        4
+      </div>
+      <div>
+        <a
+          href="https://thevinylfactory.com/features/best-albums-2017/"
+          target="_blank"
+        >
+          The Vinyl Factory
+        </a>
+        : 
+        3
+      </div>
+      <div>
+        <a
+          href="https://www.thewire.co.uk/issues/407"
+          target="_blank"
+        >
+          Wire
+        </a>
+        : 
+        41
+      </div>
+      <div>
+        <a
+          href="https://www.popmatters.com/60-best-albums-of-2017-2516162820.html"
+          target="_blank"
+        >
+          Pop Matters
+        </a>
+        : 
+        1
+      </div>
+      <div>
+        <a
+          href="https://pitchfork.com/features/lists-and-guides/the-50-best-albums-of-2017/"
+          target="_blank"
+        >
+          Pitchfork
+        </a>
+        : 
+        1
+      </div>
+      <div>
+        <a
+          href="https://www.npr.org/2017/12/12/568400855/the-50-best-albums-of-2017"
+          target="_blank"
+        >
+          NPR
+        </a>
+        : 
+        1
+      </div>
+      <div>
+        <a
+          href="https://www.spin.com/featured/50-best-albums-2017/"
+          target="_blank"
+        >
+          Spin
+        </a>
+        : 
+        1
+      </div>
+      <div>
+        <a
+          href="https://www.thelineofbestfit.com/features/listomania/best-albums-of-2017"
+          target="_blank"
+        >
+          The Line of Best Fit
+        </a>
+        : 
+        2
+      </div>
+      <div>
+        <a
+          href="https://www.tinymixtapes.com/features/2017-favorite-50-music-releases"
+          target="_blank"
+        >
+          Tiny Mix Tapes
+        </a>
+        : 
+        6
+      </div>
+      <div>
+        <a
+          href="http://www.getalternative.com/alternatives-top-50-releases-2017-3/"
+          target="_blank"
+        >
+          The Alternative
+        </a>
+        : 
+        3
+      </div>
+      <div>
+        <a
+          href="http://www.factmag.com/2017/12/20/best-albums-2017/"
+          target="_blank"
+        >
+          Fact
+        </a>
+        : 
+        41
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Gear Gear 1`] = `
+<span
+  className="pt-icon-standard pt-icon-cog sc-bZQynM cclyqY"
+/>
+`;
+
+exports[`Storyshots ListView One Row 1`] = `
+<div
+  className="sc-dnqmqq liOeRC"
+>
+  <div
+    style={
+      Object {
+        "height": "100%",
+        "width": "100%",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Storyshots ListView controlPanelExpanded 1`] = `
+<div
+  className="sc-dnqmqq ijIhSE"
+>
+  <div
+    style={
+      Object {
+        "height": "100%",
+        "width": "100%",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Storyshots ListView default 1`] = `
+<div
+  className="sc-dnqmqq liOeRC"
+>
+  <div
+    style={
+      Object {
+        "height": "100%",
+        "width": "100%",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Storyshots Row Control Row Control 1`] = `
+<div
+  className="sc-gzVnrw kKuciX"
+>
+  <p>
+    Number of Results:
+  </p>
+  <div
+    className="pt-button-group pt-large pt-fill"
+  >
+    <button
+      className="pt-button"
+      disabled={undefined}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="button"
+    >
+      <span>
+        5
+      </span>
+    </button>
+    <button
+      className="pt-button"
+      disabled={undefined}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="button"
+    >
+      <span>
+        10
+      </span>
+    </button>
+    <button
+      className="pt-button"
+      disabled={undefined}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="button"
+    >
+      <span>
+        25
+      </span>
+    </button>
+    <button
+      className="pt-button pt-active"
+      disabled={undefined}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="button"
+    >
+      <span>
+        50
+      </span>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Row Control Row Control Disabled 1`] = `
+<div
+  className="sc-gzVnrw kKuciX"
+>
+  <p>
+    Number of Results:
+  </p>
+  <div
+    className="pt-button-group pt-large pt-fill"
+  >
+    <button
+      className="pt-button pt-active"
+      disabled={undefined}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="button"
+    >
+      <span>
+        5
+      </span>
+    </button>
+    <button
+      className="pt-button"
+      disabled={undefined}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="button"
+    >
+      <span>
+        10
+      </span>
+    </button>
+    <button
+      className="pt-button pt-disabled"
+      disabled={true}
+      onClick={undefined}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="button"
+    >
+      <span>
+        25
+      </span>
+    </button>
+    <button
+      className="pt-button pt-disabled"
+      disabled={true}
+      onClick={undefined}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      type="button"
+    >
+      <span>
+        50
+      </span>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Search Input Search Input 1`] = `
+<div
+  className="pt-input-group pt-large pt-minimal sc-htoDjs ghXqmU"
+>
+  <span
+    className="pt-icon pt-icon-search"
+  />
+  <input
+    className="pt-input"
+    dir="auto"
+    onChange={[Function]}
+    placeholder="Filter by Album or Genre"
+    type="search"
+  />
+</div>
+`;
+
+exports[`Storyshots Sort Control Sort Control 1`] = `
+<label
+  className="pt-label"
+>
+  Sort By:
+  <div
+    className="pt-select pt-minimal pt-large"
+  >
+    <select
+      onChange={[Function]}
+      value={undefined}
+    >
+      <option
+        value="title"
+      >
+        Album
+      </option>
+      <option
+        value="field_genre"
+      >
+        Genre
+      </option>
+      <option
+        value="field_avg"
+      >
+        Average
+      </option>
+      <option
+        value="field_cons_score"
+      >
+        Consensus Score
+      </option>
+      <option
+        value="field_id"
+      >
+        ID
+      </option>
+      <option
+        value="field_lists"
+      >
+        Lists
+      </option>
+      <option
+        value="field_top_10s"
+      >
+        Top Ten
+      </option>
+      <option
+        value="field_wt_avg"
+      >
+        Weighted Average
+      </option>
+    </select>
+  </div>
+</label>
+`;
