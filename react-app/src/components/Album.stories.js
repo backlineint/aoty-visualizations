@@ -12,7 +12,10 @@ export const exampleAlbum = {
   artist: 'Kendrick Lamar',
   coverImage: 'https://i.scdn.co/image/f2e751ee3dbfec80737094585f59a76806a51797',
   selectedAlbum: '0',
-  title: 'DAMN.'
+  title: 'DAMN.',
+  pfork_list: 1,
+  npr_list: 1,
+  paste_list: 2
 }
 
 // Mock functions using Storybook actions
