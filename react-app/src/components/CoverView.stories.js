@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
+import { withKnobs, text, number } from '@storybook/addon-knobs';
 
 import CoverView from './CoverView';
 
@@ -15,8 +15,8 @@ export const visualizationData = {
   selectedAlbum: '0'
 }
 
-export const visualizationActions = {
-  selectAlbum: action('selectAlbum'),
+const visualizationActions = {
+  selectAlbum: action('selectAlbum')
 };
 
 storiesOf('CoverView', module)

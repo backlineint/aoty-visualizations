@@ -1,0 +1,23 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import { withKnobs, number, boolean } from '@storybook/addon-knobs';
+
+import ListView from './ListView';
+
+import { visualizationData } from './CoverView.stories';
+
+storiesOf('ListView', module)
+  .addDecorator(withKnobs)
+  .add('default', () => <ListView {...visualizationData}
+    rows={number('rows', 10)}
+    controlPanelExpanded={boolean('controlPanelExpanded', false)}
+  />)
+  .add('controlPanelExpanded', () => <ListView {...visualizationData}
+    rows={number('rows', 10)}
+    controlPanelExpanded={boolean('controlPanelExpanded', true)}
+  />)
+  .add('One Row', () => <ListView {...visualizationData}
+     rows={number('rows', 1)}
+     controlPanelExpanded={boolean('controlPanelExpanded', false)}
+  />);
