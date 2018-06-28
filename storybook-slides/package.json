@@ -2,7 +2,7 @@
   "name": "my-presentation",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://brianperryinteractive.com/aoty-slides/",
+  "homepage": "http://brianperryinteractive.com/storybook-slides/",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",

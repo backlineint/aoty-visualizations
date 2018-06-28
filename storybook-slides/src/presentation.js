@@ -177,7 +177,7 @@ export default class Presentation extends React.Component {
         >
           <Heading fit>Storybook</Heading>
           <Heading fit caps textColor="primary">An Interactive Pattern Library for Your Decoupled Applications</Heading>
-          <Link href="http://bit.ly/hot-jams" target="_blank"><S type="underline"><Text textSize="50px" margin="3rem 0 0 0">http://bit.ly/tbd</Text></S></Link>
+          <Link href="http://bit.ly/hot-jams" target="_blank"><S type="underline"><Text textSize="50px" margin="3rem 0 0 0">http://bit.ly/hot-jams</Text></S></Link>
         </Slide>
 
         <Slide
@@ -339,7 +339,7 @@ export default class Presentation extends React.Component {
           notes="Show action logging here"
         >
           <MarginHeading>Our Album Story</MarginHeading>
-          <Link href="http://localhost:6006" target="_blank">
+          <Link href="http://brianperryinteractive.com/aoty-storybook/" target="_blank">
             <Image src={images.albumStory} height="80vh" />
           </Link>
         </Slide>
@@ -417,7 +417,7 @@ export default class Presentation extends React.Component {
           code={require("raw-loader!./assets/code/list.example")}
           ranges={[
             { loc: [0, 8], title: "List View", note: "Re-use data from cover view" },
-            { loc: [10, 24], title: "List View", note: "All that remains is to write stories" },
+            { loc: [9, 24], title: "List View", note: "All that remains is to write stories" },
           ]}
           notes=""
         />
@@ -451,7 +451,7 @@ export default class Presentation extends React.Component {
           <BigList>
             <ListItem>Storyshots - Jest Snapshot Testing</ListItem>
             <Code>npm i -D @storybook/addon-storyshots</Code>
-            <ListItem>Storyshots Puppeteer - Visualregression Testing</ListItem>
+            <ListItem>Storyshots Puppeteer - visual regression Testing</ListItem>
             <Code>npm i -D @storybook/addon-storyshots-puppeteer</Code>
             <ListItem>Tip: story data can also inform Jest unit tests</ListItem>
             <ListItem>Also try: storybook-addon-specifications</ListItem>
