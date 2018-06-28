@@ -49,6 +49,10 @@ const images = {
   uber: require('./assets/uber.png'),
   albumStory: require('./assets/album-story.png'),
   aotyApp: require('./assets/aoty_app.png'),
+  storyshotConsole: require('./assets/storyshots.png'),
+  snap: require('./assets/snap.png'),
+  visual: require('./assets/visual.png'),
+  guideGuide: require('./assets/guideguide.png'),
 };
 
 const theme = createTheme(
@@ -443,38 +447,73 @@ export default class Presentation extends React.Component {
         />
 
         <Slide>
-          Testing - Storyshots, Specs, maybe visual regression testing.
+          <MarginHeading>Testing</MarginHeading>
+          <BigList>
+            <ListItem>Storyshots - Jest Snapshot Testing</ListItem>
+            <Code>npm i -D @storybook/addon-storyshots</Code>
+            <ListItem>Storyshots Puppeteer - Visualregression Testing</ListItem>
+            <Code>npm i -D @storybook/addon-storyshots-puppeteer</Code>
+            <ListItem>Tip: story data can also inform Jest unit tests</ListItem>
+            <ListItem>Also try: storybook-addon-specifications</ListItem>
+          </BigList>
+        </Slide>
+
+        <CodeSlide
+          className="code-slide"
+          bgColor="secondary"
+          lang="js"
+          // eslint-disable-next-line import/no-webpack-loader-syntax
+          code={require("raw-loader!./assets/code/test.example")}
+          ranges={[
+            { loc: [0, 5], title: "src/storybook.test.js", note: "Default storyshots config" },
+            { loc: [6, 10], title: "src/storybook.test.js", note: "Excluding specific stories" },
+            { loc: [11, 20], title: "src/storybook.test.js", note: "Image snapshots" },
+          ]}
+          notes=""
+        />
+
+        <Slide
+          notes=""
+        >
+          <MarginHeading>Storyshot Output</MarginHeading>
+          <Image src={images.storyshotConsole} height="80vh" />
+        </Slide>
+
+        <Slide
+          notes=""
+        >
+          <MarginHeading>Storyshot Output</MarginHeading>
+          <Image src={images.snap} height="80vh" />
+        </Slide>
+
+        <Slide
+          notes=""
+        >
+          <MarginHeading>Storyshot Puppeteer Output</MarginHeading>
+          <Image src={images.visual} />
         </Slide>
 
         <Slide>
-          Deploying your storybook
+          <MarginHeading>Deploying Your Storybook</MarginHeading>
+          <BigList>
+            <Code>build-storybook -c .storybook -o .out</Code>
+            <ListItem>Run manually, or add as NPM script</ListItem>
+            <ListItem>Creates static bundle in .out directory</ListItem>
+          </BigList>
         </Slide>
 
-        <Slide>
-          Hints - start functional and build out. Test.
+        <Slide
+          notes=""
+        >
+          <MarginHeading>What About Drupal / Pattern Lab?</MarginHeading>
+          <Image src={images.guideGuide} height="80vh" />
         </Slide>
 
-        <Slide>
-          Brad frost stuff - Style Guide Guide
-        </Slide>
-
-        <Slide>
-          React and Drupal in a single project.  Does it matter? Is it a good idea?
-        </Slide>
-
-        <Slide>
-          Resources
-          Dumb react
-          Learn Storybook
-          This repo / The Decoupled Talk
-        </Slide>
-
-        <Slide>
-          Questions / Thanks
-        </Slide>
-
-        <Slide>
-          Other addons? A11y? JSX?
+        <Slide
+          bgColor="secondary"
+        >
+          <MarginHeading textColor="tertiary" fit>Questions?</MarginHeading>
+          <Heading textColor="primary">(Thanks!)</Heading>
         </Slide>
 
       </Deck>

@@ -90,6 +90,14 @@
     global "^4.3.2"
     prop-types "^15.6.1"
 
+"@storybook/addon-storyshots-puppeteer@^4.0.0-alpha.9":
+  version "4.0.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-storyshots-puppeteer/-/addon-storyshots-puppeteer-4.0.0-alpha.9.tgz#3a8543ddae0f6cc9b42e2bfa6f830f5a20fff399"
+  dependencies:
+    "@storybook/node-logger" "4.0.0-alpha.9"
+    jest-image-snapshot "^2.4.2"
+    puppeteer "^1.4.0"
+
 "@storybook/addon-storyshots@^3.4.8":
   version "3.4.8"
   resolved "https://registry.yarnpkg.com/@storybook/addon-storyshots/-/addon-storyshots-3.4.8.tgz#53e8bd697ca26c5880233d6e63690937e10cf183"
@@ -175,6 +183,12 @@
 "@storybook/node-logger@3.4.8":
   version "3.4.8"
   resolved "https://registry.yarnpkg.com/@storybook/node-logger/-/node-logger-3.4.8.tgz#8f8abcd51920545c7458385b0b30199ae48ad78a"
+  dependencies:
+    npmlog "^4.1.2"
+
+"@storybook/node-logger@4.0.0-alpha.9":
+  version "4.0.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/@storybook/node-logger/-/node-logger-4.0.0-alpha.9.tgz#77a57b206ac3079dd270e753043f42b052877e30"
   dependencies:
     npmlog "^4.1.2"
 
@@ -5276,7 +5290,7 @@ jest-haste-map@^20.0.4:
     sane "~1.6.0"
     worker-farm "^1.3.1"
 
-jest-image-snapshot@^2.4.1:
+jest-image-snapshot@^2.4.1, jest-image-snapshot@^2.4.2:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/jest-image-snapshot/-/jest-image-snapshot-2.4.3.tgz#68422dc0040a7855fa837cf015a1a3bb3d4c35db"
   dependencies:
@@ -7225,7 +7239,7 @@ punycode@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
 
-puppeteer@^1.2.0:
+puppeteer@^1.2.0, puppeteer@^1.4.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.5.0.tgz#e35db3f3ba3d41013feb65be02bdaa727ec7b8ec"
   dependencies:
