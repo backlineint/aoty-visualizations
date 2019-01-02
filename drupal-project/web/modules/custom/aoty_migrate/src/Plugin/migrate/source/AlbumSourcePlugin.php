@@ -90,6 +90,15 @@ class AlbumSourcePlugin extends Url  {
     $list_rankings[] = "tmt:" . $row->getSourceProperty('tmt');
     $list_rankings[] = "altern:" . $row->getSourceProperty('altern');
     $list_rankings[] = "fact:" . $row->getSourceProperty('fact');
+    $list_rankings[] = "billbrd:" . $row->getSourceProperty('billbrd');
+    $list_rankings[] = "mscomh:" . $row->getSourceProperty('mscomh');
+    $list_rankings[] = "405:" . $row->getSourceProperty('405');
+    $list_rankings[] = "blare:" . $row->getSourceProperty('blare');
+    $list_rankings[] = "earbud:" . $row->getSourceProperty('earbud');
+    $list_rankings[] = "giitv:" . $row->getSourceProperty('giitv');
+    $list_rankings[] = "treble:" . $row->getSourceProperty('treble');
+    $list_rankings[] = "vinfac:" . $row->getSourceProperty('treble');
+    $list_rankings[] = "guard:" . $row->getSourceProperty('treble');
 
     $row->setSourceProperty('list_rankings', $list_rankings);
 
