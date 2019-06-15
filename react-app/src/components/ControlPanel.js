@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Gear from './Gear';
+import YearControl from './YearControl';
 import RowControl from './RowControl';
 import SearchInput from './SearchInput';
 import SortControl from './SortControl';
@@ -8,11 +9,19 @@ import SortControl from './SortControl';
 import './ControlPanel.css';
 
 class ControlPanel extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
+    const selectedYear = this.props.selectedYear;
     const selectedSort = 'field_cons_score';
     const selectedList = 'none';
+
+    const yearControl = {
+      options: {
+        2018: {year: '2018'},
+        2017: {year: '2017'}
+      }
+    };
 
     const sortControl = {
       options: {
@@ -62,12 +71,20 @@ class ControlPanel extends React.Component {
     };
 
     this.state = {
+      yearControl,
       sortControl,
       sortControlList,
       selectedSort,
-      selectedList
+      selectedList,
+      selectedYear
     };
   }
+
+  updateSelectedYear = (year) => {
+    this.setState({
+      selectedYear: year
+    });
+  };
 
   updateSelectedSort = (sort) => {
     this.setState({
@@ -89,6 +106,14 @@ class ControlPanel extends React.Component {
       >
         <Gear />
         <h2>{this.props.header}</h2>
+        <YearControl
+          label="Year"
+          yearControl={this.state.yearControl}
+          value={this.state.selectedYear}
+          updateSelected={this.updateSelectedYear}
+          selectYear={this.props.selectYear}
+          getAlbums={this.props.getAlbums}
+        />
         <RowControl
           label="Number of Results:"
           rowControl={this.props.rowControl}
