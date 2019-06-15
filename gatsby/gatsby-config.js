@@ -13,5 +13,8 @@ module.exports = {
         //apiBase: `api`, // optional, defaults to `jsonapi`
       },
     },
+    {
+      resolve: `gatsby-plugin-styled-components`
+    }
   ],
 }

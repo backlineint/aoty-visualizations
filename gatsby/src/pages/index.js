@@ -1,15 +1,26 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql} from "gatsby"
+
+import { AppProvider } from '../components/AppContext'
+import ControlPanel from "../components/ControlPanel"
+import Visualizations from "../components/Visualizations"
+
+// Styling
+import '@blueprintjs/core/dist/blueprint.css';
+
+// Pick Up - Set up full cover view, get changing number of rows in control panel working. 
 
 export default ({ data }) => {
+  // This might need to be converted to a class component so app has 
+  // state that can be passed to context
+  // Also, may want to create app component so this can more easily be used on 2018 and 2017 pages.
   return(
-    <div className="App">
-      <h1>Album of the Year Data</h1>
-      <p><Link to="/">Home</Link> / <Link to="/2017">2017</Link> / <Link to="/2018">2018</Link></p>
-      {Object.keys(data.allNodeAlbum.nodes).map(key =>
-        <p key={key}>{data.allNodeAlbum.nodes[key].field_artist} / {data.allNodeAlbum.nodes[key].field_album}</p>
-      )}
-    </div>
+    <AppProvider value={data}>
+      <div className="App">
+        <ControlPanel />
+        <Visualizations />
+      </div>
+    </AppProvider>
   )
 
 }
@@ -20,6 +31,8 @@ export const query = graphql`
       nodes {
         field_artist
         field_album
+        field_spotify_album_id
+        field_cover_image
       }
     }
   }
