@@ -8,7 +8,8 @@ import Visualizations from "../components/Visualizations"
 // Styling
 import '@blueprintjs/core/dist/blueprint.css';
 
-// Pick Up - Set up full cover view, get changing number of rows in control panel working. 
+// Pick Up - Work control panel, get changing number of rows working. 
+// Make Album functional component
 
 export default ({ data }) => {
   // This might need to be converted to a class component so app has 
@@ -33,6 +34,7 @@ export const query = graphql`
         field_album
         field_spotify_album_id
         field_cover_image
+        field_cover_image_large
       }
     }
   }

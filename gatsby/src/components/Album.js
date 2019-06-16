@@ -35,6 +35,8 @@ const AlbumSection = styled.div`
 	}
 `;
 
+// Todo - Convert album to be functional component
+
 class Album extends React.Component {
   render() {
     if (this.props.coverImage) {

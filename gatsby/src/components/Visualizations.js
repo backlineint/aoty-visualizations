@@ -1,25 +1,32 @@
-import React, { useContext  } from "react"
+import React from "react"
+import styled, { css } from 'styled-components';
+import { Tab2, Tabs2 } from "@blueprintjs/core";
 
-import AppContext from "./AppContext"
-import Album from "./Album"
+import CoverView from "./CoverView";
+
+const VisualizationTabs = styled(Tabs2)`
+	margin-left: 75px;
+  padding: .5rem 1rem 1rem 1rem;
+  height: 100vh;
+  overflow: hidden;
+  transition: all 0.2s ease-out;
+  
+  ${props => props.controlPanelExpanded && css`
+    margin-left: 25%;
+    transition: all 0.2s ease-in;
+  `}
+`;
 
 export default () => {
-  const data = useContext(AppContext)
-  console.table(data.allNodeAlbum.nodes)
+  // TODO - Address controlPanelExpanded prop in VisualizationTabs component below.
+  // TODO - Incorporate list and table view components
   return(
-    <div>
-      {Object.keys(data.allNodeAlbum.nodes).map(key =>
-        <Album
-          key={key}
-          artist={data.allNodeAlbum.nodes[key].field_artist}
-          title={data.allNodeAlbum.nodes[key].field_album}
-          albumId={data.allNodeAlbum.nodes[key].field_spotify_album_id}
-          coverImage={data.allNodeAlbum.nodes[key].field_cover_image}
-        />
-      )}
-    </div>
+    <VisualizationTabs id="Tabs" renderActiveTabPanelOnly="true">
+      <Tab2 id="cv" title="Covers" panel={<CoverView />} />
+      <Tab2 id="lv" title="Lists" panel={<p> List View</p>} />
+      <Tab2 id="tv" title="Table" panel={<p> Table View </p>} />
+    </VisualizationTabs>
   )
-
 }
 
 // TODO - Prop Types
