@@ -16,25 +16,30 @@ export const AlbumList = styled.ol`
  margin-top: 0;
 `;
 
+// TODO - Is it necessary to explicitly default export here? Const instead?
+// What is the React convention vs. what is the Gatsby convention?
+
 export default () => {
   const data = useContext(AppContext)
+  const albums = data.allAlbums.allNodeAlbum.nodes
   // Todo - Handle no results case (see pre-Gatsby app)
   // Todo - Handle album click interations
+  // Todo - limit number of rows displayed based on row control.
   return (
     <>
       <AlbumList>
-        {Object.keys(data.allNodeAlbum.nodes).map(key =>
+        {Object.keys(albums).slice(0, 50).map(key =>
           <Album
             key={key}
-            artist={data.allNodeAlbum.nodes[key].field_artist}
-            title={data.allNodeAlbum.nodes[key].field_album}
-            albumId={data.allNodeAlbum.nodes[key].field_spotify_album_id}
-            coverImage={data.allNodeAlbum.nodes[key].field_cover_image}
+            artist={albums[key].field_artist}
+            title={albums[key].field_album}
+            albumId={albums[key].field_spotify_album_id}
+            coverImage={albums[key].field_cover_image}
           />
         )}
       </AlbumList>
       <AlbumDetail
-        album={data.allNodeAlbum.nodes[1]}
+        album={albums[1]}
       />
     </>
   )

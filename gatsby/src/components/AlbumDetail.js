@@ -40,7 +40,7 @@ export default (props) => {
         <h4>{props.album.field_artist}</h4>
         <h2>{props.album.field_album}</h2>
         {cover}
-        <p className="pt-ui-text-large"><a href={'https://open.spotify.com/album/' + props.album.field_spotify_album_id} target="_blank">Play on Spotify</a></p>
+        <p className="pt-ui-text-large"><a href={'https://open.spotify.com/album/' + props.album.field_spotify_album_id} target="_blank" rel="noopener noreferrer">Play on Spotify</a></p>
       </div>
     </AlbumContainer>
   )
