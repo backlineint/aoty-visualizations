@@ -22,13 +22,14 @@ export const AlbumList = styled.ol`
 export default () => {
   const data = useContext(AppContext)
   const albums = data.allAlbums.allNodeAlbum.nodes
+  const rows = data.rows
   // Todo - Handle no results case (see pre-Gatsby app)
   // Todo - Handle album click interations
   // Todo - limit number of rows displayed based on row control.
   return (
     <>
       <AlbumList>
-        {Object.keys(albums).slice(0, 50).map(key =>
+        {Object.keys(albums).slice(0, rows).map(key =>
           <Album
             key={key}
             artist={albums[key].field_artist}

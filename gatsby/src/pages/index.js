@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useReducer } from "react"
 import { graphql} from "gatsby"
 
 import { AppProvider } from '../components/AppContext'
@@ -8,7 +8,7 @@ import Visualizations from "../components/Visualizations"
 // Styling
 import '@blueprintjs/core/dist/blueprint.css';
 
-// Pick Up - Work control panel, get changing number of rows working. 
+// Pick up - add filter texbox and create example of filtering albums
 // Make Album functional component
 
 const initialRowControl = {
@@ -34,15 +34,43 @@ const initialRowControl = {
   }
 };
 
+function rowReducer(state, action) {
+  switch (action.type) {
+    case 'change':
+      const rowControl = {...state}
+      Object.keys(rowControl).map(key => {
+        if (parseInt(key, 10) === action.newRows) {
+          rowControl[key].active = true;
+        }
+        else {
+          rowControl[key].active = false;
+        }
+        return rowControl;
+      })
+      return rowControl
+    default:
+      return state
+  }
+}
+
 export default ({ data }) => {
   // TODO - iterate on state management. Should this even live here?
   // does having multiple values passed to the provider impact performance
-  // convert to reducers.
   // Also, may want to create app component so this can more easily be used on 2018 and 2017 pages.
   const [allAlbums] = useState(data)
-  const [rowControl] = useState(initialRowControl)
+  const [rowControl, dispatchRow] = useReducer(rowReducer, initialRowControl)
+  const [rows, setRows] = useState(50)
+  // Note - you can have multiple providers, so you can wrap different sections of the app 
+  // and pass different values.
+  // TODO - shift level of providers
   return(
-    <AppProvider value={{allAlbums, rowControl}}>
+    <AppProvider value={{
+      allAlbums, 
+      rows, 
+      rowControl, 
+      dispatchRow,
+      setRows
+      }}>
       <div className="App">
         <ControlPanel 
           header="Best of Best of 2018" 

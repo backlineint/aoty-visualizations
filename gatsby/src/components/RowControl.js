@@ -12,8 +12,12 @@ const RowControlWrapper = styled.div`
 export default(props) => {
   // TODO - feels like we want to have seperate providers here so we can get only what
   // we need.
+  // Also might be a place where we should use a container comonent to manage state.
   const data = useContext(AppContext)
   const rowControl = data.rowControl
+  const dispatchRow = data.dispatchRow
+  const setRows = data.setRows
+
   return(
     <RowControlWrapper>
       <p>{props.label}</p>
@@ -23,6 +27,11 @@ export default(props) => {
             key={key}
             active={rowControl[key].active}
             disabled={rowControl[key].disabled}
+            onClick={() => {
+                dispatchRow({type: 'change', newRows: rowControl[key].rows})
+                setRows(key)
+              }
+            }
           >
             {key}
           </Button>
