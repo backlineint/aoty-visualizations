@@ -21,11 +21,10 @@ export const AlbumList = styled.ol`
 
 export default () => {
   const data = useContext(AppContext)
-  const albums = data.allAlbums.allNodeAlbum.nodes
-  const rows = data.rows
+  const albums = data.appState.filteredAlbums
+  const rows = data.appState.rows
   // Todo - Handle no results case (see pre-Gatsby app)
   // Todo - Handle album click interations
-  // Todo - limit number of rows displayed based on row control.
   return (
     <>
       <AlbumList>
@@ -40,7 +39,7 @@ export default () => {
         )}
       </AlbumList>
       <AlbumDetail
-        album={albums[1]}
+        album={albums[0]}
       />
     </>
   )

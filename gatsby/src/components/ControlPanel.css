@@ -1,3 +1,8 @@
+/* TODO - Move to more appropriate css file */
+body {
+  margin: 0;
+}
+
 .control-panel {
   -webkit-transition: width 0.2s ease-out;
   transition: width 0.2s ease-out;

@@ -16,7 +16,7 @@ export default(props) => {
   const data = useContext(AppContext)
   const rowControl = data.rowControl
   const dispatchRow = data.dispatchRow
-  const setRows = data.setRows
+  const dispatchApp = data.dispatchApp
 
   return(
     <RowControlWrapper>
@@ -29,7 +29,7 @@ export default(props) => {
             disabled={rowControl[key].disabled}
             onClick={() => {
                 dispatchRow({type: 'change', newRows: rowControl[key].rows})
-                setRows(key)
+                dispatchApp({type: 'set rows', newRows: rowControl[key].rows})
               }
             }
           >
