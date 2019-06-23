@@ -23,26 +23,35 @@ export default () => {
   const data = useContext(AppContext)
   const albums = data.appState.filteredAlbums
   const rows = data.appState.rows
-  // Todo - Handle no results case (see pre-Gatsby app)
   // Todo - Handle album click interations
-  return (
-    <>
-      <AlbumList>
-        {Object.keys(albums).slice(0, rows).map(key =>
-          <Album
-            key={key}
-            artist={albums[key].field_artist}
-            title={albums[key].field_album}
-            albumId={albums[key].field_spotify_album_id}
-            coverImage={albums[key].field_cover_image}
-          />
-        )}
-      </AlbumList>
-      <AlbumDetail
-        album={albums[0]}
-      />
-    </>
-  )
+  if (albums.length > 0) {
+    return (
+      <>
+        <AlbumList>
+          {Object.keys(albums).slice(0, rows).map(key =>
+            <Album
+              key={key}
+              artist={albums[key].field_artist}
+              title={albums[key].field_album}
+              albumId={albums[key].field_spotify_album_id}
+              coverImage={albums[key].field_cover_image}
+            />
+          )}
+        </AlbumList>
+        <AlbumDetail
+          album={albums[0]}
+        />
+      </>
+    )
+  }
+  else {
+    return (
+      <>
+        Search returned no results. Maybe no one likes your favorite album?
+      </>
+    )
+  }
+
 }
 
 // TODO - Prop Types

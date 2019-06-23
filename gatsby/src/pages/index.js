@@ -8,11 +8,13 @@ import ControlPanel from "../components/ControlPanel"
 import Visualizations from "../components/Visualizations"
 
 // Styling
+// Todo - Add global style for body margins
 import '@blueprintjs/core/dist/blueprint.css';
 
-// Pick up - figure out a way to address handleRowChange when filtering albums
+// Pick up - implement two sort controls.
 // Make Album functional component
 
+// TODO - Move defaults to seperate file
 const initialRowControl = {
   5: {
     rows: 5,
@@ -36,45 +38,56 @@ const initialRowControl = {
   }
 };
 
-// Todo - Split out reducers into sepearate files.
-function rowReducer(state, action) {
-  switch (action.type) {
-    case 'change':
-      const rowControl = {...state}
-      Object.keys(rowControl).map(key => {
-        if (parseInt(key, 10) === action.newRows) {
-          rowControl[key].active = true;
-        }
-        else {
-          rowControl[key].active = false;
-        }
-        return rowControl;
-      })
-      return rowControl
-    default:
-      return state
-  }
-}
-
+// Todo - Split out reducer into a sepearate file.
 function appReducer(state, action) {
   const appState = {...state}
   switch (action.type) {
     case 'filter':
       appState.filteredAlbums = _filter(state.allAlbums, function(album) {
-        //return album.field_genre.includes(action.filter.toLowerCase())
         return album.title.includes(action.filter.toLowerCase()) || album.field_genre.includes(action.filter.toLowerCase());
+      })
+
+      // Update row control for button group.
+      Object.keys(appState.rowControl).map(key => {
+        // Set active if we're displaying the same number of rows as a row control option.
+        if (parseInt(key, 10) === appState.filteredAlbums.length) {
+          appState.rowControl[key].active = true;
+          appState.rowControl[key].disabled = false;
+        }
+        else {
+          appState.rowControl[key].active = false;
+          // Disable row control options if we have fewer rows than needed.
+          if (parseInt(key, 10) > appState.filteredAlbums.length) {
+            appState.rowControl[key].disabled = true;
+          }
+          else {
+            appState.rowControl[key].disabled = false;
+          }
+        }
+        return appState.rowControl;
       })
       // Change the rows accordingly
       if (appState.filteredAlbums.length > 50) {
-        // TODO - Do something to handle row
         appState.rows = 50
       }
       else {
         appState.rows = appState.filteredAlbums.length
       }
+
       return appState
     // case: 'sort':
     case 'set rows':
+      // Update row control display
+      Object.keys(appState.rowControl).map(key => {
+        if (parseInt(key, 10) === action.newRows) {
+          appState.rowControl[key].active = true;
+        }
+        else {
+          appState.rowControl[key].active = false;
+        }
+        return appState.rowControl;
+      })
+      // Set the active number of rows
       appState.rows = action.newRows
       return appState
     default:
@@ -85,7 +98,8 @@ function appReducer(state, action) {
 export default ({ data }) => {
   // Copy source data so we can manipulate it
   const allAlbums = data.allNodeAlbum.nodes
-  // TODO - Have use effect use reducer so we don't need to use let here
+  // TODO - see if we can avoid using let here, seems like this variable would be reset every time
+  // for no real reason.
   let filteredAlbums = data.allNodeAlbum.nodes
 
   // Use a side effect to prepare album data, only during initial mount
@@ -114,20 +128,16 @@ export default ({ data }) => {
   const initialAppState = {
     allAlbums,
     filteredAlbums,
+    rowControl: initialRowControl,
     rows: 50
   }
+  // TODO - Rename to just state and dispatch
   const [appState, dispatchApp] = useReducer(appReducer, initialAppState)
-  // Todo - move rowcontrol state down to level of conrol panel
-  const [rowControl, dispatchRow] = useReducer(rowReducer, initialRowControl)
-  // Note - you can have multiple providers, so you can wrap different sections of the app 
-  // and pass different values.
-  // TODO - shift level of providers
+
   return(
     <AppProvider value={{
       appState,
-      rowControl,
       dispatchApp,
-      dispatchRow,
     }}>
       <div className="App">
         <ControlPanel 
