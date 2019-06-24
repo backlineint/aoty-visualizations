@@ -43,7 +43,7 @@ function appReducer(state, action) {
   const appState = {...state}
   switch (action.type) {
     case 'filter':
-      appState.filteredAlbums = _filter(state.allAlbums, function(album) {
+      appState.filteredAlbums = _filter(appState.allAlbums, function(album) {
         return album.title.includes(action.filter.toLowerCase()) || album.field_genre.includes(action.filter.toLowerCase());
       })
 
@@ -75,7 +75,14 @@ function appReducer(state, action) {
       }
 
       return appState
-    // case: 'sort':
+    case 'sort':
+      appState.filteredAlbums = _orderBy(appState.filteredAlbums, action.column, action.order)
+      appState.selectedSort = action.column
+      // TODO - Unset selected list - set it to none
+      // TODO - Update behavior for selecting none filter - could = cons_score
+      // TODO - why is this 560 albums and not the correct amount of albums?
+      console.log(appState.filteredAlbums)
+     return appState
     case 'set rows':
       // Update row control display
       Object.keys(appState.rowControl).map(key => {
@@ -100,6 +107,7 @@ export default ({ data }) => {
   const allAlbums = data.allNodeAlbum.nodes
   // TODO - see if we can avoid using let here, seems like this variable would be reset every time
   // for no real reason.
+  // TODO - Change from filteredAlbums to activeAlbums
   let filteredAlbums = data.allNodeAlbum.nodes
 
   // Use a side effect to prepare album data, only during initial mount
@@ -108,7 +116,14 @@ export default ({ data }) => {
       value.title_display = value.title;
       value.title = value.title.toLowerCase();
       // Cast ranking values
+      value.field_avg = parseFloat(value.field_avg)
       value.field_cons_score = parseFloat(value.field_cons_score)
+      // Why parse the ID here?
+      value.field_id = parseInt(value.field_id, 10)
+      value.field_lists = parseInt(value.field_lists, 10)
+      value.field_top_10s = parseInt(value.field_top_10s, 10)
+      value.field_wt_avg = parseFloat(value.field_wt_avg)
+
       // Protect from empty genre fields and lowercase for search
       if (!value.field_genre) {
         value.field_genre = 'n/a';
@@ -129,6 +144,7 @@ export default ({ data }) => {
     allAlbums,
     filteredAlbums,
     rowControl: initialRowControl,
+    selectedSort: 'field_cons_score',
     rows: 50
   }
   // TODO - Rename to just state and dispatch
@@ -162,6 +178,11 @@ export const query = graphql`
         title
         field_genre
         field_cons_score
+        field_avg
+        field_id
+        field_top_10s
+        field_wt_avg
+        field_lists
       }
     }
   }
