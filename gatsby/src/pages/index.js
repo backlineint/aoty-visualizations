@@ -11,8 +11,11 @@ import Visualizations from "../components/Visualizations"
 // Todo - Add global style for body margins
 import '@blueprintjs/core/dist/blueprint.css';
 
-// Pick up - implement two sort controls.
-// Make Album functional component
+// Pick up - update album list to reflect 2018 lists
+// * Detail panel functionality
+// * Other visualizations
+// * Squash TODOS
+// * Abstract to app component and apply to other years/all
 
 // TODO - Move defaults to seperate file
 const initialRowControl = {
@@ -73,16 +76,20 @@ function appReducer(state, action) {
       else {
         appState.rows = appState.filteredAlbums.length
       }
-
+      // TODO - Maintain sort while filtering.
       return appState
     case 'sort':
       appState.filteredAlbums = _orderBy(appState.filteredAlbums, action.column, action.order)
       appState.selectedSort = action.column
-      // TODO - Unset selected list - set it to none
-      // TODO - Update behavior for selecting none filter - could = cons_score
+      appState.selectedList = 'none'
       // TODO - why is this 560 albums and not the correct amount of albums?
       console.log(appState.filteredAlbums)
      return appState
+    case 'list':
+      appState.filteredAlbums = _orderBy(appState.filteredAlbums, action.column, action.order)
+      appState.selectedList = action.column
+      appState.selectedSort = 'none'
+      return appState
     case 'set rows':
       // Update row control display
       Object.keys(appState.rowControl).map(key => {
@@ -133,7 +140,13 @@ export default ({ data }) => {
         value.field_genre = value.field_genre.toLowerCase();
       }
 
-      // Flatten individual list ranking values
+      // flatten list ranking values
+      value.field_list_rankings.forEach(function(list) {
+        const listRank = list.split(':');
+        // TODO - find a way to handle 0 values rather than this 101/'' hack.
+        value[listRank[0] + '_list'] = isNaN(parseInt(listRank[1], 10)) ? 101 : parseInt(listRank[1], 10);
+        value[listRank[0]] = isNaN(parseInt(listRank[1], 10)) ? '' : parseInt(listRank[1], 10);
+      })
       return value
     })
     filteredAlbums = _orderBy([...allAlbums], 'field_cons_score', 'asc').slice(0, 50)
@@ -145,6 +158,7 @@ export default ({ data }) => {
     filteredAlbums,
     rowControl: initialRowControl,
     selectedSort: 'field_cons_score',
+    selectedList: 'none',
     rows: 50
   }
   // TODO - Rename to just state and dispatch
@@ -183,6 +197,7 @@ export const query = graphql`
         field_top_10s
         field_wt_avg
         field_lists
+        field_list_rankings
       }
     }
   }
