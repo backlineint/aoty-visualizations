@@ -43,6 +43,7 @@ const images = {
   clientList: require('./assets/client_list.png'),
   clients: require('./assets/clients.png'),
   hs2: require('./assets/hs2.png'),
+  bounteous: require('./assets/bounteous.png'),
   switchedLogo: require('./assets/switched_on_pop.png'),
   switchedEp: require('./assets/switched_ep.png'),
   spreadsheet: require('./assets/spreadsheet.png'),
@@ -269,7 +270,7 @@ export default class Presentation extends React.Component {
             <Fill>
               <Heading caps>Brian Perry</Heading>
               <List>
-                <CustomListItem>Interactive Developer at HS2 Solutions</CustomListItem>
+                <CustomListItem>Lead Front End Developer at Bounteous</CustomListItem>
                 <CustomListItem>Rocking the Chicago suburbs</CustomListItem>
                 <CustomListItem>Lover of all things components</CustomListItem>
                 <CustomListItem>... and Nintendo</CustomListItem>
@@ -297,18 +298,18 @@ export default class Presentation extends React.Component {
         >
           <Layout>
             <Fill>
-              <Heading caps>HS2 Solutions</Heading>
+              <Image
+                bgImage={images.bounteous}
+                height="94vh"
+                width="50vw"
+              />
+            </Fill>
+            <Fill>
+              <Heading caps>&nbsp;</Heading>
               <Image
                 src={images.clientList}
                 width="60%"
                 margin="30px 0 0 20%"
-              />
-            </Fill>
-            <Fill>
-              <Image
-                bgImage={images.hs2}
-                height="94vh"
-                width="50vw"
               />
             </Fill>
           </Layout>
@@ -591,7 +592,7 @@ export default class Presentation extends React.Component {
           bgColor="secondary"
           notes="."
         >
-          <Heading textColor="secondary" bgColor="tertiary" padding="15px">My Options</Heading>
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">My Options (in 2017)</Heading>
           <Layout>
             <Fill>
               <Heading caps>Reservoir</Heading>
@@ -607,6 +608,24 @@ export default class Presentation extends React.Component {
             </Fill>
           </Layout>
           <Text textColor="primary" textAlign="left" margin="0 0 0 8%">* Also Headless Lightning</Text>
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+          notes="."
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Now</Heading>
+          <Layout>
+            <Fill>
+              <Heading caps>Contenta</Heading>
+              <Image src={images.contentaLogo} />
+            </Fill>
+            <Fill>
+              <Heading caps>Drupal</Heading>
+              <Image src={images.d8} />
+            </Fill>
+          </Layout>
+          <Text textColor="primary" textAlign="right" margin="0 10% 0 8%">* Now with JSON API in Core!</Text>
         </Slide>
 
         <Slide
@@ -639,10 +658,6 @@ export default class Presentation extends React.Component {
         >
           <Layout>
             <Fill>
-              <Heading caps>Reservoir</Heading>
-              <Image src={images.reservoirLogo} />
-            </Fill>
-            <Fill>
               <Heading caps>Contenta</Heading>
               <Image src={images.contentaLogo} />
             </Fill>
@@ -660,14 +675,13 @@ export default class Presentation extends React.Component {
           <Layout>
             <Fill>
               <Heading>I Chose...</Heading>
-              <Image src={images.reservoirLogo} />
-              <Heading size={3}>Reservoir</Heading>
+              <Image src={images.contentaLogo} />
+              <Heading size={3}>A Distribution</Heading>
             </Fill>
             <Fill>
               <BigList lightBackground>
-                <ListItem>Had very simple needs</ListItem>
-                <ListItem>Worked with no config (may have been a little early on Contenta)</ListItem>
-                <ListItem>But I've used Contenta since (and it has momentum in the community)</ListItem>
+                <ListItem>Helpful when new to Decoupled Drupal</ListItem>
+                <ListItem>For new projects, I'm using Drupal Core with JSON API Enabled</ListItem>
               </BigList>
             </Fill>
           </Layout>
@@ -908,6 +922,13 @@ export default class Presentation extends React.Component {
           notes="Let's look a little more closely about how this album component came to be"
         />
 
+        <Slide>
+          <Heading>Now: Functional Components</Heading>
+          <BigList>
+            <ListItem>...</ListItem>
+          </BigList>
+        </Slide>
+
         <Slide
           notes="React components also have the concept of state which is data managed 
           within the component.
@@ -922,6 +943,13 @@ export default class Presentation extends React.Component {
             code={stateCode}
             style={{color: "black"}}
           />
+        </Slide>
+
+        <Slide>
+          <Heading>Now: Hooks</Heading>
+          <BigList>
+            <ListItem>...</ListItem>
+          </BigList>
         </Slide>
 
         <Slide
@@ -955,6 +983,13 @@ export default class Presentation extends React.Component {
           notes="Probably a case for Redux
           or the context API in react 16.3"
         />
+
+        <Slide>
+          <Heading>Now: Context</Heading>
+          <BigList>
+            <ListItem>...</ListItem>
+          </BigList>
+        </Slide>
 
         <Slide
           transition={['slide']}
@@ -1021,6 +1056,13 @@ export default class Presentation extends React.Component {
           <Image src={images.concerns} />
         </Slide>
 
+        <Slide>
+          <Heading>Now: CSS Modules</Heading>
+          <BigList>
+            <ListItem>...</ListItem>
+          </BigList>
+        </Slide>
+
         <Slide
           transition={['slide']}
           notes="TODO - Style quote to make side line white"
@@ -1059,12 +1101,28 @@ export default class Presentation extends React.Component {
           <Heading textColor="secondary">The secret sauce of the JAM Stack</Heading>
           <CustomText margin="4rem 0 0 0">Think static site generators:</CustomText>
           <CustomText>Gatsby.js</CustomText>
-          <CustomText>static-site-generator-webpack-plugin</CustomText>
         </Slide>
 
         <Slide>
           <CustomText>Could more of this app be static?</CustomText>
           <Image src={images.spinner} />
+        </Slide>
+
+        <Slide
+          bgColor="secondary"
+        >
+          <Heading caps fit>Yes.</Heading>
+        </Slide>
+
+        <Slide
+          notes="Since it is probably a little harder to visualize, let's jump ahead and look at the React app
+          before we deconstruct it.
+          TODO - make sure we have an offline version of this. Maybe don't bundle entire app, just smaller components."
+        >
+          <MarginHeading>Now: Ported 2018 to Gatsby</MarginHeading>
+          <Link href="http://brianperryinteractive.com/aoty-visualizations/" target="_blank">
+            <Image src={images.aotyApp} height="80vh" />
+          </Link>
         </Slide>
 
         <Slide
