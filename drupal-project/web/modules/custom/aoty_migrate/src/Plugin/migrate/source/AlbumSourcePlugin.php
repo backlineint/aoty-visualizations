@@ -24,7 +24,7 @@ class AlbumSourcePlugin extends Url  {
     // TODO - Store Secret in Config
     $session = new SpotifyWebAPI\Session(
       '9fe9bff24f2a46cd8c76b7378ea1160a',
-      'secret'
+      'ba1cc7a07c164b1981e91bacd3fe79d5'
     );
 
     $session->requestCredentialsToken();
@@ -97,8 +97,8 @@ class AlbumSourcePlugin extends Url  {
     $list_rankings[] = "earbud:" . $row->getSourceProperty('earbud');
     $list_rankings[] = "giitv:" . $row->getSourceProperty('giitv');
     $list_rankings[] = "treble:" . $row->getSourceProperty('treble');
-    $list_rankings[] = "vinfac:" . $row->getSourceProperty('treble');
-    $list_rankings[] = "guard:" . $row->getSourceProperty('treble');
+    $list_rankings[] = "vinfac:" . $row->getSourceProperty('vinfac');
+    $list_rankings[] = "guard:" . $row->getSourceProperty('guard');
 
     $row->setSourceProperty('list_rankings', $list_rankings);
 

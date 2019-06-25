@@ -16,6 +16,7 @@ import '@blueprintjs/core/dist/blueprint.css';
 // * Other visualizations
 // * Squash TODOS
 // * Abstract to app component and apply to other years/all
+// * Deploy
 
 // TODO - Move defaults to seperate file
 const initialRowControl = {
