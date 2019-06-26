@@ -162,7 +162,8 @@ export default ({ data }) => {
     rowControl: initialRowControl,
     selectedSort: 'field_cons_score',
     selectedList: 'none',
-    rows: 50
+    rows: 50,
+    year: 2018
   }
   // TODO - Rename to just state and dispatch
   const [appState, dispatchApp] = useReducer(appReducer, initialAppState)

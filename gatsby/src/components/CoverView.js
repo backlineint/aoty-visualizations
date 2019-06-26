@@ -23,6 +23,7 @@ export default () => {
   const data = useContext(AppContext)
   const albums = data.appState.filteredAlbums
   const rows = data.appState.rows
+  const year = data.appState.year
 
   const [selectedAlbum, setSelectedAlbum] = useState('0');
 
@@ -46,6 +47,7 @@ export default () => {
         </AlbumList>
         <AlbumDetail
           album={albums[selectedAlbum]}
+          year={year}
         />
       </>
     )

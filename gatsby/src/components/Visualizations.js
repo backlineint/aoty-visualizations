@@ -2,7 +2,8 @@ import React from "react"
 import styled, { css } from 'styled-components';
 import { Tab2, Tabs2 } from "@blueprintjs/core";
 
-import CoverView from "./CoverView";
+import CoverView from "./CoverView"
+import ListView from "./ListView";
 
 const VisualizationTabs = styled(Tabs2)`
 	margin-left: 75px;
@@ -18,13 +19,12 @@ const VisualizationTabs = styled(Tabs2)`
 `;
 
 export default () => {
-  // TODO - Address controlPanelExpanded prop in VisualizationTabs component below.
   // TODO - Incorporate list and table view components
+
   return(
     <VisualizationTabs id="Tabs" renderActiveTabPanelOnly="true">
       <Tab2 id="cv" title="Covers" panel={<CoverView />} />
-      <Tab2 id="lv" title="Lists" panel={<p> List View</p>} />
-      <Tab2 id="tv" title="Table" panel={<p> Table View </p>} />
+      <Tab2 id="lv" title="Lists" panel={<ListView />} />
     </VisualizationTabs>
   )
 }

@@ -43,7 +43,7 @@ export default (props) => {
         <p>{props.album.field_genre_display}</p>
         {cover}
         <p className="pt-ui-text-large"><a href={'https://open.spotify.com/album/' + props.album.field_spotify_album_id} target="_blank" rel="noopener noreferrer">Play on Spotify</a></p>
-        <Ranking year="2017" list="rtrade" rank={props.album.rtrade_list} />
+        <Ranking year={props.year} list="rtrade" rank={props.album.rtrade_list} />
       </div>
     </AlbumContainer>
   )
