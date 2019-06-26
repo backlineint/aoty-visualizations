@@ -37,25 +37,24 @@ const AlbumSection = styled.div`
 
 // Todo - Convert album to be functional component
 
-class Album extends React.Component {
-  render() {
-    if (this.props.coverImage) {
+export default (props) => {
+    if (props.coverImage) {
       return(
         <AlbumRow
-          onClick={() => this.props.selectAlbum(this.props.selectedAlbum)}
+          onClick={() => props.selectAlbum(props.selectedAlbum)}
           className="pt-card pt-interactive"
-          activeAlbum={this.props.activeAlbum}
+          activeAlbum={props.activeAlbum}
         >
           <Number>
             <AlbumSection>
               <img
-                src={this.props.coverImage}
-                alt={this.props.title}
+                src={props.coverImage}
+                alt={props.title}
               />
             </AlbumSection>
             <AlbumSection>
-              <div className="pt-ui-text-large">{this.props.artist}</div>
-              <h4>{this.props.title}</h4>
+              <div className="pt-ui-text-large">{props.artist}</div>
+              <h4>{props.title}</h4>
             </AlbumSection>
           </Number>
         </AlbumRow>
@@ -64,21 +63,19 @@ class Album extends React.Component {
     else {
       return(
         <AlbumRow
-          onClick={() => this.props.selectAlbum(this.props.selectedAlbum)}
+          onClick={() => props.selectAlbum(props.selectedAlbum)}
           className="pt-card pt-elevation-1 pt-interactive"
         >
           <Number>
             <AlbumSection>
-              <div className="pt-ui-text-large">{this.props.artist}</div>
-              <h4>{this.props.title}</h4>
+              <div className="pt-ui-text-large">{props.artist}</div>
+              <h4>{props.title}</h4>
             </AlbumSection>
           </Number>
         </AlbumRow>
       )
     }
-  }
-}
 
-export default Album;
+}
 
 // Todo - Prop types

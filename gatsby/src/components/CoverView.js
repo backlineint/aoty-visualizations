@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
 import AppContext from "./AppContext"
@@ -23,6 +23,9 @@ export default () => {
   const data = useContext(AppContext)
   const albums = data.appState.filteredAlbums
   const rows = data.appState.rows
+
+  const [selectedAlbum, setSelectedAlbum] = useState('0');
+
   // Todo - Handle album click interations
   if (albums.length > 0) {
     return (
@@ -35,11 +38,14 @@ export default () => {
               title={albums[key].field_album}
               albumId={albums[key].field_spotify_album_id}
               coverImage={albums[key].field_cover_image}
+              activeAlbum={selectedAlbum === key}
+              selectedAlbum={key}
+              selectAlbum={setSelectedAlbum}
             />
           )}
         </AlbumList>
         <AlbumDetail
-          album={albums[0]}
+          album={albums[selectedAlbum]}
         />
       </>
     )

@@ -11,12 +11,13 @@ import Visualizations from "../components/Visualizations"
 // Todo - Add global style for body margins
 import '@blueprintjs/core/dist/blueprint.css';
 
-// Pick up - update album list to reflect 2018 lists
-// * Detail panel functionality
+// Pick up - Detail panel functionality
+// Set year in app state
 // * Other visualizations
 // * Squash TODOS
 // * Abstract to app component and apply to other years/all
 // * Deploy
+// * re-org / abstract hooks and context
 
 // TODO - Move defaults to seperate file
 const initialRowControl = {
@@ -111,6 +112,7 @@ function appReducer(state, action) {
 }
 
 export default ({ data }) => {
+  // TODO - Bug - Album detail isn't re-rendering when this side effect completes.
   // Copy source data so we can manipulate it
   const allAlbums = data.allNodeAlbum.nodes
   // TODO - see if we can avoid using let here, seems like this variable would be reset every time

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 // Todo - Handle Rankings
-// import Ranking from './Ranking';
+import Ranking from './Ranking';
 
 const AlbumContainer = styled.div`
   width: 40%;
@@ -27,6 +27,7 @@ const AlbumContainer = styled.div`
 `;
 
 export default (props) => {
+  // TODO - Make year part of app state
   let cover = null;
   if (props.album.field_cover_image_large) {
     cover = <img
@@ -39,8 +40,10 @@ export default (props) => {
       <div className="pt-callout pt-intent-primary">
         <h4>{props.album.field_artist}</h4>
         <h2>{props.album.field_album}</h2>
+        <p>{props.album.field_genre_display}</p>
         {cover}
         <p className="pt-ui-text-large"><a href={'https://open.spotify.com/album/' + props.album.field_spotify_album_id} target="_blank" rel="noopener noreferrer">Play on Spotify</a></p>
+        <Ranking year="2017" list="rtrade" rank={props.album.rtrade_list} />
       </div>
     </AlbumContainer>
   )
