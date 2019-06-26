@@ -1,4 +1,5 @@
 import React, {useContext} from "react"
+import { Link } from "gatsby"
 
 import AppContext from "./AppContext"
 
@@ -25,7 +26,7 @@ const sortControl = {
 }
 
 // TODO - This needs to be updated for 2018
-const sortControlList = {
+const sortControlList2017 = {
   options: {
     none: {field: 'none', label: 'None', defaultSort: 'asc'},
     rtrade_list: {field: 'rtrade_list', label: 'Rough Trade', defaultSort: 'asc'},
@@ -101,6 +102,16 @@ export default (props) => {
   const selectedSort = data.appState.selectedSort
   const selectedList = data.appState.selectedList
   const dispatchApp = data.dispatchApp
+  const year = data.appState.year
+
+  let sortControlList
+  if (year === 2017) {
+    sortControlList = sortControlList2017
+  }
+  if (year === 2018) {
+    sortControlList = sortControlList2018
+  }
+  
   return(
     <div className="control-panel">
       <Gear />
@@ -119,10 +130,11 @@ export default (props) => {
       />
       <SortControl
         label="View List:"
-        sortControl={sortControlList2018}
+        sortControl={sortControlList}
         value={selectedList}
-        sortAlbums={(e) => dispatchApp({type: 'list', column: e.target.value, order: sortControlList2018.options[e.target.value].defaultSort})}
+        sortAlbums={(e) => dispatchApp({type: 'list', column: e.target.value, order: sortControlList.options[e.target.value].defaultSort})}
       />
+      <h4>Jump to: <Link to="/2018">2018</Link> / <Link to="/2017">2017</Link></h4>
       <p>Data: <a href="http://robmitchum.github.io/aotysheets.html" target="_blank" rel="noopener noreferrer">Album of the Year List Project</a></p>
     </div>
   )
