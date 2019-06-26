@@ -271,7 +271,8 @@ export default class Presentation extends React.Component {
               <Heading caps>Brian Perry</Heading>
               <List>
                 <CustomListItem>Lead Front End Developer at Bounteous</CustomListItem>
-                <CustomListItem>Rocking the Chicago suburbs</CustomListItem>
+                <CustomListItem>East coast born and raised</CustomListItem>
+                <CustomListItem>Currently rocking the Chicago suburbs</CustomListItem>
                 <CustomListItem>Lover of all things components</CustomListItem>
                 <CustomListItem>... and Nintendo</CustomListItem>
               </List>
@@ -570,7 +571,7 @@ export default class Presentation extends React.Component {
           notes="TODO - Style quote to make side line white"
         >
           <CoverLayout>
-            <Heading textColor="secondary" bgColor="tertiary" padding="15px">Choosing a Drupal Distribution</Heading>
+            <Heading textColor="secondary" bgColor="tertiary" padding="15px">Choosing Your Drupal</Heading>
             <Layout>
               <Fill>
                 <BlockQuote textColor="secondary">
