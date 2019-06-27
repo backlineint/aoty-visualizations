@@ -10,6 +10,8 @@ const SearchInputWrapper = styled.div`
 export default (props) => {
   const data = useContext(AppContext)
   const dispatchApp = data.dispatchApp
+  const setSelectedAlbum = data.setSelectedAlbum
+
   return(
     <SearchInputWrapper className="pt-input-group pt-large pt-minimal">
       <span className="pt-icon pt-icon-search"></span>
@@ -18,7 +20,11 @@ export default (props) => {
         type="search"
         placeholder={props.placeholder}
         dir="auto"
-        onChange={(e) => {dispatchApp({type: 'filter', filter: e.target.value})}}
+        onChange={(e) => {
+          // TODO - Set selected album needs to be merged main app reducer
+          setSelectedAlbum('0')
+          dispatchApp({type: 'filter', filter: e.target.value})
+        }}
       />
     </SearchInputWrapper>
   )

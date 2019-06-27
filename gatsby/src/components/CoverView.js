@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import AppContext from "./AppContext"
@@ -23,9 +23,8 @@ export default () => {
   const data = useContext(AppContext)
   const albums = data.appState.filteredAlbums
   const rows = data.appState.rows
-  const year = data.appState.year
-
-  const [selectedAlbum, setSelectedAlbum] = useState('0');
+  const selectedAlbum = data.selectedAlbum
+  const setSelectedAlbum = data.setSelectedAlbum
 
   // Todo - Handle album click interations
   if (albums.length > 0) {
@@ -47,7 +46,6 @@ export default () => {
         </AlbumList>
         <AlbumDetail
           album={albums[selectedAlbum]}
-          year={year}
         />
       </>
     )

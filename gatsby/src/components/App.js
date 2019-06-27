@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useReducer } from "react"
+import React, { useEffect, useReducer, useState } from "react"
 import _orderBy from 'lodash/orderBy';
 
 // State and Context helpers
@@ -74,11 +74,15 @@ export default (data) => {
 
   // TODO - Rename to just state and dispatch
   const [appState, dispatchApp] = useReducer(appReducer, initialAppState)
+  // TODO - This should move into app state
+  const [selectedAlbum, setSelectedAlbum] = useState('0');
 
   return (
     <AppProvider value={{
       appState,
       dispatchApp,
+      selectedAlbum,
+      setSelectedAlbum
     }}>
       <div className="App">
         <ControlPanel 
