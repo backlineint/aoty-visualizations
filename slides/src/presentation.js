@@ -43,6 +43,7 @@ const images = {
   clientList: require('./assets/client_list.png'),
   clients: require('./assets/clients.png'),
   hs2: require('./assets/hs2.png'),
+  bounteous: require('./assets/bounteous.png'),
   switchedLogo: require('./assets/switched_on_pop.png'),
   switchedEp: require('./assets/switched_ep.png'),
   spreadsheet: require('./assets/spreadsheet.png'),
@@ -74,6 +75,13 @@ const images = {
   concerns: require('./assets/concerns.png'),
   spinner: require('./assets/spinner.gif'),
   sprint: require('./assets/sprint.png'),
+  function: require('./assets/function.png'),
+  hook: require('./assets/hook.png'),
+  context: require('./assets/context.png'),
+  consumer: require('./assets/consumer.png'),
+  modules: require('./assets/modules.png'),
+  aotyApp2018: require('./assets/2018.png'),
+  gatsby: require('./assets/gatsby.png'),
 };
 
 const albums = {
@@ -85,6 +93,14 @@ const albums = {
   priests: require('./assets/albums/priests.jpeg'),
   kelela: require('./assets/albums/kelela.jpeg'),
   lorde: require('./assets/albums/lorde.jpeg'),
+  cowboy: require('./assets/albums/cowboy.jpeg'),
+  snailMail: require('./assets/albums/snailmail.jpeg'),
+  cardi: require('./assets/albums/cardi.jpeg'),
+  daytona: require('./assets/albums/daytona.jpeg'),
+  robyn: require('./assets/albums/robyn.jpeg'),
+  joy: require('./assets/albums/joy.jpeg'),
+  dirty: require('./assets/albums/dirty.jpeg'),
+  golden: require('./assets/albums/golden.jpeg'),
 };
 
 // Todo - preload images. See utils in specatcle repo.
@@ -147,18 +163,6 @@ const CoverLayout = styled.div`
   }
   blockquote span {
     border-left: 1px solid white
-  }
-  img {
-    border: 5px solid;
-  }
-`;
-
-const HovCoverLayout = styled.div`
-  p {
-    margin: 1.5rem 0;
-  }
-  blockquote span {
-    border-left: 1px solid white;
   }
   img {
     border: 5px solid;
@@ -269,8 +273,9 @@ export default class Presentation extends React.Component {
             <Fill>
               <Heading caps>Brian Perry</Heading>
               <List>
-                <CustomListItem>Interactive Developer at HS2 Solutions</CustomListItem>
-                <CustomListItem>Rocking the Chicago suburbs</CustomListItem>
+                <CustomListItem>Lead Front End Developer at Bounteous</CustomListItem>
+                <CustomListItem>East coast born and raised</CustomListItem>
+                <CustomListItem>Currently rocking the Chicago suburbs</CustomListItem>
                 <CustomListItem>Lover of all things components</CustomListItem>
                 <CustomListItem>... and Nintendo</CustomListItem>
               </List>
@@ -297,18 +302,18 @@ export default class Presentation extends React.Component {
         >
           <Layout>
             <Fill>
-              <Heading caps>HS2 Solutions</Heading>
+              <Image
+                bgImage={images.bounteous}
+                height="94vh"
+                width="50vw"
+              />
+            </Fill>
+            <Fill>
+              <Heading caps>&nbsp;</Heading>
               <Image
                 src={images.clientList}
                 width="60%"
                 margin="30px 0 0 20%"
-              />
-            </Fill>
-            <Fill>
-              <Image
-                bgImage={images.hs2}
-                height="94vh"
-                width="50vw"
               />
             </Fill>
           </Layout>
@@ -326,16 +331,16 @@ export default class Presentation extends React.Component {
             <Layout>
               <Fill>
                 <BlockQuote textColor="secondary">
-                  <Quote textColor="secondary">And luck is always better than skill at things</Quote>
-                  <Quote textColor="secondary">We're flying blind</Quote>
-                  <Quote textColor="secondary">Oh good gracious</Quote>
-                  <Quote textColor="secondary">I sound like my mom</Quote>
-                  <Cite>LCD Soundystem - tonite</Cite>
-                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: American Dream (#6 of 2017)</Text>
+                  <Quote textColor="secondary">I didn't know I had a dream</Quote>
+                  <Quote textColor="secondary">I didn't know until I saw you</Quote>
+                  <Quote textColor="secondary">So would you tell me if you want me?</Quote>
+                  <Quote textColor="secondary">'Cause I can't move until you show me</Quote>
+                  <Cite>Mitski - Come Into the Water</Cite>
+                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Be the Cowboy (#2 of 2018)</Text>
                 </BlockQuote>
               </Fill>
               <Fill>
-                <Image src={albums.americanDream} />
+                <Image src={albums.cowboy} />
               </Fill>
             </Layout>
           </CoverLayout>
@@ -503,18 +508,6 @@ export default class Presentation extends React.Component {
           </BigList>
         </Slide>
 
-        <Slide>
-          <MarginHeading fit>The security part sounds pretty good...</MarginHeading>
-          <Image src={images.ddos} />
-          <CoverLayout>
-            <BlockQuote>
-              <Quote textColor="secondary">Come for the code, stay for the</Quote>
-              <Quote textColor="secondary">community driven DDoS attacks.</Quote>
-              <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">- All of us - 3/28/18</Text>
-            </BlockQuote>
-          </CoverLayout>
-        </Slide>
-
         <Slide
           transition={['slide']}
           notes="TODO - Style quote to make side line white"
@@ -524,15 +517,15 @@ export default class Presentation extends React.Component {
             <Layout>
               <Fill>
                 <BlockQuote textColor="secondary">
-                  <Quote textColor="secondary">Don't think I'm shy 'cause I'm quiet</Quote>
-                  <Quote textColor="secondary">I'm just plottin', I'm plottin'</Quote>
-                  <Quote textColor="secondary">I got dem where I want dem</Quote>
-                  <Cite>J Hus - Plottin</Cite>
-                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Common Sense (#30 of 2017)</Text>
+                  <Quote textColor="secondary">Let's find an out</Quote>
+                  <Quote textColor="secondary">We'll start anew</Quote>
+                  <Quote textColor="secondary">With the headlights in your eyes</Quote>
+                  <Cite>Snail Mail - Let's Find an Out</Cite>
+                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Lush (#11 of 2018)</Text>
                 </BlockQuote>
               </Fill>
               <Fill>
-                <Image src={albums.commonSense} />
+                <Image src={albums.snailMail} />
               </Fill>
             </Layout>
           </CoverLayout>
@@ -569,19 +562,20 @@ export default class Presentation extends React.Component {
           notes="TODO - Style quote to make side line white"
         >
           <CoverLayout>
-            <Heading textColor="secondary" bgColor="tertiary" padding="15px">Choosing a Drupal Distribution</Heading>
+            <Heading textColor="secondary" bgColor="tertiary" padding="15px">Choosing Your Drupal</Heading>
             <Layout>
               <Fill>
                 <BlockQuote textColor="secondary">
-                  <Quote textColor="secondary">Maybe I should pray a little harder</Quote>
-                  <Quote textColor="secondary">Or work a little smarter</Quote>
-                  <Quote textColor="secondary">This time baby promise I have learned my lesson ooh</Quote>
-                  <Cite>SZA - Anything</Cite>
-                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: CTRL (#2 of 2017)</Text>
+                  <Quote textColor="secondary">'Bout my coins like Mario (Mario)</Quote>
+                  <Quote textColor="secondary">Yeah, they call me Cardi B</Quote>
+                  <Quote textColor="secondary">I run this shit like cardio</Quote>
+                  <Quote textColor="secondary">Woo, facts</Quote>  
+                  <Cite>Cardi B - I Like It</Cite>
+                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Invasion of Privacy (#7 of 2018)</Text>
                 </BlockQuote>
               </Fill>
               <Fill>
-                <Image src={albums.ctrl} />
+                <Image src={albums.cardi} />
               </Fill>
             </Layout>
           </CoverLayout>
@@ -591,7 +585,7 @@ export default class Presentation extends React.Component {
           bgColor="secondary"
           notes="."
         >
-          <Heading textColor="secondary" bgColor="tertiary" padding="15px">My Options</Heading>
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">My Options (in 2017)</Heading>
           <Layout>
             <Fill>
               <Heading caps>Reservoir</Heading>
@@ -610,13 +604,30 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
+          bgColor="secondary"
+          notes="."
+        >
+          <Heading textColor="secondary" bgColor="tertiary" padding="15px">Now</Heading>
+          <Layout>
+            <Fill>
+              <Heading caps>Contenta</Heading>
+              <Image src={images.contentaLogo} />
+            </Fill>
+            <Fill>
+              <Heading caps>Drupal</Heading>
+              <Image src={images.d8} />
+            </Fill>
+          </Layout>
+          <Text textColor="primary" textAlign="right" margin="0 10% 0 8%">* Now with JSON API in Core!</Text>
+        </Slide>
+
+        <Slide
           notes="Things they have in common...
           Contenta's API is focused around content models and the API
           Reservoir is stripped down to the bare essentials."
         >
           <MarginHeading>API Focused Admin UIs</MarginHeading>
           <Image src={images.contentaMenu} margin="0 auto 4rem auto" />
-          <Image src={images.reservoirMenu} />
         </Slide>
 
         <Slide
@@ -639,10 +650,6 @@ export default class Presentation extends React.Component {
         >
           <Layout>
             <Fill>
-              <Heading caps>Reservoir</Heading>
-              <Image src={images.reservoirLogo} />
-            </Fill>
-            <Fill>
               <Heading caps>Contenta</Heading>
               <Image src={images.contentaLogo} />
             </Fill>
@@ -660,14 +667,13 @@ export default class Presentation extends React.Component {
           <Layout>
             <Fill>
               <Heading>I Chose...</Heading>
-              <Image src={images.reservoirLogo} />
-              <Heading size={3}>Reservoir</Heading>
+              <Image src={images.contentaLogo} />
+              <Heading size={3}>A Distribution</Heading>
             </Fill>
             <Fill>
               <BigList lightBackground>
-                <ListItem>Had very simple needs</ListItem>
-                <ListItem>Worked with no config (may have been a little early on Contenta)</ListItem>
-                <ListItem>But I've used Contenta since (and it has momentum in the community)</ListItem>
+                <ListItem>Helpful when new to Decoupled Drupal</ListItem>
+                <ListItem>For new projects, I'm using Drupal Core with JSON API Enabled</ListItem>
               </BigList>
             </Fill>
           </Layout>
@@ -682,33 +688,18 @@ export default class Presentation extends React.Component {
             <Layout>
               <Fill>
                 <BlockQuote textColor="secondary">
-                  <Quote textColor="secondary">Your heart is struggling, baby</Quote>
-                  <Quote textColor="secondary">Trying to believe</Quote>
-                  <Quote textColor="secondary">That there might be something you just couldn't see</Quote>
-                  <Quote textColor="secondary">But what if I told you babe</Quote>
-                  <Quote textColor="secondary">It’s all so easy</Quote>
-                  <Cite>Kenny Loggins - Show You the Way</Cite>
-                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Drunk (#11 of 2017)</Text>
+                  <Quote textColor="secondary">Let's cram numbers, easily</Quote>
+                  <Quote textColor="secondary">The only rapper sold more dope than me was Eazy-E</Quote>
+                  <Quote textColor="secondary">How could you ever right these wrongs</Quote>
+                  <Quote textColor="secondary">When you don't even write your songs?</Quote>
+                  <Cite>Pusha T - Infrared</Cite>
+                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Daytona (#1 of 2018)</Text>
                 </BlockQuote>
               </Fill>
               <Fill>
-                <Image src={albums.drunk} />
+                <Image src={albums.daytona} />
               </Fill>
             </Layout>
-          </CoverLayout>
-        </Slide>
-
-        <Slide
-          notes="While we're on Thundercat, this song also contains some good advice for conference
-          attendees who plan on socializing."
-        >
-          <CoverLayout>
-            <BlockQuote>
-              <Quote textColor="secondary">
-                Hey, how's it going? This is your boy, Thundercat. If you're going to fill your water bottle with vodka, 
-                always make sure you have a friend with a bottle that actually has water in it.
-              </Quote>
-            </BlockQuote>
           </CoverLayout>
         </Slide>
 
@@ -810,23 +801,24 @@ export default class Presentation extends React.Component {
           transition={['slide']}
           notes="TODO - Style quote to make side line white"
         >
-          <HovCoverLayout>
-            <Heading textColor="secondary" bgColor="tertiary" padding="15px">4:44 of React Basics*</Heading>
-            <Text textColor="secondary">* actual time may vary</Text>
+          <CoverLayout>
+            <Heading textColor="secondary" bgColor="tertiary" padding="15px">React Basics</Heading>
             <Layout>
               <Fill>
                 <BlockQuote textColor="secondary">
-                  <Quote textColor="secondary">I've been to Paris at least two times</Quote>
-                  <Quote textColor="secondary">I've seen the Eiffel, I've seen a eyeful</Quote>
-                  <Cite>Jay-Z - Caught Their Eyes</Cite>
-                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: 4:44 (#16 of 2017)</Text>
+                  <Quote textColor="secondary">Can't make sense of all of the pieces</Quote>
+                  <Quote textColor="secondary">Of my own delusions</Quote>
+                  <Quote textColor="secondary">Can't take all these memories</Quote>
+                  <Quote textColor="secondary">Don't know how to use ‘em</Quote>
+                  <Cite>Robyn - Missing U</Cite>
+                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Honey (#5 of 2018)</Text>
                 </BlockQuote>
               </Fill>
               <Fill>
-                <Image src={albums.jayZ} height="65%" />
+                <Image src={albums.robyn} />
               </Fill>
             </Layout>
-          </HovCoverLayout>
+          </CoverLayout>
         </Slide>
 
         <Slide
@@ -835,7 +827,7 @@ export default class Presentation extends React.Component {
           TODO - make sure we have an offline version of this. Maybe don't bundle entire app, just smaller components."
         >
           <MarginHeading>Spoiler Alert:</MarginHeading>
-          <Link href="http://brianperryinteractive.com/aoty-visualizations/" target="_blank">
+          <Link href="http://localhost:3000" target="_blank">
             <Image src={images.aotyApp} height="80vh" />
           </Link>
         </Slide>
@@ -908,6 +900,14 @@ export default class Presentation extends React.Component {
           notes="Let's look a little more closely about how this album component came to be"
         />
 
+        <Slide>
+          <MarginHeading>Now: Functional Components</MarginHeading>
+          <Image
+              src={images.function}
+              width="70%"
+            />
+        </Slide>
+
         <Slide
           notes="React components also have the concept of state which is data managed 
           within the component.
@@ -922,6 +922,15 @@ export default class Presentation extends React.Component {
             code={stateCode}
             style={{color: "black"}}
           />
+        </Slide>
+
+        <Slide>
+          <MarginHeading>Now: Hooks</MarginHeading>
+          <Image
+            src={images.hook}
+            width="70%"
+          />
+          <CustomText textColor="secondary" padding="15px">Related Hooks: useEffect, useReducer, useContext</CustomText>
         </Slide>
 
         <Slide
@@ -956,6 +965,24 @@ export default class Presentation extends React.Component {
           or the context API in react 16.3"
         />
 
+        <Slide>
+        <MarginHeading>Now: Context</MarginHeading>
+          <Image
+            src={images.context}
+            width="70%"
+          />
+          <CustomText textColor="secondary" padding="15px">Defining a context hook</CustomText>
+        </Slide>
+
+        <Slide>
+        <MarginHeading>Now: Context</MarginHeading>
+          <Image
+            src={images.consumer}
+            width="70%"
+          />
+          <CustomText textColor="secondary" padding="15px">Providing and consuming context</CustomText>
+        </Slide>
+
         <Slide
           transition={['slide']}
           notes="TODO - Style quote to make side line white"
@@ -965,15 +992,16 @@ export default class Presentation extends React.Component {
             <Layout>
               <Fill>
                 <BlockQuote textColor="secondary">
-                  <Quote textColor="secondary">I understood him but I was also flabbergasted</Quote>
-                  <Quote textColor="secondary">I couldn't comprehend his unabashed enthusiasm</Quote>
-                  <Quote textColor="secondary">It was as if he didn't know the other side of that</Quote>  
-                  <Cite>Priests - No Big Bang</Cite>
-                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Nothing Feels Natural (#41 of 2017)</Text>
+                  <Quote textColor="secondary">Fear leads to panic, panic leads to pain</Quote>
+                  <Quote textColor="secondary">Pain leads to anger, anger leads to hate</Quote>
+                  <Quote textColor="secondary">Yeah, yeah, yeah, yeah</Quote>  
+                  <Quote textColor="secondary">Hey, ey, ey, ey</Quote> 
+                  <Cite>Idles - Danny Nedelko</Cite>
+                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Joy as an Act of Resistance (#10 of 2018)</Text>
                 </BlockQuote>
               </Fill>
               <Fill>
-                <Image src={albums.priests} />
+                <Image src={albums.joy} />
               </Fill>
             </Layout>
           </CoverLayout>
@@ -1021,6 +1049,18 @@ export default class Presentation extends React.Component {
           <Image src={images.concerns} />
         </Slide>
 
+        <Slide>
+          <MarginHeading>Now: CSS Modules</MarginHeading>
+          <Image
+            src={images.modules}
+            width="20%"
+          />
+          <BigList>
+            <ListItem>Write CSS (Or SASS) the way you're used to</ListItem>
+            <ListItem>Scopes styles locally by default</ListItem>
+          </BigList>
+        </Slide>
+
         <Slide
           transition={['slide']}
           notes="TODO - Style quote to make side line white"
@@ -1030,16 +1070,16 @@ export default class Presentation extends React.Component {
             <Layout>
               <Fill>
                 <BlockQuote textColor="secondary">
-                  <Quote textColor="secondary">Where can, where can I go, go?</Quote>
-                  <Quote textColor="secondary">It's taking, taking a hold</Quote>
-                  <Quote textColor="secondary">And now I think I know</Quote> 
-                  <Quote textColor="secondary">That I don't know nothing at all</Quote>  
-                  <Cite>Kelela - Altadena</Cite>
-                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Take Me Apart (#7 of 2017)</Text>
+                  <Quote textColor="secondary">Now go on girl and use that sauce (that sauce)</Quote>
+                  <Quote textColor="secondary">If you don't, then that's your loss (your loss)</Quote>
+                  <Quote textColor="secondary">If you don't, then that's your loss</Quote> 
+                  <Quote textColor="secondary">Turn it up, don't turn it off</Quote>  
+                  <Cite>Janelle Monáe - I Got The Juice</Cite>
+                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Dirty Computer (#3 of 2018)</Text>
                 </BlockQuote>
               </Fill>
               <Fill>
-                <Image src={albums.kelela} />
+                <Image src={albums.dirty} />
               </Fill>
             </Layout>
           </CoverLayout>
@@ -1059,7 +1099,6 @@ export default class Presentation extends React.Component {
           <Heading textColor="secondary">The secret sauce of the JAM Stack</Heading>
           <CustomText margin="4rem 0 0 0">Think static site generators:</CustomText>
           <CustomText>Gatsby.js</CustomText>
-          <CustomText>static-site-generator-webpack-plugin</CustomText>
         </Slide>
 
         <Slide>
@@ -1068,23 +1107,48 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
+          bgColor="secondary"
+        >
+          <Heading caps fit>Yes.</Heading>
+        </Slide>
+
+        <Slide
+          notes="Since it is probably a little harder to visualize, let's jump ahead and look at the React app
+          before we deconstruct it.
+          TODO - make sure we have an offline version of this. Maybe don't bundle entire app, just smaller components."
+        >
+          <MarginHeading>Now: Ported 2018 to Gatsby</MarginHeading>
+          <Link href="http://brianperryinteractive.com/aoty-visualizations/" target="_blank">
+            <Image src={images.aotyApp2018} height="80vh" />
+          </Link>
+        </Slide>
+
+        <Slide>
+          <MarginHeading>2018 Page Component</MarginHeading>
+          <Image
+            src={images.gatsby}
+            width="60%"
+          />
+          <CustomText textColor="secondary" padding="15px">Related Hooks: useEffect, useReducer, useContext</CustomText>
+        </Slide>
+
+        <Slide
           transition={['slide']}
           notes=""
         >
           <CoverLayout>
-            <Heading textColor="secondary" bgColor="tertiary" padding="15px">Melodrama</Heading>
+            <Heading textColor="secondary" bgColor="tertiary" padding="15px">Buzzkill?</Heading>
             <Layout>
               <Fill>
                 <BlockQuote textColor="secondary">
-                  <Quote textColor="secondary">Let's let things come out of the woodwork</Quote>
-                  <Quote textColor="secondary">I'll give you my best side, tell you all my best lies</Quote>
-                  <Quote textColor="secondary">Yeah, awesome right?</Quote>  
-                  <Cite>Lorde - Homemade Dynamite</Cite>
-                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Melodrama (#3 of 2017)</Text>
+                  <Quote textColor="secondary">'Cause everyone knows someone who kills the buzz</Quote>
+                  <Quote textColor="secondary">Every time they open up their mouth</Quote>
+                  <Cite>Kacey Musgraves - High Horse</Cite>
+                  <Text margin="15px 0 0 0" textColor="secondary" textAlign="left">Album: Golden Hour  (#6 of 2018)</Text>
                 </BlockQuote>
               </Fill>
               <Fill>
-                <Image src={albums.lorde} />
+                <Image src={albums.golden} />
               </Fill>
             </Layout>
           </CoverLayout>

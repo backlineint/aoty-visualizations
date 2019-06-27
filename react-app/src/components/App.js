@@ -28,6 +28,11 @@ class App extends Component {
   constructor() {
     super();
 
+    // Prod
+    // const endpoint = 'http://backlineint.webfactional.com/jsonapi/node/album';
+    // Local
+    const endpoint = 'http://aoty-drupal.lndo.site/jsonapi/node/album';
+
     const defaultSort = 'field_cons_score';
     const defaultSortOrder = 'asc';
 
@@ -64,23 +69,32 @@ class App extends Component {
     // Todo - convert this to int.
     const selectedAlbum = '0';
 
+    const selectedYear = '2018';
+
     this.state = {
+      endpoint,
       rowOptions,
       rows: defaultRows,
       defaultSort,
       defaultSortOrder,
       rowControl,
       controlPanelExpanded,
-      selectedAlbum
+      selectedAlbum,
+      selectedYear
     };
   }
 
   componentWillMount() {
     // Need to add albums to state after the constructor because data is loaded async.
-    const albumPromise = getAllAlbumData(`http://backlineint.webfactional.com/jsonapi/node/album`);
-    // If we need a local version for offline demos
-    //const albumPromise = getAllAlbumData(`http://aoty-reservoir.dd:8083/jsonapi/node/album`);
+    this.getAlbums();
+  }
 
+  /*
+   * Hit the defined API to get a new set of album data that can then be filtered
+   */
+  getAlbums = () => {
+    const albumPromise = getAllAlbumData(`${this.state.endpoint}?filter[field_year]=${this.state.selectedYear}`);
+    console.log("Getting albums");
     // Once the promise is resolved, manipulate the album data and add to state.
     albumPromise.then(albums => {
       // Cast strings to numbers in our original dataset.
@@ -117,7 +131,7 @@ class App extends Component {
       });
 
     });
-  }
+  };
 
   /*
    * Updates the number of rows displayed and adjusts row control if necessary.
@@ -226,13 +240,20 @@ class App extends Component {
     });
   };
 
+  selectYear = (year) => {
+    this.setState({
+      selectedYear: year
+    });
+  };
+
   render() {
+    const header = `Best of Best of 2018`;
     // If the API hasn't returned albums yet, indicate that we're loading.
     if (this.state.albums) {
       return (
         <div className="App">
           <ControlPanel
-            header="Best of Best of 2017"
+            header={header}
             filterAlbums={this.filterAlbums}
             sortAlbums={this.sortAlbums}
             rowControl={this.state.rowControl}
@@ -240,6 +261,9 @@ class App extends Component {
             setRows={this.setRows}
             expandControlPanel={this.expandControlPanel}
             collapseControlPanel={this.collapseControlPanel}
+            selectedYear={this.state.selectedYear}
+            selectYear={this.selectYear}
+            getAlbums={this.getAlbums}
           />
           <Visualizations
             albums={this.state.activeAlbums}

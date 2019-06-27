@@ -1,0 +1,4 @@
+name: aoty
+recipe: drupal8
+config:
+  webroot: docroot

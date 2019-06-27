@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+/**
+ * If we're running from phar load the phar autoload,
+ * else let the script 'robo' search for the autoloader.
+ */
+$candidates = [
+    'phar://robo.phar/vendor/autoload.php', // phar path
+    __DIR__.'/vendor/autoload.php',
+    __DIR__.'/../../autoload.php',
+];
+$autoloaderPath = false;
+foreach ($candidates as $candidate) {
+    if (file_exists($candidate)) {
+        $autoloaderPath = $candidate;
+        break;
+    }
+}
+if (!$autoloaderPath) {
+  die("Could not find autoloader. Run 'composer install'.");
+}
+$classLoader = require $autoloaderPath;
+$configFilePath = getenv('ROBO_CONFIG') ?: getenv('HOME') . '/.robo/robo.yml';
+$runner = new \Robo\Runner();
+$runner
+  ->setRelativePluginNamespace('Robo\Plugin')
+  ->setSelfUpdateRepository('consolidation/robo')
+  ->setConfigurationFilename($configFilePath)
+  ->setEnvConfigPrefix('ROBO')
+  ->setClassLoader($classLoader);
+$statusCode = $runner->execute($_SERVER['argv']);
+exit($statusCode);

@@ -1,0 +1,38 @@
+/* TODO - Move to more appropriate css file */
+body {
+  margin: 0;
+}
+
+.control-panel {
+  -webkit-transition: width 0.2s ease-out;
+  transition: width 0.2s ease-out;
+  height: 100vh;
+  float: left;
+  width: 75px;
+  padding: 1rem;
+  overflow: scroll;
+  background-color: #1e90ff;
+  color: #fff;
+}
+.control-panel a,
+.control-panel a:visited,
+.control-panel a:hover,
+.control-panel a:active {
+  color: #fff;
+}
+.control-panel:hover {
+  -webkit-transition: width 0.2s ease-out;
+  transition: width 0.2s ease-out;
+  width: 25%;
+}
+.control-panel:hover * {
+  -webkit-transition: opacity 0.75s ease-in;
+  transition: opacity 0.75s ease-in;
+  opacity: 1;
+}
+.control-panel:hover .pt-icon-standard {
+  display: none;
+}
+.control-panel * {
+  opacity: 0;
+}

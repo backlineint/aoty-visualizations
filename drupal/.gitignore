@@ -21,3 +21,4 @@
 
 # DB Extracts
 /docroot/*.sql
+*.sql.gz

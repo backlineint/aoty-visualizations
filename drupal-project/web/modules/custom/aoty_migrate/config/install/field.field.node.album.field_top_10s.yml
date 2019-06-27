@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_top_10s
+    - node.type.album
+_core: {  }
+id: node.album.field_top_10s
+field_name: field_top_10s
+entity_type: node
+bundle: album
+label: 'Top 10s'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
