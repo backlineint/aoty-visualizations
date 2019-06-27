@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Gear from './Gear';
-import YearControl from './YearControl';
 import RowControl from './RowControl';
 import SearchInput from './SearchInput';
 import SortControl from './SortControl';
@@ -106,14 +105,6 @@ class ControlPanel extends React.Component {
       >
         <Gear />
         <h2>{this.props.header}</h2>
-        <YearControl
-          label="Year"
-          yearControl={this.state.yearControl}
-          value={this.state.selectedYear}
-          updateSelected={this.updateSelectedYear}
-          selectYear={this.props.selectYear}
-          getAlbums={this.props.getAlbums}
-        />
         <RowControl
           label="Number of Results:"
           rowControl={this.props.rowControl}

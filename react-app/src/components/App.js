@@ -247,7 +247,7 @@ class App extends Component {
   };
 
   render() {
-    const header = `Best of Best of ${this.state.year}`;
+    const header = `Best of Best of 2018`;
     // If the API hasn't returned albums yet, indicate that we're loading.
     if (this.state.albums) {
       return (
