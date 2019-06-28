@@ -5,6 +5,7 @@
  */
 
 module.exports = {
+  pathPrefix: "/aoty-visualizations",
   plugins: [
     {
       resolve: `gatsby-source-drupal`,
