@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{155:function(n,a,e){"use strict";e.r(a),e.d(a,"query",function(){return c});var r=e(0),t=e.n(r),u=e(231);a.default=function(n){var a=n.data;return t.a.createElement(u.a,{allAlbums:a,year:2017})};var c="162752454"}}]);
+//# sourceMappingURL=component---src-pages-2017-js-fabcfc89749a429dcbb2.js.map
