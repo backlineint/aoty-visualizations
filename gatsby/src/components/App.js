@@ -1,5 +1,6 @@
 // Dependencies
 import React, { useEffect, useReducer, useState } from "react"
+import { Helmet } from 'react-helmet'
 import _orderBy from 'lodash/orderBy';
 
 // State and Context helpers
@@ -84,6 +85,10 @@ export default (data) => {
       selectedAlbum,
       setSelectedAlbum
     }}>
+      <Helmet>
+        <script src="https://unpkg.com/dom4@^1.8"></script>
+        <link rel="stylesheet" type="text/css" href="//unpkg.com/@blueprintjs/core@1.40.0/dist/blueprint.css"></link>
+      </Helmet>
       <div className="App">
         <ControlPanel 
           header={`Best of Best of ${data.year}`}
