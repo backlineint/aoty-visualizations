@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{156:function(e,a,n){"use strict";n.r(a),n.d(a,"query",function(){return s});var r=n(0),t=n.n(r),u=n(200),l=n(232);a.default=function(e){var a=e.data,n=Object(u.a)(a);return t.a.createElement(l.a,{allAlbums:n.allAlbums,filteredAlbums:n.filteredAlbums,year:2018})};var s="3812080216"}}]);
+//# sourceMappingURL=component---src-pages-2018-js-a3d2dacd518436a5bf00.js.map
