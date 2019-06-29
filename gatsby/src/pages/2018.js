@@ -1,12 +1,15 @@
 import React from "react"
 import { graphql } from "gatsby"
 
+import prepareData from '../utilities/prepareData'
 import App from '../components/App'
 
 export default ({ data }) => {
+  const preparedData = prepareData(data)
   return(
     <App 
-      allAlbums={data}
+      allAlbums={preparedData.allAlbums}
+      filteredAlbums={preparedData.filteredAlbums}
       year={2018}
     />
   )
