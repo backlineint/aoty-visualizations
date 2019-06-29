@@ -1,18 +1,23 @@
 import React from "react"
 import { graphql } from "gatsby"
 
+import prepareData from '../utilities/prepareData'
 import App from '../components/App'
 
 /**
- * TODO - Next
+ * TODO List:
+ * Update the lists included in the album view
+ * Update the lists included in the list view
  * Squash various minor bugs
  * Stretch - create 'all' view.
  */
 
 export default ({ data }) => {
+  const preparedData = prepareData(data)
   return(
     <App 
-      allAlbums={data}
+      allAlbums={preparedData.allAlbums}
+      filteredAlbums={preparedData.filteredAlbums}
       year={2018}
     />
   )
