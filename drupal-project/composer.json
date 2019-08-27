@@ -21,8 +21,7 @@
         "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/config_update": "^1.6",
         "drupal/console": "^1.0.2",
-        "drupal/core": "^8.6.0",
-        "drupal/jsonapi": "^1.23",
+        "drupal/core": "^8.7.0",
         "drupal/migrate_tools": "^4.0",
         "drush/drush": "^9.0.0",
         "jwilsson/spotify-web-api-php": "^2.6",
@@ -31,7 +30,7 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-        "webflo/drupal-core-require-dev": "^8.6.0"
+        "webflo/drupal-core-require-dev": "^8.7.0"
     },
     "conflict": {
         "drupal/drupal": "*"
