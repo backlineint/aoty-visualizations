@@ -1,4 +1,0 @@
-name: aoty-drupal
-recipe: drupal8
-config:
-  webroot: web

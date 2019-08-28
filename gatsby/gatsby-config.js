@@ -10,8 +10,8 @@ module.exports = {
     {
       resolve: `gatsby-source-drupal`,
       options: {
-        baseUrl: `http://aoty-drupal.lndo.site/`
-        //apiBase: `api`, // optional, defaults to `jsonapi`
+        baseUrl: `http://aoty.lndo.site/`,
+        preview: true
       },
     },
     {

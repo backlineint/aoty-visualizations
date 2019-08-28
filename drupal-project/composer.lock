@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b34ca4e928088f5c779f2c9edddc1e87",
+    "content-hash": "fe1efcdee241e325363b7562963b30a3",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2379,6 +2379,62 @@
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
             "time": "2019-08-07T19:19:20+00:00"
+        },
+        {
+            "name": "drupal/gatsby",
+            "version": "1.0.0-alpha2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/gatsby.git",
+                "reference": "8.x-1.0-alpha2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/gatsby-8.x-1.0-alpha2.zip",
+                "reference": "8.x-1.0-alpha2",
+                "shasum": "b6592ad5d266dc5878a2714d7c542e0ac8646955"
+            },
+            "require": {
+                "drupal/core": "~8.0",
+                "drupal/jsonapi": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-alpha2",
+                    "datestamp": "1565819885",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "codekarate",
+                    "homepage": "https://www.drupal.org/user/506260"
+                },
+                {
+                    "name": "mrjmd",
+                    "homepage": "https://www.drupal.org/user/1800446"
+                }
+            ],
+            "description": "Enables Live Preview for Gatsby",
+            "homepage": "https://www.drupal.org/project/gatsby",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/gatsby",
+                "issues": "https://www.drupal.org/project/issues/gatsby"
+            }
         },
         {
             "name": "drupal/migrate_plus",
@@ -8310,7 +8366,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "drupal/gatsby": 15
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],

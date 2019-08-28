@@ -1,4 +1,4 @@
 name: aoty
 recipe: drupal8
 config:
-  webroot: docroot
+  webroot: drupal-project/web

@@ -22,6 +22,7 @@
         "drupal/config_update": "^1.6",
         "drupal/console": "^1.0.2",
         "drupal/core": "^8.7.0",
+        "drupal/gatsby": "^1.0@alpha",
         "drupal/migrate_tools": "^4.0",
         "drush/drush": "^9.0.0",
         "jwilsson/spotify-web-api-php": "^2.6",
