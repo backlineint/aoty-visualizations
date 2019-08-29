@@ -1,5 +1,6 @@
 import _filter from 'lodash/filter';
 import _orderBy from 'lodash/orderBy';
+import _isEqual from 'lodash/isEqual';
 
 export default function appReducer(state, action) {
   const appState = {...state}
@@ -63,6 +64,21 @@ export default function appReducer(state, action) {
       // Set the active number of rows
       appState.rows = action.newRows
       return appState
+    case 'preview':
+      // Update state in repsonse to data changes from Gatsby Preview
+      if (_isEqual(action.previewPayload.allAlbums, state.allAlbums)) {
+        // If the album payload hasn't changed, do nothing so we don't re-render
+        // infinitely
+        return state
+      }
+      else {
+        // If the album payload has changed, recreate filtered albums with new
+        // data while honoring sort and filter settings.
+        appState.allAlbums = action.previewPayload.allAlbums
+        appState.filteredAlbums = action.previewPayload.filteredAlbums
+        // TODO - this is likely to be blowing away much of the control panel state.
+        return appState
+      }
     default:
       return state
   }

@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useReducer, useState } from "react"
+import React, { useReducer, useState, useEffect } from "react"
 import { Helmet } from 'react-helmet'
 
 // State and Context helpers
@@ -33,6 +33,13 @@ export default (props) => {
   const [appState, dispatchApp] = useReducer(appReducer, initialAppState)
   // TODO - This should move into app state
   const [selectedAlbum, setSelectedAlbum] = useState('0');
+
+  // Update state on re-render to honor changes from Gatsby Preview
+  // TODO - Should we move appState up to index level to better handle data updates
+  // from Gatsby preview?
+  // Is there any way we could avoid useEffect here? Updating state based on incoming
+  // props seems like an antipattern.
+  useEffect(() => dispatchApp({type: 'preview', previewPayload: initialAppState}))
 
   return (
     <AppProvider value={{
