@@ -26,7 +26,8 @@ export default (props) => {
     selectedSort: 'field_cons_score',
     selectedList: 'none',
     rows: 50,
-    year: props.year
+    year: props.year,
+    selectedFilter: ''
   }
 
   // TODO - Rename to just state and dispatch
