@@ -8,8 +8,17 @@ export default function appReducer(state, action) {
     case 'filter':
       // Store filter in state so it can be recreated during preview
       appState.selectedFilter = action.filter.toLowerCase()
-      // Todo - filters seem to blow away sort
-      return filterAlbums(appState, appState.selectedFilter)
+      // Apply filter
+      appState = filterAlbums(appState, appState.selectedFilter)
+      // Apply sort
+      if (appState.selectedSort !== 'none') {
+        appState = sort(appState, appState.selectedSort)
+      }
+      // Apply list
+      if (appState.selectedList !== 'none') {
+        appState = sort(appState, appState.selectedList)
+      }
+      return appState
     case 'sort':
       appState.selectedSort = action.column
       appState.selectedList = 'none'
@@ -38,9 +47,13 @@ export default function appReducer(state, action) {
           appState = filterAlbums(appState, appState.selectedFilter)
         }
         // Apply sort
-        appState = sort(appState, appState.selectedSort)
+        if (appState.selectedSort !== 'none') {
+          appState = sort(appState, appState.selectedSort)
+        }
         // Apply list
-        appState = sort(appState, appState.selectedList)
+        if (appState.selectedList !== 'none') {
+          appState = sort(appState, appState.selectedList)
+        }
         // Set Rows seems to work without intervention.
         return appState
       }
@@ -80,7 +93,6 @@ const filterAlbums = (appState, filter) => {
   else {
     appState.rows = appState.filteredAlbums.length
   }
-  // TODO - Maintain sort while filtering.
   return appState
 }
 
