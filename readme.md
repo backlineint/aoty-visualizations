@@ -30,9 +30,9 @@ To stop the running Drupal instance run:
 
 To restart the Drupal instance and run Gatsby in develop mode run:
 
-`lando start`
-`cd gatsby`
-`npm run develop`
+* `lando start`
+* `cd gatsby`
+* `npm run develop`
 
 ## Slides and Talks
 
