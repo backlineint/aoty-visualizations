@@ -1,9 +1,0 @@
-parameters:
-  cors.config:
-    enabled: true
-    allowedHeaders: ['*']
-    allowedMethods: ['GET', 'OPTIONS']
-    allowedOrigins: ['*']
-    exposedHeaders: false
-    maxAge: false
-    supportsCredentials: false
