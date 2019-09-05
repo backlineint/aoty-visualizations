@@ -1,9 +1,8 @@
 #!/bin/sh
-
-cd ../drupal/docroot
-drush si -y
-drush upwd admin --password=admin
-drush en -y aoty_migrate
-drush migrate-import --group=aoty -y
-# If you want to limit for testing purposes...
-# drush migrate-import --group=aoty --limit=50 -y
+lando start
+lando composer install
+curl -L -o aoty-seed.sql.gz https://www.dropbox.com/s/21hgc9hn6h1v8wi/aoty-seed.sql.gz?dl=1
+lando db-import aoty-seed.sql.gz
+cd gatsby
+npm install
+npm run develop

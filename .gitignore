@@ -4,3 +4,6 @@ IDEs
 
 # MacOS/Finder
 .DS_Store
+
+# Database Seed
+aoty-seed.sql.gz

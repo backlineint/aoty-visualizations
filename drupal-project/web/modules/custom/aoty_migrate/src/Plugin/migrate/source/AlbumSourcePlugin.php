@@ -24,7 +24,7 @@ class AlbumSourcePlugin extends Url  {
     // TODO - Store Secret in Config
     $session = new SpotifyWebAPI\Session(
       '9fe9bff24f2a46cd8c76b7378ea1160a',
-      'ba1cc7a07c164b1981e91bacd3fe79d5'
+      'secret'
     );
 
     $session->requestCredentialsToken();
