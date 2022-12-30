@@ -20,7 +20,7 @@
     "@blueprintjs/table": "^1.31.3",
     "@nivo/heatmap": "^0.59.0",
     "babel-plugin-styled-components": "^1.10.0",
-    "gatsby": "^2.14.0",
+    "gatsby": "^2.32.13",
     "gatsby-plugin-react-helmet": "^3.1.0",
     "gatsby-plugin-styled-components": "^3.0.7",
     "gatsby-source-drupal": "^3.2.23",
